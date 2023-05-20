@@ -3,6 +3,7 @@ using VContainer;
 using UnityEngine;
 using VContainer.Unity;
 using Code.Infrastructure;
+using Code.Infrastructure.GameStateMachine;
 
 namespace Code.CompositionRoot
 {
@@ -25,6 +26,9 @@ namespace Code.CompositionRoot
             RegisterCoroutineRunner();
             RegisterUIRoot();
             RegisterSceneLoader();
+
+            builder.Register<BootstrapState>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<GameStateMachine>(Lifetime.Singleton).As<IGameStateMachine>();
         }
 
         private void GetContainerBuilder(IContainerBuilder builder) => 
