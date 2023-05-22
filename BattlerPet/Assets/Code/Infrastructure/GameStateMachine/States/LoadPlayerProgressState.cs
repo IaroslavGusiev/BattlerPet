@@ -12,7 +12,7 @@ namespace Code.Infrastructure.GameStateMachine
         private readonly IPlayerProgressService _playerProgress;
         private readonly IEnumerable<IProgressReader> _progressReaderServices;
 
-        public LoadPlayerProgressState(ISaveLoadService saveLoadService, IGameStateMachine gameStateMachine, IPlayerProgressService playerProgress, IEnumerable<IProgressReader> progressReaderServices)
+        public LoadPlayerProgressState( IGameStateMachine gameStateMachine, ISaveLoadService saveLoadService, IPlayerProgressService playerProgress, IEnumerable<IProgressReader> progressReaderServices)
         {
             _saveLoadService = saveLoadService;
             _gameStateMachine = gameStateMachine;

@@ -27,7 +27,7 @@ namespace Code.CompositionRoot
             RegisterCoroutineRunner();
             RegisterUIRoot();
             RegisterSceneLoader();
-            RegisterStateFactory();
+            RegisterStateFactories();
             RegisterGameStateMachine();
             RegisterStaticDataService();
             RegisterAdsService();
@@ -65,11 +65,15 @@ namespace Code.CompositionRoot
                 .As<ISceneLoader>();
         }
 
-        private void RegisterStateFactory()
+        private void RegisterStateFactories()
         {
-            _builder.Register<StateFactory>(Lifetime.Singleton);
-            _builder.RegisterFactory<IGameStateMachine, IState>(container => 
-                container.Resolve<StateFactory>().Create, Lifetime.Singleton);
+           _builder.Register<BootstrapStateFactory>(Lifetime.Singleton);
+           _builder.RegisterFactory<IGameStateMachine, BootstrapState>(container => 
+                container.Resolve<BootstrapStateFactory>().Create, Lifetime.Singleton);
+
+           _builder.Register<LoadPlayerProgressStateFactory>(Lifetime.Singleton);
+           _builder.RegisterFactory<IGameStateMachine, LoadPlayerProgressState>(container => 
+               container.Resolve<LoadPlayerProgressStateFactory>().Create, Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachine()
