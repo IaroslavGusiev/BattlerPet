@@ -1,16 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using VContainer;
 
 namespace Code.Infrastructure.GameStateMachine
 {
     public class GameStateMachine : IGameStateMachine
     {
-        private readonly Dictionary<Type, IExitableState> _registeredStates;
+        private readonly Dictionary<Type, IExitableState> _registeredStates = new Dictionary<Type, IExitableState>();
         private IExitableState _currentState;
 
-        public GameStateMachine(IEnumerable<IExitableState> states) => 
-            _registeredStates = states.ToDictionary(state => state.GetType());
+        private readonly BootstrapStateFactory _factory;
+
+        public GameStateMachine(BootstrapStateFactory bootstrapStateFactory) // IEnumerable<IExitableState> states
+        {
+            _factory = bootstrapStateFactory;
+            _registeredStates.Add(typeof(BootstrapState), _factory.Create(this));
+        }
 
         public void Enter<TState>() where TState : class, IState
         {

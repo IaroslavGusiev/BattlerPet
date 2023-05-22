@@ -1,3 +1,14 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: 6217a39b3467443e9918b86bda7dee67
-timeCreated: 1684587692
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _uiRootPrefab: {fileID: 1950283971381655895, guid: ac65abe57f85d49418dcc940008ab2a5, type: 3}
+  - _bootstrapperPrefab: {fileID: 2557659420767331291, guid: d311b56a5f5d6544ebe9f272c60d4e13, type: 3}
+  - _coroutineRunnerPrefab: {fileID: 3095453004810926964, guid: 84bfa13c807c2584c9844faa99148b77, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

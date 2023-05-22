@@ -3,6 +3,7 @@ using VContainer;
 using UnityEngine;
 using VContainer.Unity;
 using Code.Infrastructure;
+using Code.Infrastructure.Services;
 using Code.Infrastructure.GameStateMachine;
 
 namespace Code.CompositionRoot
@@ -27,8 +28,13 @@ namespace Code.CompositionRoot
             RegisterUIRoot();
             RegisterSceneLoader();
 
-            builder.Register<BootstrapState>(Lifetime.Singleton).AsImplementedInterfaces();
-            builder.Register<GameStateMachine>(Lifetime.Singleton).As<IGameStateMachine>();
+            _builder.Register<BootstrapStateFactory>(Lifetime.Singleton);
+            builder.RegisterFactory<IGameStateMachine, BootstrapState>(container => container.Resolve<BootstrapStateFactory>().Create, Lifetime.Singleton);
+            
+            RegisterGameStateMachine();
+            
+            RegisterStaticDataService();
+            RegisterAdsService();
         }
 
         private void GetContainerBuilder(IContainerBuilder builder) => 
@@ -59,6 +65,24 @@ namespace Code.CompositionRoot
         {
             _builder.Register<SceneLoader>(Lifetime.Singleton)
                 .As<ISceneLoader>();
+        }
+        
+        private void RegisterGameStateMachine()
+        {
+            _builder.Register<GameStateMachine>(Lifetime.Singleton)
+                .As<IGameStateMachine>();
+        }
+
+        private void RegisterStaticDataService()
+        {
+            _builder.Register<StaticDataService>(Lifetime.Singleton)
+                .As<IStaticDataService>();
+        }
+        
+        private void RegisterAdsService()
+        {
+            _builder.Register<AdsService>(Lifetime.Singleton)
+                .As<IAdsService>();
         }
     }
 }
