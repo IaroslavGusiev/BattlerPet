@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Code.Infrastructure.Services
+namespace Code.Services
 {
     public class StaticDataService : IStaticDataService
     {

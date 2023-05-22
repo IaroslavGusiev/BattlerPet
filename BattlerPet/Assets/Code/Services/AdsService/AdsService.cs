@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Code.Infrastructure.Services
+namespace Code.Services
 {
     public class AdsService : IAdsService
     {

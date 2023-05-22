@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Code.Infrastructure.Services;
+using Code.Services;
 
 namespace Code.Infrastructure.GameStateMachine
 {
@@ -18,8 +18,9 @@ namespace Code.Infrastructure.GameStateMachine
         
         public void Enter()
         {
-            InitializeServices();
             Debug.Log("<color=green>Enter BootstrapState</color>");
+            InitializeServices();
+            _gameStateMachine.Enter<LoadPlayerProgressState>();
         }
 
         public void Exit()

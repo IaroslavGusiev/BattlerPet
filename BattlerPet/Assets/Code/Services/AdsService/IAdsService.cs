@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Code.Infrastructure.Services
+namespace Code.Services
 {
     public interface IAdsService
     {

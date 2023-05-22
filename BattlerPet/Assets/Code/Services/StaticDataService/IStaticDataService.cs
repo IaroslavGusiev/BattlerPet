@@ -1,4 +1,4 @@
-namespace Code.Infrastructure.Services
+namespace Code.Services
 {
     public interface IStaticDataService
     {

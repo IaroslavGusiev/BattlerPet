@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using VContainer;
 
 namespace Code.Infrastructure.GameStateMachine
 {
@@ -10,12 +8,13 @@ namespace Code.Infrastructure.GameStateMachine
         private readonly Dictionary<Type, IExitableState> _registeredStates = new Dictionary<Type, IExitableState>();
         private IExitableState _currentState;
 
-        private readonly BootstrapStateFactory _factory;
+        private readonly StateFactory _factory;
 
-        public GameStateMachine(BootstrapStateFactory bootstrapStateFactory) // IEnumerable<IExitableState> states
+        public GameStateMachine(StateFactory stateFactory) 
         {
-            _factory = bootstrapStateFactory;
-            _registeredStates.Add(typeof(BootstrapState), _factory.Create(this));
+            _factory = stateFactory;
+            _registeredStates.Add(typeof(BootstrapState), _factory.Create<BootstrapState>(this));
+            _registeredStates.Add(typeof(LoadPlayerProgressState), _factory.Create<LoadPlayerProgressState>(this));
         }
 
         public void Enter<TState>() where TState : class, IState

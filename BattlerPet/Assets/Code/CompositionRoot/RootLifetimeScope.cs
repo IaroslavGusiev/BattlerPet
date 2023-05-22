@@ -1,9 +1,9 @@
 ﻿using Code.UI;
 using VContainer;
 using UnityEngine;
+using Code.Services;
 using VContainer.Unity;
 using Code.Infrastructure;
-using Code.Infrastructure.Services;
 using Code.Infrastructure.GameStateMachine;
 
 namespace Code.CompositionRoot
@@ -27,14 +27,12 @@ namespace Code.CompositionRoot
             RegisterCoroutineRunner();
             RegisterUIRoot();
             RegisterSceneLoader();
-
-            _builder.Register<BootstrapStateFactory>(Lifetime.Singleton);
-            builder.RegisterFactory<IGameStateMachine, BootstrapState>(container => container.Resolve<BootstrapStateFactory>().Create, Lifetime.Singleton);
-            
+            RegisterStateFactory();
             RegisterGameStateMachine();
-            
             RegisterStaticDataService();
             RegisterAdsService();
+            RegisterSaveLoadService();
+            RegisterPlayerProgressService();
         }
 
         private void GetContainerBuilder(IContainerBuilder builder) => 
@@ -66,7 +64,14 @@ namespace Code.CompositionRoot
             _builder.Register<SceneLoader>(Lifetime.Singleton)
                 .As<ISceneLoader>();
         }
-        
+
+        private void RegisterStateFactory()
+        {
+            _builder.Register<StateFactory>(Lifetime.Singleton);
+            _builder.RegisterFactory<IGameStateMachine, IState>(container => 
+                container.Resolve<StateFactory>().Create, Lifetime.Singleton);
+        }
+
         private void RegisterGameStateMachine()
         {
             _builder.Register<GameStateMachine>(Lifetime.Singleton)
@@ -78,11 +83,23 @@ namespace Code.CompositionRoot
             _builder.Register<StaticDataService>(Lifetime.Singleton)
                 .As<IStaticDataService>();
         }
-        
+
         private void RegisterAdsService()
         {
             _builder.Register<AdsService>(Lifetime.Singleton)
                 .As<IAdsService>();
+        }
+
+        private void RegisterSaveLoadService()
+        {
+            _builder.Register<SaveLoadService>(Lifetime.Singleton)
+                .As<ISaveLoadService>();
+        }
+
+        private void RegisterPlayerProgressService()
+        {
+            _builder.Register<PlayerProgressService>(Lifetime.Singleton)
+                .As<IPlayerProgressService>();
         }
     }
 }
