@@ -25,7 +25,7 @@ namespace Code.Infrastructure.GameStateMachine
             Debug.Log("LoadPlayerProgressState enter");
             PlayerProgress progress = LoadProgressOrInitNew();
             NotifyProgressReaderServices(progress);
-            // _gameStateMachine.Enter<LoadLevelState, string>("Game");
+            _gameStateMachine.Enter<LoadLevelState, string>("Game");
         }
 
         public void Exit()

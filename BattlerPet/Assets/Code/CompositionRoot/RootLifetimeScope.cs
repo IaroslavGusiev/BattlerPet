@@ -4,6 +4,7 @@ using UnityEngine;
 using Code.Services;
 using VContainer.Unity;
 using Code.Infrastructure;
+using Code.UI.LoadingCurtain;
 using Code.Infrastructure.GameStateMachine;
 
 namespace Code.CompositionRoot
@@ -13,6 +14,7 @@ namespace Code.CompositionRoot
         #region CorePrefabs
         [SerializeField] private UIRoot _uiRootPrefab;
         [SerializeField] private Bootstrapper _bootstrapperPrefab;
+        [SerializeField] private LoadingCurtain _loadingCurtainPrefab;
         [SerializeField] private CoroutineRunner _coroutineRunnerPrefab;
         #endregion
 
@@ -25,6 +27,7 @@ namespace Code.CompositionRoot
             GetContainerBuilder(builder);
             RegisterBootstrapper();
             RegisterCoroutineRunner();
+            RegisterLoadingCurtain();
             RegisterUIRoot();
             RegisterSceneLoader();
             RegisterStateFactories();
@@ -52,6 +55,13 @@ namespace Code.CompositionRoot
                 .As<ICoroutineRunner>();
         }
 
+        private void RegisterLoadingCurtain()
+        {
+            _builder.RegisterComponentInNewPrefab(_loadingCurtainPrefab, Lifetime.Singleton)
+                .DontDestroyOnLoad()
+                .AsImplementedInterfaces();
+        }
+
         private void RegisterUIRoot()
         {
             _builder.RegisterComponentInNewPrefab(_uiRootPrefab, Lifetime.Singleton)
@@ -74,6 +84,10 @@ namespace Code.CompositionRoot
            _builder.Register<LoadPlayerProgressStateFactory>(Lifetime.Singleton);
            _builder.RegisterFactory<IGameStateMachine, LoadPlayerProgressState>(container => 
                container.Resolve<LoadPlayerProgressStateFactory>().Create, Lifetime.Singleton);
+
+           _builder.Register<LoadLevelStateFactory>(Lifetime.Singleton);
+           _builder.RegisterFactory<IGameStateMachine, LoadLevelState>(container =>
+               container.Resolve<LoadLevelStateFactory>().Create, Lifetime.Singleton);
         }
 
         private void RegisterGameStateMachine()

@@ -50,4 +50,5 @@ MonoBehaviour:
   autoInjectGameObjects: []
   _uiRootPrefab: {fileID: 1950283971381655895, guid: ac65abe57f85d49418dcc940008ab2a5, type: 3}
   _bootstrapperPrefab: {fileID: 2557659420767331291, guid: d311b56a5f5d6544ebe9f272c60d4e13, type: 3}
+  _loadingCurtainPrefab: {fileID: 4048226295705287136, guid: cdbfd8a9b8a6a0d439b9d6485664d257, type: 3}
   _coroutineRunnerPrefab: {fileID: 3095453004810926964, guid: 84bfa13c807c2584c9844faa99148b77, type: 3}

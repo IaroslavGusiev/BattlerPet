@@ -5,13 +5,17 @@ namespace Code.Infrastructure.GameStateMachine
 {
     public class GameStateMachine : IGameStateMachine
     {
-        private readonly Dictionary<Type, IExitableState> _states = new Dictionary<Type, IExitableState>();
+        private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _currentState;
         
-        public GameStateMachine(BootstrapStateFactory bootstrapStateFactory, LoadPlayerProgressStateFactory loadPlayerProgressStateFactory) 
+        public GameStateMachine(BootstrapStateFactory bootstrapStateFactory, LoadPlayerProgressStateFactory loadPlayerProgressStateFactory, LoadLevelStateFactory loadLevelStateFactory)
         {
-            _states.Add(typeof(BootstrapState), bootstrapStateFactory.Create(this));
-            _states.Add(typeof(LoadPlayerProgressState), loadPlayerProgressStateFactory.Create(this));
+            _states = new Dictionary<Type, IExitableState>()
+            {
+                [typeof(BootstrapState)] = bootstrapStateFactory.Create(this),
+                [typeof(LoadPlayerProgressState)] = loadPlayerProgressStateFactory.Create(this),
+                [typeof(LoadLevelState)] = loadLevelStateFactory.Create(this)
+            };
         }
 
         public void Enter<TState>() where TState : class, IState
