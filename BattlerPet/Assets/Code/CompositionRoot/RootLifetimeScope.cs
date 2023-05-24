@@ -59,7 +59,7 @@ namespace Code.CompositionRoot
         {
             _builder.RegisterComponentInNewPrefab(_loadingCurtainPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
-                .AsImplementedInterfaces();
+                .As<ILoadingCurtain>();
         }
 
         private void RegisterUIRoot()
@@ -75,25 +75,16 @@ namespace Code.CompositionRoot
                 .As<ISceneLoader>();
         }
 
-        private void RegisterStateFactories()
-        {
-           _builder.Register<BootstrapStateFactory>(Lifetime.Singleton);
-           _builder.RegisterFactory<IGameStateMachine, BootstrapState>(container => 
-                container.Resolve<BootstrapStateFactory>().Create, Lifetime.Singleton);
-
-           _builder.Register<LoadPlayerProgressStateFactory>(Lifetime.Singleton);
-           _builder.RegisterFactory<IGameStateMachine, LoadPlayerProgressState>(container => 
-               container.Resolve<LoadPlayerProgressStateFactory>().Create, Lifetime.Singleton);
-
-           _builder.Register<LoadLevelStateFactory>(Lifetime.Singleton);
-           _builder.RegisterFactory<IGameStateMachine, LoadLevelState>(container =>
-               container.Resolve<LoadLevelStateFactory>().Create, Lifetime.Singleton);
-        }
-
         private void RegisterGameStateMachine()
         {
             _builder.Register<GameStateMachine>(Lifetime.Singleton)
                 .As<IGameStateMachine>();
+        }
+
+        private void RegisterStateFactories()
+        {
+            var stateFactoryRegister = new StateFactoryRegister(_builder);
+            stateFactoryRegister.RegisterStateFactories();
         }
 
         private void RegisterStaticDataService()
