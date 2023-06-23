@@ -1,21 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.Observables
 {
-    [System.Serializable]
+    [Serializable]
     public class Publisher<TSubject> : IPublisher<TSubject>
     {
-        [SerializeField] private TSubject subject;
-
-        public event System.Action<TSubject> OnChange;
+        public event Action<TSubject> OnChange;
+        
+        [SerializeField] private TSubject _subject;
         
         public TSubject Subject
         {
-            get => subject;
+            get => _subject;
             set
             {
-                subject = value;
-                OnChange?.Invoke(subject);
+                _subject = value;
+                OnChange?.Invoke(_subject);
             }
         }
     }

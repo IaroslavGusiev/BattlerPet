@@ -17,9 +17,7 @@ namespace Code.Infrastructure
         public void Initialize() => 
             _gameStateMachine.Enter<BootstrapState>();
 
-        public void Dispose()
-        {
+        public void Dispose() => 
             Debug.Log("<color=red>Bootstrapper Dispose</color>");
-        }
     }
 }

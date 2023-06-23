@@ -29,7 +29,7 @@ namespace CodeBase.Infrastructure.Observables
             get => _value;
             set
             {
-                T oldValue = this._value;
+                T oldValue = _value;
                 _value = value;
                 OnChanged?.Invoke(this, oldValue, value);
             }
@@ -48,16 +48,12 @@ namespace CodeBase.Infrastructure.Observables
         public override string ToString() => 
             _value.ToString();
 
-        public bool Equals(Observable<T> other) => 
+        public bool Equals(Observable<T> other) =>
             other._value.Equals(_value);
 
-        public override bool Equals(object other)
-        {
-            return other != null
-                   && other is Observable<T>
-                   && ((Observable<T>)other)._value.Equals(_value);
-        }
- 
+        public override bool Equals(object other) =>
+         other is Observable<T> observable && observable._value.Equals(_value);
+
         public override int GetHashCode() => 
             _value.GetHashCode();
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 using Code.Services;
 using VContainer.Unity;
 using Code.Infrastructure;
+using Game.Scripts.Common;
 using Code.UI.LoadingCurtain;
 using Code.Infrastructure.GameStateMachine;
 
@@ -36,6 +37,7 @@ namespace Code.CompositionRoot
             RegisterAdsService();
             RegisterSaveLoadService();
             RegisterPlayerProgressService();
+            RegisterAssetProvider();
         }
 
         private void GetContainerBuilder(IContainerBuilder builder) => 
@@ -75,16 +77,16 @@ namespace Code.CompositionRoot
                 .As<ISceneLoader>();
         }
 
-        private void RegisterGameStateMachine()
-        {
-            _builder.Register<GameStateMachine>(Lifetime.Singleton)
-                .As<IGameStateMachine>();
-        }
-
         private void RegisterStateFactories()
         {
             var stateFactoryRegister = new StateFactoryRegister(_builder);
             stateFactoryRegister.RegisterStateFactories();
+        }
+
+        private void RegisterGameStateMachine()
+        {
+            _builder.Register<GameStateMachine>(Lifetime.Singleton)
+                .As<IGameStateMachine>();
         }
 
         private void RegisterStaticDataService()
@@ -109,6 +111,12 @@ namespace Code.CompositionRoot
         {
             _builder.Register<PlayerProgressService>(Lifetime.Singleton)
                 .As<IPlayerProgressService>();
+        }
+
+        private void RegisterAssetProvider()
+        {
+            _builder.Register<AssetProvider>(Lifetime.Singleton)
+                .As<IAssetProvider>();
         }
     }
 }
