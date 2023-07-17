@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Game.Scripts.Common
+namespace Code.Services
 {
     public interface IAssetProvider 
     {

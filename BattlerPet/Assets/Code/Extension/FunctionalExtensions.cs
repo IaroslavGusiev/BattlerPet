@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine.Pool;
 
 namespace CodeBase.Extensions
 {
@@ -24,6 +25,19 @@ namespace CodeBase.Extensions
                 apply?.Invoke(self);
 
             return self;
+        }
+
+        public static T Do<T>(this T obj, Action<T> action)
+        {
+            return Do<T>(obj, action, true);
+        }
+        
+        public static T Do<T>(this T obj, Action<T> action, bool when)
+        {
+            if (when)
+                action.Invoke(obj);
+
+            return obj;
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using VContainer;
+﻿using VContainer;
 using VContainer.Unity;
 
 namespace Code.LifetimeScopes
@@ -8,7 +7,7 @@ namespace Code.LifetimeScopes
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            Debug.Log("<color=green>GameLifetimeScope</color>");
+             
         }
     }
 }

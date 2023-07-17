@@ -4,8 +4,10 @@ using UnityEngine;
 using Code.Services;
 using VContainer.Unity;
 using Code.Infrastructure;
-using Game.Scripts.Common;
+using CodeBase.Extensions;
 using Code.UI.LoadingCurtain;
+using Code.Services.JSONSaver;
+using Code.Infrastructure.GameFactory;
 using Code.Infrastructure.GameStateMachine;
 
 namespace Code.CompositionRoot
@@ -31,13 +33,14 @@ namespace Code.CompositionRoot
             RegisterLoadingCurtain();
             RegisterUIRoot();
             RegisterSceneLoader();
-            RegisterStateFactories();
             RegisterGameStateMachine();
             RegisterStaticDataService();
             RegisterAdsService();
             RegisterSaveLoadService();
             RegisterPlayerProgressService();
             RegisterAssetProvider();
+            RegisterGameFactory();
+            RegisterJsonSaver();
         }
 
         private void GetContainerBuilder(IContainerBuilder builder) => 
@@ -77,16 +80,11 @@ namespace Code.CompositionRoot
                 .As<ISceneLoader>();
         }
 
-        private void RegisterStateFactories()
-        {
-            var stateFactoryRegister = new StateFactoryRegister(_builder);
-            stateFactoryRegister.RegisterStateFactories();
-        }
-
         private void RegisterGameStateMachine()
         {
-            _builder.Register<GameStateMachine>(Lifetime.Singleton)
-                .As<IGameStateMachine>();
+            new GameStateMachineFactory(_builder)
+                .With(i => i.RegisterGameStateMachine())
+                .With(i => i.RegisterStateFactories());
         }
 
         private void RegisterStaticDataService()
@@ -117,6 +115,18 @@ namespace Code.CompositionRoot
         {
             _builder.Register<AssetProvider>(Lifetime.Singleton)
                 .As<IAssetProvider>();
+        }
+
+        private void RegisterGameFactory()
+        {
+            _builder.Register<GameFactory>(Lifetime.Singleton)
+                .As<IGameFactory>();
+        }
+
+        private void RegisterJsonSaver()
+        {
+            _builder.Register<JsonSaver>(Lifetime.Singleton)
+                .As<IJsonSaver>();
         }
     }
 }
