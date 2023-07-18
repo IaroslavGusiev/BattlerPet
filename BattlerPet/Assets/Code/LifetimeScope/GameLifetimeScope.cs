@@ -7,7 +7,7 @@ namespace Code.LifetimeScopes
     {
         protected override void Configure(IContainerBuilder builder)
         {
-             
+            
         }
     }
 }

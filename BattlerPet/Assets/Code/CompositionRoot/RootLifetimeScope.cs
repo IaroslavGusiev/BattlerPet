@@ -1,7 +1,7 @@
-﻿using Code.UI;
-using VContainer;
+﻿using VContainer;
 using UnityEngine;
 using Code.Services;
+using Code.Code.Data;
 using VContainer.Unity;
 using Code.Infrastructure;
 using CodeBase.Extensions;
@@ -14,16 +14,8 @@ namespace Code.CompositionRoot
 {
     public class RootLifetimeScope : LifetimeScope
     {
-        #region CorePrefabs
-        [SerializeField] private UIRoot _uiRootPrefab;
-        [SerializeField] private Bootstrapper _bootstrapperPrefab;
-        [SerializeField] private LoadingCurtain _loadingCurtainPrefab;
-        [SerializeField] private CoroutineRunner _coroutineRunnerPrefab;
-        #endregion
-
-        #region ContainerBuilder
+        [SerializeField] private CorePrefabsData _corePrefabsData;
         private IContainerBuilder _builder;
-        #endregion
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -48,28 +40,29 @@ namespace Code.CompositionRoot
 
         private void RegisterBootstrapper()
         {
-            _builder.RegisterComponentInNewPrefab(_bootstrapperPrefab, Lifetime.Singleton)
-                .DontDestroyOnLoad()
-                .AsImplementedInterfaces();
+            _builder.RegisterComponentInNewPrefab(_corePrefabsData.BootstrapperPrefab, Lifetime.Singleton)
+                .DontDestroyOnLoad();
+
+            _builder.RegisterEntryPoint<Bootstrapper>();
         }
 
         private void RegisterCoroutineRunner()
         {
-            _builder.RegisterComponentInNewPrefab(_coroutineRunnerPrefab, Lifetime.Singleton)
+            _builder.RegisterComponentInNewPrefab(_corePrefabsData.CoroutineRunnerPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
                 .As<ICoroutineRunner>();
         }
 
         private void RegisterLoadingCurtain()
         {
-            _builder.RegisterComponentInNewPrefab(_loadingCurtainPrefab, Lifetime.Singleton)
+            _builder.RegisterComponentInNewPrefab(_corePrefabsData.LoadingCurtainPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
                 .As<ILoadingCurtain>();
         }
 
         private void RegisterUIRoot()
         {
-            _builder.RegisterComponentInNewPrefab(_uiRootPrefab, Lifetime.Singleton)
+            _builder.RegisterComponentInNewPrefab(_corePrefabsData.UIRootPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
                 .AsImplementedInterfaces();
         }
@@ -126,7 +119,7 @@ namespace Code.CompositionRoot
         private void RegisterJsonSaver()
         {
             _builder.Register<JsonSaver>(Lifetime.Singleton)
-                .As<IJsonSaver>();
+                .As<ISaver>();
         }
     }
 }

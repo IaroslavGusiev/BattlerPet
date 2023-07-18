@@ -1,11 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using Code.Code.Data;
 using UnityEngine;
 using Newtonsoft.Json;
 
 namespace Code.Services.JSONSaver
 {
-    public class JsonSaver : IJsonSaver
+    public class JsonSaver : ISaver
     {
         public bool SaveData<T>(string relativePath, T data)
         {
@@ -35,7 +37,6 @@ namespace Code.Services.JSONSaver
                 Debug.Log($"<color=red> Cannot load file at {path}. File doesn't exist. </color>");
                 return default;
             }
-            
             try
             {
                 var data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
@@ -45,6 +46,17 @@ namespace Code.Services.JSONSaver
             {
                 Debug.Log($"<color=red>Failed to load data due to: {e.Message} {e.StackTrace} </color>");
                 return default;
+            }
+        }
+        
+        public static void ClearAllData()
+        {
+            foreach (string path in SavedKeysData.AllKeys
+                    .Select(key => Application.persistentDataPath + key)
+                    .Where(File.Exists))
+            {
+                File.Delete(path);
+                Debug.Log($"<color=green> Delete file at path { path } </color>");
             }
         }
     }
