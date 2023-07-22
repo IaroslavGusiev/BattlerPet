@@ -1,7 +1,7 @@
-﻿using VContainer;
+﻿using Code.Data;
+using VContainer;
 using UnityEngine;
 using Code.Services;
-using Code.Code.Data;
 using VContainer.Unity;
 using Code.Infrastructure;
 using CodeBase.Extensions;
@@ -40,9 +40,7 @@ namespace Code.CompositionRoot
 
         private void RegisterBootstrapper()
         {
-            _builder.RegisterComponentInNewPrefab(_corePrefabsData.BootstrapperPrefab, Lifetime.Singleton)
-                .DontDestroyOnLoad();
-
+            _builder.RegisterComponentInNewPrefab(_corePrefabsData.BootstrapperPrefab, Lifetime.Singleton);
             _builder.RegisterEntryPoint<Bootstrapper>();
         }
 

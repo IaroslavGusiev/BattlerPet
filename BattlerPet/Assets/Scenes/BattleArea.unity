@@ -207,50 +207,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1847736079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1847736081}
-  - component: {fileID: 1847736080}
-  m_Layer: 0
-  m_Name: TestBehaviour
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1847736080
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847736079}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31b231fddebb45528ae61fc394a8891a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1847736081
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1847736079}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 510.6245, y: 203.80823, z: -0.8781452}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2869436541998416961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -258,18 +214,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 87001052438696743, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
-      propertyPath: autoRun
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 87001052438696743, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
-      propertyPath: autoInjectGameObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 87001052438696743, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
-      propertyPath: autoInjectGameObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 1847736079}
     - target: {fileID: 765798474398322232, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -316,7 +260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6204942158966268263, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
       propertyPath: m_Name
-      value: GameLifetimeScope
+      value: BattleAreaScope
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}

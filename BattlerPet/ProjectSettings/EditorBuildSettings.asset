@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/BootstrapScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/BattleArea.unity
     guid: 9a2e0a6c64bf79c4ca316724a8322787
+  - enabled: 1
+    path: Assets/Scenes/ShowWindowsScene.unity
+    guid: 57c1454145fc1a245b0a69c0c5a79844
   m_configObjects: {}

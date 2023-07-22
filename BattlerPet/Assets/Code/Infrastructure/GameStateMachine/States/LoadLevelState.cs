@@ -1,8 +1,9 @@
-﻿using Code.UI.LoadingCurtain;
+﻿using Code.Data;
+using Code.UI.LoadingCurtain;
 
 namespace Code.Infrastructure.GameStateMachine
 {
-    public class LoadLevelState : IPaylodedState<string>
+    public class LoadLevelState : IPaylodedState<SceneName>
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ILoadingCurtain _loadingCurtain;
@@ -15,10 +16,10 @@ namespace Code.Infrastructure.GameStateMachine
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter(string sceneName)
+        public void Enter(SceneName scene)
         {
             _loadingCurtain.Show();
-            _sceneLoader.Load(sceneName, () => _loadingCurtain.Hide());
+            _sceneLoader.Load(scene, () => _loadingCurtain.Hide());
         }
 
         public void Exit()

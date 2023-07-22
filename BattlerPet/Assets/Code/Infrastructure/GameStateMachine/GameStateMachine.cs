@@ -33,10 +33,8 @@ namespace Code.Infrastructure.GameStateMachine
         private TState ChangeState<TState>() where TState : class, IExitableState
         {
             _currentState?.Exit();
-      
             TState state = GetState<TState>();
             _currentState = state;
-      
             return state;
         }
     

@@ -3,7 +3,7 @@ using UnityEngine;
 using Code.Infrastructure;
 using Code.UI.LoadingCurtain;
 
-namespace Code.Code.Data
+namespace Code.Data
 {
     [CreateAssetMenu(fileName = "CorePrefabsData", menuName = "ScriptableObject/CorePrefabsData")]
     public class CorePrefabsData : ScriptableObject

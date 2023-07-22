@@ -25,13 +25,10 @@ namespace Code.Infrastructure.GameStateMachine
             Debug.Log("LoadPlayerProgressState enter");
             PlayerProgress progress = LoadProgressOrInitNew();
             NotifyProgressReaderServices(progress);
-            _gameStateMachine.Enter<LoadLevelState, string>("Game");
+            _gameStateMachine.Enter<LoadLevelState, SceneName>(payload: SceneName.BattleArea);
         }
 
-        public void Exit()
-        {
-            
-        }
+        public void Exit() { }
 
         private void NotifyProgressReaderServices(PlayerProgress progress)
         {

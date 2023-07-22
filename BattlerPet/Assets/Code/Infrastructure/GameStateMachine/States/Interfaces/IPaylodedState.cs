@@ -1,6 +1,6 @@
 namespace Code.Infrastructure.GameStateMachine
 {
-    public interface IPaylodedState<TPayload> : IExitableState
+    public interface IPaylodedState<in TPayload> : IExitableState
     {
         void Enter(TPayload payload);
     }
