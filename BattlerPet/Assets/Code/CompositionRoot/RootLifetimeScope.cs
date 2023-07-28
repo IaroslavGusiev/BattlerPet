@@ -6,7 +6,6 @@ using VContainer.Unity;
 using Code.Infrastructure;
 using CodeBase.Extensions;
 using Code.UI.LoadingCurtain;
-using Code.Services.JSONSaver;
 using Code.Infrastructure.GameFactory;
 using Code.Infrastructure.GameStateMachine;
 
@@ -23,7 +22,6 @@ namespace Code.CompositionRoot
             RegisterBootstrapper();
             RegisterCoroutineRunner();
             RegisterLoadingCurtain();
-            RegisterUIRoot();
             RegisterSceneLoader();
             RegisterGameStateMachine();
             RegisterStaticDataService();
@@ -32,7 +30,7 @@ namespace Code.CompositionRoot
             RegisterPlayerProgressService();
             RegisterAssetProvider();
             RegisterGameFactory();
-            RegisterJsonSaver();
+            RegisterShowWindowService();
         }
 
         private void GetContainerBuilder(IContainerBuilder builder) => 
@@ -58,13 +56,6 @@ namespace Code.CompositionRoot
                 .As<ILoadingCurtain>();
         }
 
-        private void RegisterUIRoot()
-        {
-            _builder.RegisterComponentInNewPrefab(_corePrefabsData.UIRootPrefab, Lifetime.Singleton)
-                .DontDestroyOnLoad()
-                .AsImplementedInterfaces();
-        }
-
         private void RegisterSceneLoader()
         {
             _builder.Register<SceneLoader>(Lifetime.Singleton)
@@ -81,13 +72,14 @@ namespace Code.CompositionRoot
         private void RegisterStaticDataService()
         {
             _builder.Register<StaticDataService>(Lifetime.Singleton)
-                .As<IStaticDataService>();
+                .As<IStaticDataService>()
+                .AsSelf();
         }
 
         private void RegisterAdsService()
         {
             _builder.Register<AdsService>(Lifetime.Singleton)
-                .As<IAdsService>();
+                .AsImplementedInterfaces();
         }
 
         private void RegisterSaveLoadService()
@@ -114,10 +106,10 @@ namespace Code.CompositionRoot
                 .As<IGameFactory>();
         }
 
-        private void RegisterJsonSaver()
+        private void RegisterShowWindowService()
         {
-            _builder.Register<JsonSaver>(Lifetime.Singleton)
-                .As<ISaver>();
+            _builder.Register<ShowWindowsService>(Lifetime.Scoped)
+                .AsImplementedInterfaces();
         }
     }
 }

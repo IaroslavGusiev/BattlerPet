@@ -4,34 +4,33 @@ using Code.Data;
 using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
+using Cysharp.Threading.Tasks;
 
 namespace Code.Services.JSONSaver
 {
     public class JsonSaver : ISaver
     {
-        public bool SaveData<T>(string relativePath, T data)
+        public async UniTask SaveData<T>(string relativePath, T data)
         {
-            string path = Application.persistentDataPath + relativePath;
+            string path = GetPath(relativePath);
             try
             {
                 if (File.Exists(path))
                     File.Delete(path);
 
-                using FileStream stream = File.Create(path);
+                await using FileStream stream = File.Create(path);
                 stream.Close();
-                File.WriteAllText(path, JsonConvert.SerializeObject(data));
-                return true;
+                await File.WriteAllTextAsync(path, JsonConvert.SerializeObject(data));
             }
             catch (Exception e)
             {
                 Debug.LogError($"Enable to save data due to: {e.Message} {e.StackTrace}");
-                return false;
             }
         }
 
-        public T LoadData<T>(string relativePath)
+        public async UniTask<T> LoadData<T>(string relativePath)
         {
-            string path = Application.persistentDataPath + relativePath;
+            string path = GetPath(relativePath);
             if (!File.Exists(path))
             {
                 Debug.Log($"<color=red> Cannot load file at {path}. File doesn't exist. </color>");
@@ -39,8 +38,8 @@ namespace Code.Services.JSONSaver
             }
             try
             {
-                var data = JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
-                return data;
+                string data = await File.ReadAllTextAsync(path).AsUniTask();
+                return JsonConvert.DeserializeObject<T>(data);
             }
             catch (Exception e)
             {
@@ -48,7 +47,10 @@ namespace Code.Services.JSONSaver
                 return default;
             }
         }
-        
+
+        private string GetPath(string relativePath) => 
+            Application.persistentDataPath + relativePath;
+
         public static void ClearAllData()
         {
             foreach (string path in SavedKeysData.AllKeys

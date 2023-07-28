@@ -1,8 +1,10 @@
-﻿namespace Code.Services.JSONSaver
+﻿using Cysharp.Threading.Tasks;
+
+namespace Code.Services.JSONSaver
 {
     public interface ISaver
     {
-        bool SaveData<T>(string relativePath, T data);
-        T LoadData<T>(string relativePath);
+        UniTask SaveData<T>(string relativePath, T data);
+        UniTask<T> LoadData<T>(string relativePath);
     }
 }

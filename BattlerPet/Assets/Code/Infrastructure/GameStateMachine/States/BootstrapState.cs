@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using Code.Services;
+using System.Collections.Generic;
 
 namespace Code.Infrastructure.GameStateMachine
 {
     public class BootstrapState : IState
     {
-        private readonly IAdsService _adsService;
         private readonly IGameStateMachine _gameStateMachine;
-        private readonly IStaticDataService _staticDataService;
+        private readonly StaticDataService _staticDataService;
+        private readonly IEnumerable<IInitializeHandler> _initializeHandlers;
 
-        public BootstrapState(IGameStateMachine gameStateMachine, IAdsService adsService, IStaticDataService staticDataService) 
+        public BootstrapState(IGameStateMachine gameStateMachine, StaticDataService staticDataService, IEnumerable<IInitializeHandler> initializeHandlers) 
         {
-            _adsService = adsService;
+            _initializeHandlers = initializeHandlers;
             _gameStateMachine = gameStateMachine;
             _staticDataService = staticDataService;
         }
@@ -30,8 +31,10 @@ namespace Code.Infrastructure.GameStateMachine
 
         private void InitializeServices()
         {
-            _adsService.Initialize();
-            _staticDataService.Initialize();
+            _staticDataService.LoadData();
+            
+            foreach (IInitializeHandler initializeHandler in _initializeHandlers)
+                initializeHandler.Initialize();
         }
     }
 }

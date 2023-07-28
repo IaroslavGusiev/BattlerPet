@@ -1,19 +1,21 @@
 ﻿using Code.Services;
+using System.Collections.Generic;
 
 namespace Code.Infrastructure.GameStateMachine
 {
     public class BootstrapStateFactory
     {
-        private readonly IAdsService _adsService;
-        private readonly IStaticDataService _staticDataService;
+        private readonly StaticDataService _staticDataService;
+        private readonly IShowWindowsService _showWindowsService;
+        private readonly IEnumerable<IInitializeHandler> _initializeHandlers;
 
-        public BootstrapStateFactory(IAdsService adsService, IStaticDataService staticDataService)
+        public BootstrapStateFactory(StaticDataService staticDataService, IEnumerable<IInitializeHandler> initializeHandlers)
         {
-            _adsService = adsService;
+            _initializeHandlers = initializeHandlers;
             _staticDataService = staticDataService;
         }
 
         public BootstrapState Create(IGameStateMachine gameStateMachine) => 
-            new(gameStateMachine, _adsService, _staticDataService);
+            new(gameStateMachine, _staticDataService, _initializeHandlers);
     }
 }

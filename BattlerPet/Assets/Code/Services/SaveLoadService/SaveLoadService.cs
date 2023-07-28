@@ -1,5 +1,6 @@
 ﻿using Code.Data;
 using Code.Services.JSONSaver;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Code.Services
@@ -10,25 +11,25 @@ namespace Code.Services
         private readonly IEnumerable<IProgressSaver> _saverServices;
         private readonly IPlayerProgressService _playerProgressService;
 
-        public SaveLoadService(ISaver saver, IEnumerable<IProgressSaver> saverServices, IPlayerProgressService playerProgressService)
+        public SaveLoadService(IEnumerable<IProgressSaver> saverServices, IPlayerProgressService playerProgressService)
         {
-            _saver = saver;
+            _saver = new JsonSaver();
             _saverServices = saverServices;
             _playerProgressService = playerProgressService;
         }
 
-        public void SaveProgress()
+        public async UniTaskVoid SaveProgress()
         {
             foreach (IProgressSaver saver in _saverServices) 
                 saver.UpdateProgress(_playerProgressService.Progress);
 
-            _saver.SaveData(relativePath: SavedKeysData.PlayerProgressKey, _playerProgressService.Progress);
-        }
+            await _saver.SaveData(relativePath: SavedKeysData.PlayerProgressKey, data: _playerProgressService.Progress);
+        }  
 
-        public PlayerProgress LoadProgress()
+        public async UniTask<PlayerProgress> LoadProgress()
         {
-            var playerProgress = _saver.LoadData<PlayerProgress>(relativePath: SavedKeysData.PlayerProgressKey);
-            return playerProgress;
+            var progress = await _saver.LoadData<PlayerProgress>(relativePath: SavedKeysData.PlayerProgressKey);
+            return progress;
         }
     }
 }

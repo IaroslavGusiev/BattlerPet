@@ -1,10 +1,11 @@
 using Code.Data;
+using Cysharp.Threading.Tasks;
 
 namespace Code.Services
 {
     public interface ISaveLoadService
     {
-        void SaveProgress();
-        PlayerProgress LoadProgress();
+        UniTaskVoid SaveProgress();
+        UniTask<PlayerProgress> LoadProgress();
     }
 }

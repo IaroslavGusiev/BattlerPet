@@ -1,7 +1,10 @@
+using Code.Data;
+using Code.StaticData.Hero;
+
 namespace Code.Services
 {
     public interface IStaticDataService
     {
-        void Initialize();
+        HeroData HeroDataFor(HeroType heroType);
     }
 }

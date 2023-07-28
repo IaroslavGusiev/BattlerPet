@@ -1,6 +1,8 @@
 ﻿using Code.Data;
 using UnityEngine;
 using Code.Services;
+using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Code.Infrastructure.GameStateMachine
@@ -22,13 +24,18 @@ namespace Code.Infrastructure.GameStateMachine
 
         public void Enter()
         {
-            Debug.Log("LoadPlayerProgressState enter");
-            PlayerProgress progress = LoadProgressOrInitNew();
-            NotifyProgressReaderServices(progress);
-            _gameStateMachine.Enter<LoadLevelState, SceneName>(payload: SceneName.BattleArea);
+            Debug.Log("LoadPlayerProgressState enter"); 
+            LoadPlayerProgress().Forget();
         }
 
         public void Exit() { }
+
+        private async UniTaskVoid LoadPlayerProgress()
+        {
+            PlayerProgress progress = await LoadProgressOrInitNew();
+            NotifyProgressReaderServices(progress);
+            _gameStateMachine.Enter<LoadLevelState, SceneName>(payload: SceneName.BattleArea);
+        }
 
         private void NotifyProgressReaderServices(PlayerProgress progress)
         {
@@ -36,16 +43,16 @@ namespace Code.Infrastructure.GameStateMachine
                 reader.LoadProgress(progress);
         }
 
-        private PlayerProgress LoadProgressOrInitNew()
+        private async Task<PlayerProgress> LoadProgressOrInitNew()
         {
-            _playerProgress.Progress = _saveLoadService.LoadProgress() ?? NewProgress();
-            return _playerProgress.Progress;
-        }
+            PlayerProgress progress = await _saveLoadService.LoadProgress();
 
-        private PlayerProgress NewProgress()
-        {
-            var progress =  new PlayerProgress();
-            return progress;
+            if (progress == null)
+                return new PlayerProgress();
+
+            _playerProgress.Progress = progress;
+            return _playerProgress.Progress;
+
         }
     }
 }
