@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b095a82f3794de7b65e2ad736b3b7b0, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
+  <Name>k__BackingField: Claw Slash
+  <AnimAttackType>k__BackingField: 0
   <SkillType>k__BackingField: 0
   <TargetType>k__BackingField: 0
-  <AnimAttackType>k__BackingField: 0
-  <Name>k__BackingField: Claw Slash
-  <Value>k__BackingField: 0
+  <Value>k__BackingField: 10
   <Cooldown>k__BackingField: 0
+  <SkillModifier>k__BackingField: 0
+  <SkillModifierChance>k__BackingField: 0
+  <SkillModifierValue>k__BackingField: 0
+  <SkillModifierAmount>k__BackingField: 0

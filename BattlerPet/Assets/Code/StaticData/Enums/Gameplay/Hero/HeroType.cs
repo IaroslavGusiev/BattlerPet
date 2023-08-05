@@ -1,4 +1,4 @@
-﻿namespace Code.Data
+﻿namespace Code.Data.Gameplay
 {
     public enum HeroType
     {

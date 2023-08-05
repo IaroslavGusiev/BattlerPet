@@ -1,5 +1,4 @@
-﻿using Code.UI;
-using UnityEngine;
+﻿using UnityEngine;
 using Code.Infrastructure;
 using Code.UI.LoadingCurtain;
 

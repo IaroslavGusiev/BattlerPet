@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using Code.Services.JSONSaver;
 
-namespace Project.Editor.Editor
+namespace Project.Editor
 {
     public class ClearDataTool : EditorWindow
     {

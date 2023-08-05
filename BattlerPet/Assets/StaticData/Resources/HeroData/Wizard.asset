@@ -12,7 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 110d812b0f074d76adb108bbdb233560, type: 3}
   m_Name: Wizard
   m_EditorClassIdentifier: 
-  <Prefab>k__BackingField: {fileID: 3540611046307985817, guid: be285c19bb66b2e45b49e78c67f222ea, type: 3}
   <HeroType>k__BackingField: 3
+  <Prefab>k__BackingField: {fileID: 3540611046307985817, guid: be285c19bb66b2e45b49e78c67f222ea, type: 3}
+  <PrefabPath>k__BackingField: Entities/Heroes/Wizard/Wizard
+  <SkillData>k__BackingField:
+  - {fileID: 11400000, guid: 8ae883f0335fb2141a6ffa0b0aa23de0, type: 2}
+  - {fileID: 11400000, guid: 34b7b7ac8637ce44c9aef4a52403175c, type: 2}
+  - {fileID: 11400000, guid: fb5afa1692b944e4bbd1762b7c006f83, type: 2}
   <MaxHp>k__BackingField: 90
   <MaxHaste>k__BackingField: 100

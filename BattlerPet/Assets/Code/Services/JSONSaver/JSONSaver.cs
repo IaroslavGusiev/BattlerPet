@@ -48,13 +48,13 @@ namespace Code.Services.JSONSaver
             }
         }
 
-        private string GetPath(string relativePath) => 
-            Application.persistentDataPath + relativePath;
+        private static string GetPath(string relativePath) => 
+            Application.persistentDataPath + "/" + relativePath;
 
         public static void ClearAllData()
         {
             foreach (string path in SavedKeysData.AllKeys
-                    .Select(key => Application.persistentDataPath + key)
+                    .Select(GetPath)
                     .Where(File.Exists))
             {
                 File.Delete(path);

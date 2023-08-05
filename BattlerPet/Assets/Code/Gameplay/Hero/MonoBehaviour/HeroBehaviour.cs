@@ -1,5 +1,5 @@
-﻿using Code.Data;
-using UnityEngine;
+﻿using UnityEngine;
+using Code.Data.Gameplay;
 
 namespace Code.Gameplay.Hero
 {

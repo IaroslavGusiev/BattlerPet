@@ -20,20 +20,20 @@ namespace Code.Infrastructure.GameStateMachine
 
         public void Enter<TState>() where TState : class, IState
         {
-            TState newState = ChangeState<TState>();
+            var newState = ChangeState<TState>();
             newState.Enter();
         }
 
         public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPaylodedState<TPayload>
         {
-            TState newState = ChangeState<TState>();
+            var newState = ChangeState<TState>();
             newState.Enter(payload);
         }
 
         private TState ChangeState<TState>() where TState : class, IExitableState
         {
             _currentState?.Exit();
-            TState state = GetState<TState>();
+            var state = GetState<TState>();
             _currentState = state;
             return state;
         }

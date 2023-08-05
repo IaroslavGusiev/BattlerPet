@@ -1,4 +1,4 @@
-using Code.Data;
+using Code.Data.Gameplay;
 using Code.StaticData.Hero;
 
 namespace Code.Services

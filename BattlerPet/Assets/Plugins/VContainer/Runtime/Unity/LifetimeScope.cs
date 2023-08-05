@@ -273,6 +273,7 @@ namespace VContainer.Unity
             {
                 foreach (var installer in GlobalExtraInstallers)
                 {
+                    Debug.Log($"<color=yellow> {installer.GetType()} </color>");
                     installer.Install(builder);
                 }
             }

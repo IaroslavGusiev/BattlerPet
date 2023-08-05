@@ -214,6 +214,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 87001052438696743, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
+      propertyPath: parentReference.TypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 87001052438696743, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
+      propertyPath: autoInjectGameObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 765798474398322232, guid: e0673ffdc6e748d4f9ccf7fdc61ff951, type: 3}
       propertyPath: m_RootOrder
       value: 1

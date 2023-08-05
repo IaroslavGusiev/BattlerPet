@@ -6,10 +6,10 @@ namespace Code.Infrastructure.GameStateMachine
     public class LoadPlayerProgressStateFactory
     {
         private readonly ISaveLoadService _saveLoadService;
-        private readonly IPlayerProgressService _playerProgress;
+        private readonly IPlayerProgressProvider _playerProgress;
         private readonly IEnumerable<IProgressReader> _progressReaderServices;
 
-        public LoadPlayerProgressStateFactory(ISaveLoadService saveLoadService, IPlayerProgressService playerProgress, IEnumerable<IProgressReader> progressReaderServices)
+        public LoadPlayerProgressStateFactory(ISaveLoadService saveLoadService, IPlayerProgressProvider playerProgress, IEnumerable<IProgressReader> progressReaderServices)
         {
             _playerProgress = playerProgress;
             _saveLoadService = saveLoadService;

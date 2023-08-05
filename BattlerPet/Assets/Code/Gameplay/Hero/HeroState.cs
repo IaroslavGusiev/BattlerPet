@@ -1,4 +1,6 @@
-﻿namespace Code.Gameplay.Hero
+﻿using System.Collections.Generic;
+
+namespace Code.Gameplay.Hero
 {
     public class HeroState
     {
@@ -6,5 +8,6 @@
         public float CurrentHp;
         public float CurrentHaste;
         public float MaxHaste;
+        public List<SkillState> SkillStates;
     }
 }

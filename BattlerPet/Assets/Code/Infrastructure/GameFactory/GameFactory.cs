@@ -1,17 +1,18 @@
 ﻿using System;
-using Code.Data;
+using System.Linq;
 using VContainer;
 using Code.Services;
 using VContainer.Unity;
 using Code.Gameplay.Hero;
-using Code.StaticData.Hero;
+using Code.Data.Gameplay;
 using CodeBase.Extensions;
+using Code.StaticData.Hero;
 
-namespace Code.Infrastructure.GameFactory
+namespace Code.Infrastructure
 {
     public class GameFactory : IGameFactory
     {
-        private IAssetProvider _assetProvider;
+        private readonly IAssetProvider _assetProvider;
         private readonly IObjectResolver _objectResolver;
         private readonly IStaticDataService _staticDataService;
 
@@ -25,7 +26,9 @@ namespace Code.Infrastructure.GameFactory
         public HeroBehaviour CreateHero(HeroType heroType)
         {
             HeroData data = _staticDataService.HeroDataFor(heroType);
-            HeroBehaviour hero = _objectResolver.Instantiate(data.Prefab)
+            var prefab = _assetProvider.Get<HeroBehaviour>(data.PrefabPath);
+            
+            HeroBehaviour hero = _objectResolver.Instantiate(prefab)
                 .With(hero => hero.HeroType = data.HeroType)
                 .With(hero => hero.Id = new Guid().ToString());
 
@@ -33,7 +36,8 @@ namespace Code.Infrastructure.GameFactory
                 .With(x => x.MaxHp = data.MaxHp)
                 .With(x => x.CurrentHp = data.MaxHp)
                 .With(x => x.MaxHaste = data.MaxHaste)
-                .With(x => x.CurrentHaste = 0));
+                .With(x => x.CurrentHaste = 0)
+                .With(x => x.SkillStates = data.SkillData.Select(SkillState.FromSkillData).ToList()));
 
             return hero;
         }

@@ -1,10 +1,9 @@
-﻿namespace Code.Data.Gameplay.Skill
+﻿namespace Code.Data.Gameplay
 {
     public enum SkillType
     {
         Damage = 0,
         Heal = 1,
-        HasteBurn = 2,
-        Poison = 3
+        HasteBuff = 2,
     }
 }

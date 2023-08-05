@@ -1,7 +1,7 @@
-﻿using Code.Data;
+﻿using Code.Data.Gameplay;
 using Code.Gameplay.Hero;
 
-namespace Code.Infrastructure.GameFactory
+namespace Code.Infrastructure
 {
     public interface IGameFactory
     {

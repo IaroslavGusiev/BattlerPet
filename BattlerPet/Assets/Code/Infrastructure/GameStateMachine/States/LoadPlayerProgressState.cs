@@ -11,10 +11,10 @@ namespace Code.Infrastructure.GameStateMachine
     {
         private readonly ISaveLoadService _saveLoadService;
         private readonly IGameStateMachine _gameStateMachine;
-        private readonly IPlayerProgressService _playerProgress;
+        private readonly IPlayerProgressProvider _playerProgress;
         private readonly IEnumerable<IProgressReader> _progressReaderServices;
 
-        public LoadPlayerProgressState(IGameStateMachine gameStateMachine, ISaveLoadService saveLoadService, IPlayerProgressService playerProgress, IEnumerable<IProgressReader> progressReaderServices)
+        public LoadPlayerProgressState(IGameStateMachine gameStateMachine, ISaveLoadService saveLoadService, IPlayerProgressProvider playerProgress, IEnumerable<IProgressReader> progressReaderServices)
         {
             _saveLoadService = saveLoadService;
             _gameStateMachine = gameStateMachine;
@@ -33,17 +33,17 @@ namespace Code.Infrastructure.GameStateMachine
         private async UniTaskVoid LoadPlayerProgress()
         {
             PlayerProgress progress = await LoadProgressOrInitNew();
-            NotifyProgressReaderServices(progress);
+            NotifyProgressReaders(progress);
             _gameStateMachine.Enter<LoadLevelState, SceneName>(payload: SceneName.BattleArea);
         }
 
-        private void NotifyProgressReaderServices(PlayerProgress progress)
+        private void NotifyProgressReaders(PlayerProgress progress)
         {
             foreach (IProgressReader reader in _progressReaderServices)
                 reader.LoadProgress(progress);
         }
 
-        private async Task<PlayerProgress> LoadProgressOrInitNew()
+        private async UniTask<PlayerProgress> LoadProgressOrInitNew()
         {
             PlayerProgress progress = await _saveLoadService.LoadProgress();
 

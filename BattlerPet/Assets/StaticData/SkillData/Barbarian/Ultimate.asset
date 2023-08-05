@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b095a82f3794de7b65e2ad736b3b7b0, type: 3}
   m_Name: Ultimate
   m_EditorClassIdentifier: 
-  <SkillType>k__BackingField: 2
-  <TargetType>k__BackingField: 3
-  <AnimAttackType>k__BackingField: 2
   <Name>k__BackingField: Inferno Cyclone
-  <Value>k__BackingField: 0
-  <Cooldown>k__BackingField: 0
+  <AnimAttackType>k__BackingField: 2
+  <SkillType>k__BackingField: 0
+  <TargetType>k__BackingField: 3
+  <Value>k__BackingField: 15
+  <Cooldown>k__BackingField: 6
+  <SkillModifier>k__BackingField: 2
+  <SkillModifierChance>k__BackingField: 100
+  <SkillModifierValue>k__BackingField: 5
+  <SkillModifierAmount>k__BackingField: 3
