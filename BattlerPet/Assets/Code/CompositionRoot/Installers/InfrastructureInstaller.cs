@@ -26,7 +26,7 @@ namespace Code.CompositionRoot
         private void RegisterGameFactory()
         {
             _builder.Register<GameFactory>(Lifetime.Singleton)
-                .As<IGameFactory>();
+                .AsImplementedInterfaces();
         }
 
         private void RegisterAssetProvider()

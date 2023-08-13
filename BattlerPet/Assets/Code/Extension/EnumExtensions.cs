@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CodeBase.Extensions
 {
@@ -13,6 +14,13 @@ namespace CodeBase.Extensions
                 return (TEnum)(object)value;
 
             return default;
+        }
+        
+        public static T GetRandomEnumValue<T>(this T enumType, params T[] excludeValues) where T : Enum
+        {
+            var values = (T[])Enum.GetValues(typeof(T));
+            values = values.Except(excludeValues).ToArray();
+            return values.PickRandom();
         }
     }
 }

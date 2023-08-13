@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SecondAttack
   m_EditorClassIdentifier: 
   <Name>k__BackingField: 'Hastened Alliance '
-  <AnimAttackType>k__BackingField: 1
+  <AttackType>k__BackingField: 1
   <SkillType>k__BackingField: 2
   <TargetType>k__BackingField: 4
   <Value>k__BackingField: 10

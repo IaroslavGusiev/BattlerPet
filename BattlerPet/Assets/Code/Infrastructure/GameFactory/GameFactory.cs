@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Linq;
 using VContainer;
+using System.Linq;
+using UnityEngine;
 using Code.Services;
 using VContainer.Unity;
 using Code.Gameplay.Hero;
@@ -10,7 +11,7 @@ using Code.StaticData.Hero;
 
 namespace Code.Infrastructure
 {
-    public class GameFactory : IGameFactory
+    public class GameFactory : IGameFactory, IBattlefieldFactory
     {
         private readonly IAssetProvider _assetProvider;
         private readonly IObjectResolver _objectResolver;
@@ -40,6 +41,12 @@ namespace Code.Infrastructure
                 .With(x => x.SkillStates = data.SkillData.Select(SkillState.FromSkillData).ToList()));
 
             return hero;
+        }
+
+        public GameObject CreateBattlefieldCube(string path, Vector3 at, Transform under)
+        {
+            var prefab = _assetProvider.Get<GameObject>(path);
+            return _objectResolver.Instantiate(prefab, at, Quaternion.identity, under);
         }
     }
 }

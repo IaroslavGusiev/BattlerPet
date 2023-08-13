@@ -25,10 +25,10 @@ namespace Code.Gameplay.Hero
             _otherAnimBoolHashes = new[] { _victoryHash, _runHash, _sadHash };
         }
 
-        public void PlayAttack(AnimAttackType animAttackType)
+        public void PlayAttack(AttackType attackType)
         {
             ResetAllTrigger();
-            _animator.SetTrigger(_attacksHashes[animAttackType.ToInt()]);
+            _animator.SetTrigger(_attacksHashes[attackType.ToInt()]);
         }
 
         public void PlaySad(bool start)

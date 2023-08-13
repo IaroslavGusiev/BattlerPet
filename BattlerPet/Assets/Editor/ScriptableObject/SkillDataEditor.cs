@@ -14,7 +14,7 @@ namespace Project.Editor
             GUILayout.Space(10);
             if (GUILayout.Button("Rename SkillData"))
             {
-                var newName = $"{skillData.AnimAttackType.ToString()}";
+                var newName = $"{skillData.AttackType.ToString()}";
                 skillData.Rename(newName);
                 AssetDatabase.RenameAsset(AssetDatabase.GetAssetPath(skillData), newName);
             }
