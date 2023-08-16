@@ -1,4 +1,5 @@
-﻿using VContainer;
+﻿using System;
+using VContainer;
 using VContainer.Unity;
 using Code.Infrastructure.GameStateMachine;
 
@@ -7,7 +8,7 @@ namespace Code.CompositionRoot
     public class GameStateMachineInstaller : IInstaller
     {
         private IContainerBuilder _builder;
-        
+
         public void Install(IContainerBuilder builder)
         {
             _builder = builder;
@@ -23,30 +24,17 @@ namespace Code.CompositionRoot
 
         private void RegisterStateFactories()
         {
-            RegisterBootstrapStateFactory();
-            RegisterLoadPlayerProgressStateFactory();
-            RegisterLoadLevelStateFactory();
-        }
-        
-        private void RegisterBootstrapStateFactory()
-        {
-            _builder.Register<BootstrapStateFactory>(Lifetime.Singleton);
-            _builder.RegisterFactory<IGameStateMachine, BootstrapState>(container =>
-                container.Resolve<BootstrapStateFactory>().Create, Lifetime.Singleton);
+            RegisterStateFactory<BootstrapStateFactory>(typeof(BootstrapState));
+            RegisterStateFactory<LoadLevelStateFactory>(typeof(LoadLevelState));
+            RegisterStateFactory<LoadPlayerProgressStateFactory>(typeof(LoadPlayerProgressState));
         }
 
-        private void RegisterLoadPlayerProgressStateFactory()
+        private void RegisterStateFactory<TFactory>(Type stateType) where TFactory : class, IStateFactory
         {
-            _builder.Register<LoadPlayerProgressStateFactory>(Lifetime.Singleton);
-            _builder.RegisterFactory<IGameStateMachine, LoadPlayerProgressState>(container =>
-                container.Resolve<LoadPlayerProgressStateFactory>().Create, Lifetime.Singleton);
-        }
-
-        private void RegisterLoadLevelStateFactory()
-        {
-            _builder.Register<LoadLevelStateFactory>(Lifetime.Singleton);
-            _builder.RegisterFactory<IGameStateMachine, LoadLevelState>(container =>
-                container.Resolve<LoadLevelStateFactory>().Create, Lifetime.Singleton);
+            _builder
+                .Register<TFactory>(Lifetime.Singleton)
+                .As<IStateFactory>()
+                .WithParameter(stateType);
         }
     }
 }

@@ -17,6 +17,16 @@ public static class EnumerableExtension
     public static List<T> GetClone<T>(this List<T> source) => 
         source.GetRange(0, source.Count);
     
+    public static T PickRandomExcluding<T>(this IEnumerable<T> collection, T excludedItem)
+    {
+        if (collection == null)
+            return default;
+
+        List<T> actual = collection.Where(item => !item.Equals(excludedItem)).ToList();
+
+        return actual.Count > 0 ? actual[Random.Range(0, actual.Count)] : default;
+    }
+    
     public static T PickRandom<T>(this IEnumerable<T> collection)
     {
         if (collection == null)

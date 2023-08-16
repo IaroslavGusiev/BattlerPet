@@ -1,14 +1,17 @@
-﻿using Code.Services;
+﻿using System;
+using Code.Services;
 using System.Collections.Generic;
 
 namespace Code.Infrastructure.GameStateMachine
 {
-    public class LoadPlayerProgressStateFactory
+    public class LoadPlayerProgressStateFactory : IStateFactory
     {
+        public Type StateType => typeof(LoadPlayerProgressState);
+        
         private readonly ISaveLoadService _saveLoadService;
         private readonly IPlayerProgressProvider _playerProgress;
         private readonly IEnumerable<IProgressReader> _progressReaderServices;
-
+        
         public LoadPlayerProgressStateFactory(ISaveLoadService saveLoadService, IPlayerProgressProvider playerProgress, IEnumerable<IProgressReader> progressReaderServices)
         {
             _playerProgress = playerProgress;
@@ -16,7 +19,7 @@ namespace Code.Infrastructure.GameStateMachine
             _progressReaderServices = progressReaderServices;
         }
 
-        public LoadPlayerProgressState Create(IGameStateMachine gameStateMachine) => 
-            new(gameStateMachine,_saveLoadService, _playerProgress, _progressReaderServices);
+        public IExitableState Create(IGameStateMachine gameStateMachine) => 
+            new LoadPlayerProgressState(gameStateMachine,_saveLoadService, _playerProgress, _progressReaderServices);
     }
 }

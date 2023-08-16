@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GridSize>k__BackingField: {x: 9, y: 2, z: 9}
   <StartPositionOffset>k__BackingField: {x: -6, y: 0, z: -4}
+  <BattlefieldAmbianceParticleData>k__BackingField:
+    <ParticlePrefabPath>k__BackingField: Battlefield/Particles/FloatingDust 2
+    <SpawnPositions>k__BackingField:
+    - {x: 5, y: 5, z: 0}
+    - {x: -10, y: 5, z: 0}

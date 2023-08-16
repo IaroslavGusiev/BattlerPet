@@ -11,9 +11,22 @@ namespace Code.Gameplay.Battlefield
         public BattlefieldConfig BattlefieldConfig;
         public Dictionary<CubeType, List<CubeData>> CubeData = new();
 
-        public string GetCubePath(CubeType cubeType)
+        private Dictionary<SideType, CubeData> _fenceData;
+
+        public void WarmUp()
         {
-            return CubeData[cubeType].PickRandom().PrefabPath;
+            CubeData data = CubeData[CubeType.Fence].PickRandom();
+            _fenceData = new Dictionary<SideType, CubeData>()
+            {
+                [SideType.HeroSide] = data,
+                [SideType.EnemySide] = CubeData[CubeType.Fence].PickRandomExcluding(data)
+            };
         }
+
+        public string GetCubePrefabPath(CubeType cubeType) => 
+            CubeData[cubeType].PickRandom().PrefabPath;
+
+        public string GetFencePrefabPath(SideType sideType) => 
+            _fenceData[sideType].PrefabPath;
     }
 }

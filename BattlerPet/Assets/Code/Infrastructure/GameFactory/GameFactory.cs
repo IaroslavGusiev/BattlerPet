@@ -43,10 +43,10 @@ namespace Code.Infrastructure
             return hero;
         }
 
-        public GameObject CreateBattlefieldCube(string path, Vector3 at, Transform under)
+        public GameObject CreateBattlefieldItem(string path, Vector3 at, Transform under)
         {
             var prefab = _assetProvider.Get<GameObject>(path);
-            return _objectResolver.Instantiate(prefab, at, Quaternion.identity, under);
+            return _objectResolver.Instantiate(prefab, at, prefab.transform.rotation, under);
         }
     }
 }

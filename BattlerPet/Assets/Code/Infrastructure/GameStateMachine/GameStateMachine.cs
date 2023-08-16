@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Code.Infrastructure.GameStateMachine
@@ -8,15 +9,8 @@ namespace Code.Infrastructure.GameStateMachine
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _currentState;
         
-        public GameStateMachine(BootstrapStateFactory bootstrapStateFactory, LoadPlayerProgressStateFactory loadPlayerProgressStateFactory, LoadLevelStateFactory loadLevelStateFactory)
-        {
-            _states = new Dictionary<Type, IExitableState>()
-            {
-                [typeof(BootstrapState)] = bootstrapStateFactory.Create(this),
-                [typeof(LoadPlayerProgressState)] = loadPlayerProgressStateFactory.Create(this),
-                [typeof(LoadLevelState)] = loadLevelStateFactory.Create(this)
-            };
-        }
+        public GameStateMachine(IEnumerable<IStateFactory> stateFactories) => 
+            _states = stateFactories.ToDictionary(x => x.StateType, x => x.Create(this));
 
         public void Enter<TState>() where TState : class, IState
         {

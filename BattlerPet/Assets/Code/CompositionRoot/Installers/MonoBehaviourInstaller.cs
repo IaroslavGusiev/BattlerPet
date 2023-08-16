@@ -2,6 +2,7 @@
 using VContainer;
 using VContainer.Unity;
 using Code.Infrastructure;
+using Code.Infrastructure.UpdateRunner;
 
 namespace Code.CompositionRoot
 {
@@ -16,21 +17,28 @@ namespace Code.CompositionRoot
         public void Install(IContainerBuilder builder)
         {
             _builder = builder;
+            RegisterUpdateRunner();
             RegisterBootstrapper();
             RegisterCoroutineRunner();
         }
-        
+
         private void RegisterBootstrapper()
         {
             _builder.RegisterComponentInNewPrefab(_corePrefabsData.BootstrapperPrefab, Lifetime.Singleton)
                 .AsImplementedInterfaces();
         }
-        
+
         private void RegisterCoroutineRunner()
         {
             _builder.RegisterComponentInNewPrefab(_corePrefabsData.CoroutineRunnerPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
                 .As<ICoroutineRunner>();
+        }
+
+        private void RegisterUpdateRunner()
+        {
+            _builder.Register<UpdateRunner>(Lifetime.Singleton)
+                .AsImplementedInterfaces();
         }
     }
 }
