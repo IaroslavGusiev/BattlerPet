@@ -1,6 +1,6 @@
 # Unity Pet Project (BattlerPet)
 
-Welcome to my **Unity pet project**! In this project, I'm exploring various architectural concepts, composition root patterns, and experimenting with microservice-like architecture within a Unity game. I'm using some key technologies and libraries to help achieve these goals, including DI container **VContainer**, **UniTask**, and **UniRx**.
+Welcome to my **Unity pet project**! In this project, I'm exploring various architectural concepts, composition root patterns, and experimenting with microservice-like architecture within a Unity game. I'm using some key technologies and libraries to help achieve these goals, including **VContainer**, **UniTask**, and **UniRx**.
 
 ## Project Overview
 
