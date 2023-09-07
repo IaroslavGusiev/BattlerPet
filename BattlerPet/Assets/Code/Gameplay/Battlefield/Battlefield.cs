@@ -9,45 +9,38 @@ namespace Code.Gameplay.Battlefield
 {
     public class Battlefield : IInitializable
     {
-        private readonly IBattlefieldFactory _battlefieldFactory;
+        private readonly IAssetProvider _assetProvider;
         private readonly IStaticDataService _staticDataService;
+        private readonly IBattlefieldFactory _battlefieldFactory;
+        private BattlefieldConfig _battlefieldConfig;
 
-        private BattlefieldGenerator _battlefieldGenerator;
-        private BattlefieldGenData _genData;
-
-        public Battlefield(IBattlefieldFactory battlefieldFactory, IStaticDataService staticDataService)
+        public Battlefield(IBattlefieldFactory battlefieldFactory, IStaticDataService staticDataService, IAssetProvider assetProvider)
         {
+            _assetProvider = assetProvider;
             _staticDataService = staticDataService;
             _battlefieldFactory = battlefieldFactory;
         }
 
         public void Initialize()
         {
-            GetData();
-            CreateAmbianceParticles();
-            CreateBattlefieldGenerator();
+            GetBattlefieldConfig();
+            BattlefieldBehaviour battlefieldBehaviour = CreateBattlefieldBehaviour();
+            CreateBattlefieldGenerator(battlefieldBehaviour);
+            SetSkyboxMaterial(_battlefieldConfig.SkyboxData.GetRandomSkyboxMaterial());
         }
 
-        private void GetData()
+        private void GetBattlefieldConfig() => 
+            _battlefieldConfig = _staticDataService.GetBattlefieldConfig();
+
+        private BattlefieldBehaviour CreateBattlefieldBehaviour()
         {
-            _staticDataService.GetBattlefieldGenData()
-                .With(x => _genData = x)
-                .With(x => x.WarmUp())
-                .With(x => SetSkyboxMaterial(x.SkyBoxMaterial));
+            return _battlefieldFactory
+                .CreateBattlefieldBehaviour(_battlefieldConfig.BattlefieldBehaviourPath)
+                .With(x => x.Initialize());
         }
 
-        private void CreateAmbianceParticles()
-        {
-            Transform container = new GameObject("AmbianceParticle").transform;
-            BattlefieldAmbianceParticleData data = _genData.BattlefieldConfig.BattlefieldAmbianceParticleData;
-            data.SpawnPositions.ForEach(x => _battlefieldFactory.CreateBattlefieldItem(data.ParticlePrefabPath, x, container));
-        }
-
-        private void CreateBattlefieldGenerator()
-        {
-            _battlefieldGenerator = new BattlefieldGenerator(_battlefieldFactory, _genData);
-            _battlefieldGenerator.Generate();
-        }
+        private void CreateBattlefieldGenerator(BattlefieldBehaviour battlefieldBehaviour) => 
+            new BattlefieldGenerator(battlefieldBehaviour, _battlefieldConfig.BattlefieldDataContainer, _assetProvider, _battlefieldFactory).GenerateBattlefield();
 
         private void SetSkyboxMaterial(Material skyboxMaterial) =>
             RenderSettings.skybox = skyboxMaterial;

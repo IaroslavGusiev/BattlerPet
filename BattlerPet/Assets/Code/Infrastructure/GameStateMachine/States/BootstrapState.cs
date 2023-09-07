@@ -10,13 +10,13 @@ namespace Code.Infrastructure.GameStateMachine
         private readonly StaticDataService _staticDataService;
         private readonly IEnumerable<IInitializeHandler> _initializeHandlers;
 
-        public BootstrapState(IGameStateMachine gameStateMachine, StaticDataService staticDataService, IEnumerable<IInitializeHandler> initializeHandlers) 
+        public BootstrapState(IGameStateMachine gameStateMachine, StaticDataService staticDataService, IEnumerable<IInitializeHandler> initializeHandlers)
         {
-            _initializeHandlers = initializeHandlers;
             _gameStateMachine = gameStateMachine;
             _staticDataService = staticDataService;
+            _initializeHandlers = initializeHandlers;
         }
-        
+
         public void Enter()
         {
             Debug.Log("<color=green>Enter BootstrapState</color>");
@@ -24,15 +24,12 @@ namespace Code.Infrastructure.GameStateMachine
             _gameStateMachine.Enter<LoadPlayerProgressState>();
         }
 
-        public void Exit()
-        {
-            
-        }
+        public void Exit() { }
 
         private void InitializeServices()
         {
             _staticDataService.LoadData();
-            
+
             foreach (IInitializeHandler initializeHandler in _initializeHandlers)
                 initializeHandler.Initialize();
         }

@@ -23,14 +23,21 @@ namespace Code.Infrastructure
                 onLoaded?.Invoke();
                 return;
             }
-            var loadScene = SceneManager.LoadSceneAsync(nextScene, loadMode).ToUniTask();
+            
+            var loadScene = SceneManager
+                .LoadSceneAsync(nextScene, loadMode)
+                .ToUniTask();
+            
             await loadScene;
             onLoaded?.Invoke();
         }
 
         private async UniTaskVoid UnloadSceneAsync(string sceneName, Action onUnloaded = null)
         {
-            var unloadScene = SceneManager.UnloadSceneAsync(sceneName).ToUniTask();
+            var unloadScene = SceneManager
+                .UnloadSceneAsync(sceneName)
+                .ToUniTask();
+            
             await unloadScene;
             onUnloaded?.Invoke();
         }

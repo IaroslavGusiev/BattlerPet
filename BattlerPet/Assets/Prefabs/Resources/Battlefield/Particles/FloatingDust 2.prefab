@@ -4808,6 +4808,7 @@ GameObject:
   - component: {fileID: 4074655034864234}
   - component: {fileID: 198611198129871496}
   - component: {fileID: 199428096651612482}
+  - component: {fileID: -2002092874256482661}
   m_Layer: 0
   m_Name: FloatingDust 2
   m_TagString: Untagged
@@ -9595,3 +9596,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &-2002092874256482661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904427401803332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbbbbf995cbf3cc44876c4aa421455d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _meshRenderer: {fileID: 0}

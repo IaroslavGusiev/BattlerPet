@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173c9bf22bd29e346a5b9605b2a5a1a3, type: 3}
   m_Name: SkyboxData
   m_EditorClassIdentifier: 
-  <SkyBoxMaterials>k__BackingField:
-  - {fileID: 2100000, guid: 0a6a46f3bb9d1444ca868d6ee739340a, type: 2}
-  - {fileID: 2100000, guid: 2cd58da722439c04fb4fc8c4c22e6c15, type: 2}
-  - {fileID: 2100000, guid: 53de9a2fa60cfae4a9eb04ff616a141a, type: 2}
-  - {fileID: 2100000, guid: 84db88626c4e4d14da132a180ec148dc, type: 2}
-  - {fileID: 2100000, guid: 364641eb7d92a7f4b9ebd78b0d887aad, type: 2}
-  - {fileID: 2100000, guid: 00335061f55411f49b0d0eaa9150f4b2, type: 2}
-  - {fileID: 2100000, guid: 24c5d5aed6fb04645a8a99894ef1beae, type: 2}
-  - {fileID: 2100000, guid: 187c15a21fc7f2346a831d66b7b247cb, type: 2}
-  - {fileID: 2100000, guid: f9c898edef9d7b64f89790e4c635834d, type: 2}
+  _skyBoxMaterials:
   - {fileID: 2100000, guid: 4d0e0ffc7a6c1bf44b435e0b23260f8c, type: 2}
+  - {fileID: 2100000, guid: f9c898edef9d7b64f89790e4c635834d, type: 2}
+  - {fileID: 2100000, guid: 187c15a21fc7f2346a831d66b7b247cb, type: 2}
+  - {fileID: 2100000, guid: 24c5d5aed6fb04645a8a99894ef1beae, type: 2}
+  - {fileID: 2100000, guid: 00335061f55411f49b0d0eaa9150f4b2, type: 2}
+  - {fileID: 2100000, guid: 364641eb7d92a7f4b9ebd78b0d887aad, type: 2}
+  - {fileID: 2100000, guid: 2cd58da722439c04fb4fc8c4c22e6c15, type: 2}
+  - {fileID: 2100000, guid: 0a6a46f3bb9d1444ca868d6ee739340a, type: 2}

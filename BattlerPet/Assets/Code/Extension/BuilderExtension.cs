@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using VContainer;
+using System.Runtime.CompilerServices;
 
 namespace CodeBase.Extensions
 {

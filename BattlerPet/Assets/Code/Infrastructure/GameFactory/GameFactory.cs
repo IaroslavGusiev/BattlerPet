@@ -8,6 +8,7 @@ using Code.Gameplay.Hero;
 using Code.Data.Gameplay;
 using CodeBase.Extensions;
 using Code.StaticData.Hero;
+using Code.Gameplay.Battlefield;
 
 namespace Code.Infrastructure
 {
@@ -27,26 +28,35 @@ namespace Code.Infrastructure
         public HeroBehaviour CreateHero(HeroType heroType)
         {
             HeroData data = _staticDataService.HeroDataFor(heroType);
-            var prefab = _assetProvider.Get<HeroBehaviour>(data.PrefabPath);
+            var prefab = GetPrefab<HeroBehaviour>(data.PrefabPath);
             
             HeroBehaviour hero = _objectResolver.Instantiate(prefab)
                 .With(hero => hero.HeroType = data.HeroType)
                 .With(hero => hero.Id = new Guid().ToString());
 
-            hero.InitializeWithState(new HeroState()
+            hero.InitializeHeroModel(new HeroModel() // TODO: model factory, UniRX for stats 
                 .With(x => x.MaxHp = data.MaxHp)
                 .With(x => x.CurrentHp = data.MaxHp)
                 .With(x => x.MaxHaste = data.MaxHaste)
                 .With(x => x.CurrentHaste = 0)
-                .With(x => x.SkillStates = data.SkillData.Select(SkillState.FromSkillData).ToList()));
-
+                .With(x => x.SkillModels = data.SkillData.Select(skillData => new SkillModel(skillData)).ToList()));
+            
             return hero;
         }
 
-        public GameObject CreateBattlefieldItem(string path, Vector3 at, Transform under)
+        public BattlefieldBehaviour CreateBattlefieldBehaviour(string path)
         {
-            var prefab = _assetProvider.Get<GameObject>(path);
+            var prefab = GetPrefab<BattlefieldBehaviour>(path);
+            return _objectResolver.Instantiate(prefab, null);
+        }
+
+        public Cube CreateBattlefieldItem(string path, Vector3 at, Transform under) // TODO: Separate to BattlefieldFactory
+        {
+            var prefab = GetPrefab<Cube>(path);
             return _objectResolver.Instantiate(prefab, at, prefab.transform.rotation, under);
         }
+
+        private T GetPrefab<T>(string path) where T : MonoBehaviour => 
+            _assetProvider.Get<T>(path);
     }
 }

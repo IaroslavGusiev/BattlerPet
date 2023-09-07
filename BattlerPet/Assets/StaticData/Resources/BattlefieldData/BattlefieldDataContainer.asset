@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f93704610f1bc45b678487b2ccbe1d, type: 3}
+  m_Name: BattlefieldDataContainer
+  m_EditorClassIdentifier: 
+  <BattlefieldPartBundles>k__BackingField:
+  - PartType: 0
+    BattlefieldPartData:
+    - {fileID: 11400000, guid: 96e77573b7df59c4ba1f0fab5bee514c, type: 2}
+    - {fileID: 11400000, guid: 70fabd58795a03c46bb7769b41e05ad8, type: 2}
+    - {fileID: 11400000, guid: 76c3821cd5adce249b4bbc1fc6ef637f, type: 2}
+    - {fileID: 11400000, guid: 802dca5df5f2c8f419b68418bf4e91c0, type: 2}
+    - {fileID: 11400000, guid: 1bbf90f425edff444b09d283200e7cde, type: 2}
+    - {fileID: 11400000, guid: 2d433118185f9214581f8ee20e72022b, type: 2}
+    - {fileID: 11400000, guid: 50cd1d2b645a9b14ea5891e50bbde225, type: 2}
+    - {fileID: 11400000, guid: 7e0956cd3e74f2f48bd05e8acc7c28c7, type: 2}
+    - {fileID: 11400000, guid: 6321ebba4fc82544293c071658a3e760, type: 2}
+  - PartType: 1
+    BattlefieldPartData:
+    - {fileID: 11400000, guid: 80ea27df1a4c4714ba29db79ae16271e, type: 2}
+    - {fileID: 11400000, guid: 371859dca18865641a34269a3705a81e, type: 2}
+    - {fileID: 11400000, guid: 2e7b4c4379ec8554782484db2abb5158, type: 2}
+    - {fileID: 11400000, guid: 8ad08f158ea879348a656bb9b608157c, type: 2}
+    - {fileID: 11400000, guid: fed59a91ac1044e4ba4a9c2bd4cbed47, type: 2}
+  - PartType: 2
+    BattlefieldPartData:
+    - {fileID: 11400000, guid: e30973c709f408644bbc13613b979d3c, type: 2}
+    - {fileID: 11400000, guid: 6fc2019cf82f6914f9300d1cd3eccc36, type: 2}
+    - {fileID: 11400000, guid: 02864fffc0d71c548a9b7484c796abbd, type: 2}
+    - {fileID: 11400000, guid: 71ffb6a4bef9c134dbf712070dd6a3e7, type: 2}
+    - {fileID: 11400000, guid: ba571c91e411ee34bab120ef11b00370, type: 2}
+    - {fileID: 11400000, guid: a16d551577c08df4e950ac2ec46780d1, type: 2}
+    - {fileID: 11400000, guid: e231149b6c962814e93d562df46ddc77, type: 2}
+    - {fileID: 11400000, guid: a55d4b1cd81ac8c4eb33ab7772fc35bd, type: 2}
+    - {fileID: 11400000, guid: ee0a1a8b16b4feb4e945d3ae56906062, type: 2}
+    - {fileID: 11400000, guid: 06c21afb073a1c14799f24c3bda3f85e, type: 2}
+    - {fileID: 11400000, guid: 31963cf5a837e3842937fe8559159a7f, type: 2}
+    - {fileID: 11400000, guid: 2492f6182fa762a42909158103d5ebdb, type: 2}
+    - {fileID: 11400000, guid: 0f2aab8fa11d89e4e900fac88da36798, type: 2}
+    - {fileID: 11400000, guid: 23a6d687a48900544acf935ba27f90ae, type: 2}
+    - {fileID: 11400000, guid: 8d08d1173651cda47a997c1122d706d1, type: 2}
+    - {fileID: 11400000, guid: 4ce7ecc15038f9542a22f55557ff2845, type: 2}
+    - {fileID: 11400000, guid: 8a1d5855188d1be49bea01206be035da, type: 2}
+    - {fileID: 11400000, guid: 0dd4dd6ed6cd11d45811b21d614d9e7b, type: 2}
+    - {fileID: 11400000, guid: 866ffa9319300e445ac80ee6f0e071fe, type: 2}
+    - {fileID: 11400000, guid: 67bf6a4d1e2bb224f9dcb30f195c8e04, type: 2}
+    - {fileID: 11400000, guid: fc22a410a10fd5a42ac02cbe1d7566ff, type: 2}
+    - {fileID: 11400000, guid: c25590e587c84aa488daa9df298e78a6, type: 2}
+    - {fileID: 11400000, guid: dade1321c301133428452e7b6a90599b, type: 2}
+    - {fileID: 11400000, guid: 024d7a6bdb7a5764fa92c5abbcce0b70, type: 2}
+    - {fileID: 11400000, guid: f1c4906183c47744e89ee6cc7cb1a765, type: 2}
+    - {fileID: 11400000, guid: ad35a0e56220c494cb401307f28d5ac0, type: 2}
+    - {fileID: 11400000, guid: 5f514d4e4bd079f4c92ebd0eb07a0899, type: 2}
+    - {fileID: 11400000, guid: be7d393161fd58241b981fb24511cc5b, type: 2}
+    - {fileID: 11400000, guid: cbb03981521234d45983899215d9cfd1, type: 2}
+    - {fileID: 11400000, guid: e4080ce0f9b36c347adb8bfec7e298ea, type: 2}
+    - {fileID: 11400000, guid: b7cd78c446e6690478e16704b1650590, type: 2}
+    - {fileID: 11400000, guid: a448f4b109dba9343a141a3402c601e5, type: 2}
+    - {fileID: 11400000, guid: 81c0c343eae8aed41b132649c2e1521f, type: 2}
+    - {fileID: 11400000, guid: 4005f5e49d771944daefb06aa5ffc0cd, type: 2}
+    - {fileID: 11400000, guid: 08b8921e86894fc4c9c92fb21290d912, type: 2}
+    - {fileID: 11400000, guid: e0b35b3e7fe294145a90b3e1a1670384, type: 2}
+    - {fileID: 11400000, guid: 349a4a3a5ecf2424584043c8901cfb30, type: 2}
+    - {fileID: 11400000, guid: 40583ef528a587c42b9ff03ed38e225e, type: 2}
+    - {fileID: 11400000, guid: e7bc354b9d141f0438884985fe59ad5c, type: 2}
+    - {fileID: 11400000, guid: 06afe57e3683a1441962f422242c1754, type: 2}
+    - {fileID: 11400000, guid: bfc085ddc615b59439128756ff002772, type: 2}
+    - {fileID: 11400000, guid: 706532916a0c629458617c836c0f8491, type: 2}
+    - {fileID: 11400000, guid: 6b4b9b5e5cab0c24d881fbc914853066, type: 2}
+    - {fileID: 11400000, guid: da7b2dc5f464b694fb0f2caebaa9274c, type: 2}
+  - PartType: 3
+    BattlefieldPartData:
+    - {fileID: 11400000, guid: 42e9e218d68c4c44aae38e10f7dc07ef, type: 2}
+    - {fileID: 11400000, guid: 3ed6b89cf50461540a7011d7e675e804, type: 2}
+  <TopLayerCubeTypes>k__BackingField: 010000000200000003000000

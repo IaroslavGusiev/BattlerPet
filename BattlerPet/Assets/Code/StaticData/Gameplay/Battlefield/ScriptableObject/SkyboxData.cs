@@ -6,6 +6,9 @@ namespace Code.Data.Gameplay.Battlefield
     [CreateAssetMenu(fileName = "SkyboxData", menuName = "ScriptableObject/Battlefield/SkyboxData")]
     public class SkyboxData : ScriptableObject
     {
-        [field: SerializeField] public List<Material> SkyBoxMaterials { get; private set; } 
+        [SerializeField] private List<Material> _skyBoxMaterials;
+
+        public Material GetRandomSkyboxMaterial() => 
+            _skyBoxMaterials.PickRandom();
     }
 }

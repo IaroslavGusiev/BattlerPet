@@ -1,4 +1,5 @@
-﻿using Code.Data;
+﻿using System;
+using Code.Data;
 using VContainer;
 using VContainer.Unity;
 using Code.Infrastructure;
@@ -25,14 +26,14 @@ namespace Code.CompositionRoot
         private void RegisterBootstrapper()
         {
             _builder.RegisterComponentInNewPrefab(_corePrefabsData.BootstrapperPrefab, Lifetime.Singleton)
-                .AsImplementedInterfaces();
+                .As<IInitializable, IDisposable>();
         }
 
         private void RegisterCoroutineRunner()
         {
             _builder.RegisterComponentInNewPrefab(_corePrefabsData.CoroutineRunnerPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
-                .As<ICoroutineRunner>();
+                .As<ICoroutineRunner, IDisposable>();
         }
 
         private void RegisterUpdateRunner()

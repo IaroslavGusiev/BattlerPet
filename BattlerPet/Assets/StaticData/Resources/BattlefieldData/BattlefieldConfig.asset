@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274f9bbc852b16e4a8ada80be774c5a0, type: 3}
   m_Name: BattlefieldConfig
   m_EditorClassIdentifier: 
+  <BattlefieldBehaviourPath>k__BackingField: Battlefield/Battlefield
+  <BattlefieldDataContainer>k__BackingField: {fileID: 11400000, guid: 24027e1a3b49b3e40884820e1dfb5ffd, type: 2}
   <GridSize>k__BackingField: {x: 9, y: 2, z: 9}
   <StartPositionOffset>k__BackingField: {x: -6, y: 0, z: -4}
   <BattlefieldAmbianceParticleData>k__BackingField:
@@ -19,3 +21,4 @@ MonoBehaviour:
     <SpawnPositions>k__BackingField:
     - {x: 5, y: 5, z: 0}
     - {x: -10, y: 5, z: 0}
+  <SkyboxData>k__BackingField: {fileID: 11400000, guid: 0417bd2d39e2bc44b9ab2749399ceb24, type: 2}

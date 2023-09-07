@@ -9,11 +9,9 @@ namespace Code.Gameplay.Hero
         public string Id { get; set; }
         
         [SerializeField] private HeroAnimator _heroAnimator;
-        private HeroState _heroState;
+        private HeroModel _heroModel;
 
-        public void InitializeWithState(HeroState heroState)
-        {
-            _heroState = heroState;
-        }
+        public void InitializeHeroModel(HeroModel heroModel) => 
+            _heroModel = heroModel;
     }
 }

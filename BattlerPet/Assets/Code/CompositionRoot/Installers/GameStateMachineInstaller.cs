@@ -12,13 +12,14 @@ namespace Code.CompositionRoot
         public void Install(IContainerBuilder builder)
         {
             _builder = builder;
-            RegisterGameStateMachine();
             RegisterStateFactories();
+            RegisterGameStateMachine();
         }
 
         private void RegisterGameStateMachine()
         {
-            _builder.Register<GameStateMachine>(Lifetime.Singleton)
+            _builder
+                .Register<GameStateMachine>(Lifetime.Singleton)
                 .As<IGameStateMachine>();
         }
 

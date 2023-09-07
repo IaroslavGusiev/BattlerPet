@@ -6,8 +6,8 @@ namespace Code.Services
 {
     public class AssetProvider : IAssetProvider
     {
-        private readonly Dictionary<string, Object> _cachedObjects = new Dictionary<string, Object>();
-        private readonly Dictionary<string, List<Object>> _cachedListOfObjects = new Dictionary<string, List<Object>>();
+        private readonly Dictionary<string, Object> _cachedObjects = new();
+        private readonly Dictionary<string, List<Object>> _cachedListOfObjects = new();
 
         public T Get<T>(string path) where T : Object
         {

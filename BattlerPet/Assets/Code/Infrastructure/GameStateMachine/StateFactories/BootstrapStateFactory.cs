@@ -11,11 +11,11 @@ namespace Code.Infrastructure.GameStateMachine
         private readonly StaticDataService _staticDataService;
         private readonly IShowWindowsService _showWindowsService;
         private readonly IEnumerable<IInitializeHandler> _initializeHandlers;
-        
+
         public BootstrapStateFactory(StaticDataService staticDataService, IEnumerable<IInitializeHandler> initializeHandlers)
         {
-            _initializeHandlers = initializeHandlers;
             _staticDataService = staticDataService;
+            _initializeHandlers = initializeHandlers;
         }
         
         public IExitableState Create(IGameStateMachine gameStateMachine) =>
