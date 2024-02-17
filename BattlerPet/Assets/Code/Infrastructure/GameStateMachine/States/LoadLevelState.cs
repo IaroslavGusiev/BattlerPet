@@ -1,28 +1,28 @@
 ﻿using Code.Data;
 using Code.UI.LoadingCurtain;
+using Cysharp.Threading.Tasks;
+using Code.Infrastructure.StateMachineBase;
 
-namespace Code.Infrastructure.GameStateMachine
+namespace Code.Infrastructure.GameStateMachineScope
 {
     public class LoadLevelState : IPaylodedState<SceneName>
     {
-        private readonly IGameStateMachine _gameStateMachine;
         private readonly ILoadingCurtain _loadingCurtain;
         private readonly ISceneLoader _sceneLoader;
 
-        public LoadLevelState(IGameStateMachine gameStateMachine, ILoadingCurtain loadingCurtain, ISceneLoader sceneLoader)
+        public LoadLevelState(ILoadingCurtain loadingCurtain, ISceneLoader sceneLoader)
         {
-            _gameStateMachine = gameStateMachine;
             _loadingCurtain = loadingCurtain;
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter(SceneName scene)
+        public async UniTask Enter(SceneName scene)
         {
             _loadingCurtain.Show();
-            _sceneLoader.Load(scene, () => _loadingCurtain.Hide());
+            await _sceneLoader.Load(scene, () => _loadingCurtain.Hide());
         }
 
-        public void Exit()
+        public async UniTask Exit()
         {
             
         }

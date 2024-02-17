@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using System.Threading.Tasks;
 using Code.Gameplay.Battlefield;
+using Cysharp.Threading.Tasks;
 
 namespace Code.Infrastructure
 {
     public interface IBattlefieldFactory
     {
-        BattlefieldBehaviour CreateBattlefieldBehaviour(string path);
-        Cube CreateBattlefieldItem(string path, Vector3 at, Transform under);
+        UniTask<BattlefieldBehaviour> CreateBattlefieldBehaviour(string prefabAddress);
+        UniTask<Cube> CreateBattlefieldItem(string prefabAddress, Vector3 at, Transform parent);
     }
 }

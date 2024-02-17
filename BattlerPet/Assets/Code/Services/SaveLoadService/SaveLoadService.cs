@@ -18,7 +18,7 @@ namespace Code.Services
             _playerProgressProvider = playerProgressProvider;
         }
 
-        public async UniTaskVoid SaveProgress()
+        public async UniTask SaveProgress()
         {
             foreach (IProgressSaver saver in _saverServices) 
                 saver.UpdateProgress(_playerProgressProvider.Progress);
@@ -26,10 +26,7 @@ namespace Code.Services
             await _saver.SaveData(relativePath: SavedKeysData.PlayerProgressKey, data: _playerProgressProvider.Progress);
         }  
 
-        public async UniTask<PlayerProgress> LoadProgress()
-        {
-            var progress = await _saver.LoadData<PlayerProgress>(relativePath: SavedKeysData.PlayerProgressKey);
-            return progress;
-        }
+        public async UniTask<PlayerProgress> LoadProgress() => 
+            await _saver.LoadData<PlayerProgress>(relativePath: SavedKeysData.PlayerProgressKey);
     }
 }

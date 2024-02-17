@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEditor;
 using UnityEngine;
-using Code.Data.Gameplay.Battlefield;
 using Code.Gameplay.Battlefield;
 
+#if UNITY_EDITOR
 namespace Project.Editor
 {
     [CustomEditor(typeof(BattlefieldPartData))]
@@ -12,36 +12,36 @@ namespace Project.Editor
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
-            var cubeTemplate = (BattlefieldPartData)target;
-            
+            var cubeTemplate = (BattlefieldPartData) target;
+
             GUILayout.Space(20);
-            GeneratePrefabResourcePath(cubeTemplate);
-            
+            GeneratePrefabAddress(cubeTemplate);
+
             GUILayout.Space(10);
             RenameAssetToPrefabName(cubeTemplate);
-            
+
             GUILayout.Space(10);
             ExtractMaterialPath(cubeTemplate);
         }
 
-        private void GeneratePrefabResourcePath(BattlefieldPartData battlefieldPartTemplate)
+        private void GeneratePrefabAddress(BattlefieldPartData battlefieldPartTemplate)
         {
-            if (GUILayout.Button("Generate Prefab Resource Path"))
+            if (GUILayout.Button("Generate Prefab Address"))
             {
-                const string resourcesFolder = "/Resources/";
-                string prefabPath = AssetDatabase.GetAssetPath(battlefieldPartTemplate.Prefab);
-                int resourcesIndex = prefabPath.IndexOf(resourcesFolder, StringComparison.OrdinalIgnoreCase);
-                if (resourcesIndex != -1)
+                UnityEngine.Object prefab = battlefieldPartTemplate.Prefab;
+                string prefabPath = AssetDatabase.GetAssetPath(prefab);
+                string prefabGuid = AssetDatabase.AssetPathToGUID(prefabPath);
+                string prefabAddress = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.FindAssetEntry(prefabGuid)?.address;
+
+                if (prefabAddress != null)
                 {
-                    prefabPath = prefabPath[(resourcesIndex + resourcesFolder.Length)..];
-                    int dotIndex = prefabPath.LastIndexOf('.');
-                    if (dotIndex != -1)
-                    {
-                        prefabPath = prefabPath.Substring(0, dotIndex);
-                    }
+                    battlefieldPartTemplate.PrefabAddress = prefabAddress;
+                    EditorUtility.SetDirty(target);
                 }
-                battlefieldPartTemplate.PrefabPath = prefabPath;
-                EditorUtility.SetDirty(target);
+                else
+                {
+                    Debug.LogError("Prefab is not an Addressable Asset. Make sure it is assigned in the Addressable Assets window.");
+                }
             }
         }
 
@@ -58,7 +58,7 @@ namespace Project.Editor
                 AssetDatabase.Refresh();
             }
         }
-        
+
         private void ExtractMaterialPath(BattlefieldPartData battlefieldPartTemplate)
         {
             if (GUILayout.Button("Extract Material Path"))
@@ -79,6 +79,7 @@ namespace Project.Editor
                             if (dotIndex != -1)
                                 materialPath = materialPath[..dotIndex];
                         }
+
                         battlefieldPartTemplate.MaterialPath = materialPath;
                         EditorUtility.SetDirty(target);
                     }
@@ -87,3 +88,4 @@ namespace Project.Editor
         }
     }
 }
+#endif

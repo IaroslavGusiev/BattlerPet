@@ -4,7 +4,7 @@ using Code.Services;
 using Code.Infrastructure;
 using Code.Data.Battlefield;
 using System.Collections.Generic;
-using Code.Data.Gameplay.Battlefield;
+using Cysharp.Threading.Tasks;
 
 namespace Code.Gameplay.Battlefield
 {
@@ -13,61 +13,64 @@ namespace Code.Gameplay.Battlefield
         private readonly IAssetProvider _assetProvider;
         private readonly BattlefieldBehaviour _battlefield;
         private readonly IBattlefieldFactory _battlefieldFactory;
-        private readonly BattlefieldDataContainer _battlefieldDataContainer;
+        private readonly BattlefieldDataContainer _dataContainer;
         
         private const int RandomChanceForDecor = 75;
 
-        public BattlefieldGenerator(BattlefieldBehaviour battlefield, BattlefieldDataContainer battlefieldDataContainer, IAssetProvider assetProvider, IBattlefieldFactory battlefieldFactory)
+        public BattlefieldGenerator(BattlefieldBehaviour battlefield, BattlefieldDataContainer dataContainer, IAssetProvider assetProvider, IBattlefieldFactory battlefieldFactory)
         {
             _battlefield = battlefield;
             _assetProvider = assetProvider;
             _battlefieldFactory = battlefieldFactory;
-            _battlefieldDataContainer = battlefieldDataContainer;
+            _dataContainer = dataContainer;
         }
 
-        public void GenerateBattlefield()
+        public async UniTask GenerateBattlefield()
         {
             SetBotCubesMaterial();
             SetTopCubesMaterial();
-            CreateFenceForEachSide();
+            await CreateFenceForEachSide();
             CreateDecor();
         }
 
-        private void SetBotCubesMaterial()
+        private void SetBotCubesMaterial() 
         {
             string path = GetDataFromBundle(BattlefieldPart.BotCube).PickRandom().MaterialPath;
-            var material = _assetProvider.Get<Material>(path);
+            var material = _assetProvider.LoadFromResources<Material>(path);
             _battlefield.SetBotCubesMaterials(material);
         }
 
-        private void SetTopCubesMaterial()
+        private void SetTopCubesMaterial() 
         {
-            TopLayerCubeType randomType = _battlefieldDataContainer.TopLayerCubeTypes.PickRandom();
+            TopLayerCubeType randomType = _dataContainer.TopLayerCubeTypes.PickRandom();
             
             List<Material> materials = (
                 from partData 
                 in GetDataFromBundle(BattlefieldPart.TopCube) 
                 where partData.TopLayerCubeType == randomType 
-                select _assetProvider.Get<Material>(partData.MaterialPath)).ToList();
+                select _assetProvider.LoadFromResources<Material>(partData.MaterialPath)).ToList();
             
             _battlefield.SetTopCubesMaterials(materials);
         }
 
-        private void CreateFenceForEachSide()
+        private async UniTask CreateFenceForEachSide()
         {
             BattlefieldPartData heroSideFenceData = GetDataFromBundle(BattlefieldPart.Fence).PickRandom();
             BattlefieldPartData enemySideFenceData = GetDataFromBundle(BattlefieldPart.Fence).PickRandomExcluding(heroSideFenceData);
             
             CreateContainer("Fence", _battlefield.transform, out Transform container);
             
-            SpawnFenceForLine(_battlefield.GetFenceSpawnPositions(SideType.HeroSide), heroSideFenceData.PrefabPath, container);
-            SpawnFenceForLine(_battlefield.GetFenceSpawnPositions(SideType.EnemySide), enemySideFenceData.PrefabPath, container);
+            await SpawnFenceForLine(_battlefield.GetFenceSpawnPositions(SideType.PlayerSide), heroSideFenceData.PrefabAddress, container);
+            await SpawnFenceForLine(_battlefield.GetFenceSpawnPositions(SideType.AISide), enemySideFenceData.PrefabAddress, container);
         }
 
         private void CreateDecor()
         {
             CreateContainer("Decor", _battlefield.transform, out Transform container);
-            List<string> prefabsPaths = GetDataFromBundle(BattlefieldPart.Decor).Select(x => x.PrefabPath).ToList(); 
+            
+            List<string> prefabsPaths = GetDataFromBundle(BattlefieldPart.Decor)
+                .Select(x => x.PrefabAddress)
+                .ToList(); 
                 
             foreach (Vector3 pos in _battlefield.GetDecorSpawnPositions().Where(_ => ShouldSpawnDecor()))
                 _battlefieldFactory.CreateBattlefieldItem(prefabsPaths.PickRandom(), pos, container);
@@ -75,14 +78,16 @@ namespace Code.Gameplay.Battlefield
         
         private IEnumerable<BattlefieldPartData> GetDataFromBundle(BattlefieldPart part)
         {
-            BattlefieldPartBundle bundle = _battlefieldDataContainer.BattlefieldPartBundles.FirstOrDefault(x => x.PartType == part);
+            BattlefieldPartBundle bundle = _dataContainer.BattlefieldPartBundles.FirstOrDefault(x => x.PartType == part);
             return bundle?.BattlefieldPartData;
         }
 
-        private void SpawnFenceForLine(List<Vector3> spawnPositions, string prefabPath, Transform container)
+        private async UniTask SpawnFenceForLine(List<Vector3> spawnPositions, string prefabPath, Transform container)
         {
             foreach (Vector3 position in spawnPositions)
-                _battlefieldFactory.CreateBattlefieldItem(prefabPath, position, container);
+            {
+                await _battlefieldFactory.CreateBattlefieldItem(prefabPath, position, container); 
+            }
         }
 
         private void CreateContainer(string name, Transform parent, out Transform container)

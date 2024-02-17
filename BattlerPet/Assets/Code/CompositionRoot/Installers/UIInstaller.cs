@@ -1,5 +1,6 @@
 ﻿using Code.Data;
 using VContainer;
+using Code.Services;
 using VContainer.Unity;
 using Code.UI.LoadingCurtain;
 using Code.UI.ShowWindowsService;
@@ -23,8 +24,9 @@ namespace Code.CompositionRoot
         
         private void RegisterShowWindowService()
         {
-            _builder.Register<ShowWindowsService>(Lifetime.Singleton)
-                .AsImplementedInterfaces();
+            _builder.Register<ScreenService>(Lifetime.Singleton)
+                .As<IScreenService>()
+                .AsSelf();
         }
         
         private void RegisterLoadingCurtain()

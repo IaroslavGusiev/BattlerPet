@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace Code.Infrastructure
 {
     public class CoroutineRunner : MonoBehaviour, ICoroutineRunner, IDisposable
     {
-        private readonly List<IEnumerator> _currentlyRunningCoroutines = new();
+        private readonly HashSet<IEnumerator> _currentlyRunningCoroutines = new();
 
         public void RunCoroutine(IEnumerator coroutine)
         {
@@ -15,23 +16,26 @@ namespace Code.Infrastructure
             StartCoroutine(WrapCoroutine(coroutine));
         }
 
-        public void StopRequiredCoroutine(IEnumerator coroutine)
+        public void StopRunningCoroutine(IEnumerator coroutine)
         {
             if (_currentlyRunningCoroutines.Contains(coroutine))
+            {
                 _currentlyRunningCoroutines.Remove(coroutine);
-            
-            StopCoroutine(coroutine);
+                StopCoroutine(coroutine);
+            }
         }
 
         public void Dispose()
         {
-            foreach (IEnumerator coroutine in _currentlyRunningCoroutines)
+            foreach (IEnumerator coroutine in _currentlyRunningCoroutines.Where(coroutine => coroutine != null))
                 StopCoroutine(coroutine);
+
+            _currentlyRunningCoroutines.Clear();
         }
 
         private IEnumerator WrapCoroutine(IEnumerator coroutine)
         {
-            yield return StartCoroutine(coroutine); 
+            yield return StartCoroutine(coroutine);
             _currentlyRunningCoroutines.Remove(coroutine);
         }
     }

@@ -19,13 +19,20 @@ namespace Code.CompositionRoot
         {
             _builder = builder;
             RegisterUpdateRunner();
-            RegisterBootstrapper();
+            RegisterDoTweenUpdater();
             RegisterCoroutineRunner();
         }
 
-        private void RegisterBootstrapper()
+        private void RegisterUpdateRunner()
         {
-            _builder.RegisterComponentInNewPrefab(_corePrefabsData.BootstrapperPrefab, Lifetime.Singleton)
+            _builder.Register<UpdateRunner>(Lifetime.Singleton)
+                .As<ITickable, ITickSource>();
+        }
+
+        private void RegisterDoTweenUpdater()
+        {
+            _builder
+                .Register<DoTweenUpdater>(Lifetime.Singleton)
                 .As<IInitializable, IDisposable>();
         }
 
@@ -34,12 +41,6 @@ namespace Code.CompositionRoot
             _builder.RegisterComponentInNewPrefab(_corePrefabsData.CoroutineRunnerPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
                 .As<ICoroutineRunner, IDisposable>();
-        }
-
-        private void RegisterUpdateRunner()
-        {
-            _builder.Register<UpdateRunner>(Lifetime.Singleton)
-                .AsImplementedInterfaces();
         }
     }
 }

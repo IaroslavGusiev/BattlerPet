@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: MushroomYellowGroup1Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/MushroomYellowGroup1
+  <PrefabAddress>k__BackingField: MushroomYellowGroup1
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: -135765303398950601, guid: 676e2b1b8a7d94942904984c6d1982c2, type: 3}
   <BattlefieldPart>k__BackingField: 2

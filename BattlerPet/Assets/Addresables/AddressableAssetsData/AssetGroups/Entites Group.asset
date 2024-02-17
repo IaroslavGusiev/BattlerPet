@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Entites Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Entites Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 1437ab6c99b1b6d4697dfdd2a5073dd1
+  m_SerializeEntries:
+  - m_GUID: 5cb60af502a840a48a7ff4e54f5ac048
+    m_Address: Barbarian
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 365f7ff17f5fc594caea798c262aa5e1
+    m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 12870c57db21fd94ebb992cfe654702f
+    m_Address: ElvenArcher
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: abf0f76b64f04834b854e943b900f791
+    m_Address: Wizard
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae21c395e7b9ebb40952bec356c8e130
+    m_Address: Skeleton
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2dc7a39752b900e4687107df84c4bdf7
+    m_Address: Dragon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1b5d106cf6c97248817afe0d366cb0c
+    m_Address: Orc
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f9be86da5267aa429d13b77495d4b2a
+    m_Address: Bat
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ed23fe9b1f41e5b41ad31d760e3bc755
+    m_Address: EvilMage
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Entities
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: c85dfa36122ce534388ee31708a06be0, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 63ba962ba9fdce742a4a4e73f73db238, type: 2}
+    - {fileID: 11400000, guid: cbaf476ee5e37b34f8137642c60f9dd7, type: 2}

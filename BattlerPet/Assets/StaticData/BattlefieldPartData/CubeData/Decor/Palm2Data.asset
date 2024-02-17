@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: Palm2Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/Palm_2
+  <PrefabAddress>k__BackingField: Palm_2
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: -4290499116040573526, guid: 06716651652c8a649b1e8b810eecfdad, type: 3}
   <BattlefieldPart>k__BackingField: 2

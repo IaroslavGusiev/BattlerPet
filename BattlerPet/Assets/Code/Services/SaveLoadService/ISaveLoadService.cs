@@ -5,7 +5,7 @@ namespace Code.Services
 {
     public interface ISaveLoadService
     {
-        UniTaskVoid SaveProgress();
+        UniTask SaveProgress();
         UniTask<PlayerProgress> LoadProgress();
     }
 }

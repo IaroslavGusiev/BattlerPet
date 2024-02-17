@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: Flower25Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/Flower2_5
+  <PrefabAddress>k__BackingField: Flower2_5
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: 1785060890558772200, guid: ebc3d6f14afae38459105b7058c16a8b, type: 3}
   <BattlefieldPart>k__BackingField: 2

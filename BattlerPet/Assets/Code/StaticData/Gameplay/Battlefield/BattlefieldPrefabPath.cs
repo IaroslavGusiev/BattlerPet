@@ -1,4 +1,4 @@
-﻿namespace Code.Data.Gameplay.Battlefield
+﻿namespace Code.Gameplay.Battlefield
 {
     public class BattlefieldPrefabPath
     {

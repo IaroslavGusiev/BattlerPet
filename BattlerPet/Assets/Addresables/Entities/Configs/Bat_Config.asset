@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110d812b0f074d76adb108bbdb233560, type: 3}
+  m_Name: Bat_Config
+  m_EditorClassIdentifier: 
+  <EntityType>k__BackingField: 5
+  <PrefabAddress>k__BackingField: Bat
+  <SkillConfigs>k__BackingField:
+  - {fileID: 11400000, guid: 0fc7506580a32a948b04647b32f7531d, type: 2}
+  - {fileID: 11400000, guid: f95292a776050734982ec611e080c775, type: 2}
+  - {fileID: 11400000, guid: 353f41868a31c8843874883a96b49693, type: 2}
+  <MaxHp>k__BackingField: 90
+  <MaxHaste>k__BackingField: 100

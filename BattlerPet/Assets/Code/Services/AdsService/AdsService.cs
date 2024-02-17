@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Code.Services
 {
-    public class AdsService : IAdsService, IInitializeHandler
+    public class AdsService : IAdsService
     {
         public event Action RewardedVideoReady;
         

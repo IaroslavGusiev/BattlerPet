@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace Code.Data.Gameplay.Battlefield
+namespace Code.Gameplay.Battlefield
 {
     [Serializable]
     public class BattlefieldAmbianceParticleData

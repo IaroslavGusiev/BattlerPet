@@ -1,11 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 
 namespace Code.Infrastructure
 {
     public interface ICoroutineRunner
     {
         void RunCoroutine(IEnumerator coroutine);
-        void StopRequiredCoroutine(IEnumerator coroutine);
+        void StopRunningCoroutine(IEnumerator coroutine);
     }
 }

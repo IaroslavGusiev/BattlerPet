@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using Code.Services;
-using VContainer.Unity;
 using Code.Infrastructure;
-using CodeBase.Extensions;
-using Code.Data.Gameplay.Battlefield;
+using Code.Data.Battlefield;
+using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace Code.Gameplay.Battlefield
 {
-    public class Battlefield : IInitializable
+    public class Battlefield : IBattlefield
     {
         private readonly IAssetProvider _assetProvider;
         private readonly IStaticDataService _staticDataService;
         private readonly IBattlefieldFactory _battlefieldFactory;
+        
+        private SlotSetup _slotSetup;
         private BattlefieldConfig _battlefieldConfig;
 
         public Battlefield(IBattlefieldFactory battlefieldFactory, IStaticDataService staticDataService, IAssetProvider assetProvider)
@@ -21,26 +23,36 @@ namespace Code.Gameplay.Battlefield
             _battlefieldFactory = battlefieldFactory;
         }
 
-        public void Initialize()
+        public async UniTask Initialize()
         {
             GetBattlefieldConfig();
-            BattlefieldBehaviour battlefieldBehaviour = CreateBattlefieldBehaviour();
-            CreateBattlefieldGenerator(battlefieldBehaviour);
+            BattlefieldBehaviour battlefieldBehaviour = await CreateBattlefieldBehaviour();
+            await CreateBattlefieldGenerator(battlefieldBehaviour);
+            CreateSlotSetup(battlefieldBehaviour.SlotBehaviours);
             SetSkyboxMaterial(_battlefieldConfig.SkyboxData.GetRandomSkyboxMaterial());
         }
+
+        public IEnumerable<SlotBehaviour> GetSlotForSide(SideType side) => 
+            _slotSetup.GetSlotForSide(side);
 
         private void GetBattlefieldConfig() => 
             _battlefieldConfig = _staticDataService.GetBattlefieldConfig();
 
-        private BattlefieldBehaviour CreateBattlefieldBehaviour()
+        private async UniTask<BattlefieldBehaviour> CreateBattlefieldBehaviour()
         {
-            return _battlefieldFactory
-                .CreateBattlefieldBehaviour(_battlefieldConfig.BattlefieldBehaviourPath)
-                .With(x => x.Initialize());
+            BattlefieldBehaviour battlefieldBehaviour = await _battlefieldFactory.CreateBattlefieldBehaviour(_battlefieldConfig.BattlefieldBehaviourPrefabAddress);
+            battlefieldBehaviour.Initialize();
+            return battlefieldBehaviour;
         }
 
-        private void CreateBattlefieldGenerator(BattlefieldBehaviour battlefieldBehaviour) => 
-            new BattlefieldGenerator(battlefieldBehaviour, _battlefieldConfig.BattlefieldDataContainer, _assetProvider, _battlefieldFactory).GenerateBattlefield();
+        private async UniTask CreateBattlefieldGenerator(BattlefieldBehaviour battlefieldBehaviour)
+        {
+            var battlefieldGenerator = new BattlefieldGenerator(battlefieldBehaviour, _battlefieldConfig.BattlefieldDataContainer, _assetProvider, _battlefieldFactory);
+            await battlefieldGenerator.GenerateBattlefield();
+        }
+
+        private void CreateSlotSetup(IEnumerable<SlotBehaviour> slots) => 
+            _slotSetup = new SlotSetup(slots); 
 
         private void SetSkyboxMaterial(Material skyboxMaterial) =>
             RenderSettings.skybox = skyboxMaterial;

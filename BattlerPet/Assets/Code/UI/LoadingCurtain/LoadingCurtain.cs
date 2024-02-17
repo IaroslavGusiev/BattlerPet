@@ -5,8 +5,9 @@ namespace Code.UI.LoadingCurtain
 {
     public class LoadingCurtain : MonoBehaviour, ILoadingCurtain
     {
-        [SerializeField] public CanvasGroup _curtain;
-
+        [SerializeField] private CanvasGroup _curtain;
+        private readonly YieldInstruction _fadeAlphaDelay = new WaitForSeconds(0.03f);
+        
         public void Show()
         {
             gameObject.SetActive(true);
@@ -21,7 +22,7 @@ namespace Code.UI.LoadingCurtain
             while (_curtain.alpha > 0)
             {
                 _curtain.alpha -= 0.03f;
-                yield return new WaitForSeconds(0.03f);
+                yield return _fadeAlphaDelay;
             }
             gameObject.SetActive(false);
         }

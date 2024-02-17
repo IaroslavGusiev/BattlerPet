@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: Grass4Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/Grass4
+  <PrefabAddress>k__BackingField: Grass4
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: -5915112087348766160, guid: fcbe4a9769e0d064682ac3c731c46d13, type: 3}
   <BattlefieldPart>k__BackingField: 2

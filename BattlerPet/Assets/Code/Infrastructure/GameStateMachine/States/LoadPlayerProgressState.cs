@@ -1,40 +1,41 @@
 ﻿using Code.Data;
-using UnityEngine;
 using Code.Services;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using Code.Infrastructure.StateMachineBase;
 
-namespace Code.Infrastructure.GameStateMachine
+namespace Code.Infrastructure.GameStateMachineScope
 {
     public class LoadPlayerProgressState : IState
     {
         private readonly ISaveLoadService _saveLoadService;
-        private readonly IGameStateMachine _gameStateMachine;
+        private readonly GameStateMachine _gameStateMachine;
         private readonly IPlayerProgressProvider _playerProgress;
         private readonly IEnumerable<IProgressReader> _progressReaderServices;
 
-        public LoadPlayerProgressState(IGameStateMachine gameStateMachine, ISaveLoadService saveLoadService, IPlayerProgressProvider playerProgress, IEnumerable<IProgressReader> progressReaderServices)
+        public LoadPlayerProgressState(GameStateMachine gameStateMachine, ISaveLoadService saveLoadService, IPlayerProgressProvider playerProgress, IEnumerable<IProgressReader> progressReaderServices)
         {
+            _playerProgress = playerProgress;
             _saveLoadService = saveLoadService;
             _gameStateMachine = gameStateMachine;
-            _playerProgress = playerProgress;
             _progressReaderServices = progressReaderServices;
         }
 
-        public void Enter()
+        public async UniTask Enter()
         {
-            Debug.Log("LoadPlayerProgressState enter"); 
-            LoadPlayerProgress().Forget();
+            await LoadPlayerProgress();
         }
 
-        public void Exit() { }
+        public async UniTask Exit()
+        {
+            
+        }
 
-        private async UniTaskVoid LoadPlayerProgress()
+        private async UniTask LoadPlayerProgress()
         {
             PlayerProgress progress = await LoadProgressOrInitNew();
             NotifyProgressReaders(progress);
-            _gameStateMachine.Enter<LoadLevelState, SceneName>(payload: SceneName.BattleArea);
+            await _gameStateMachine.Enter<BattleAreaState>();
         }
 
         private void NotifyProgressReaders(PlayerProgress progress)
@@ -52,7 +53,6 @@ namespace Code.Infrastructure.GameStateMachine
 
             _playerProgress.Progress = progress;
             return _playerProgress.Progress;
-
         }
     }
 }

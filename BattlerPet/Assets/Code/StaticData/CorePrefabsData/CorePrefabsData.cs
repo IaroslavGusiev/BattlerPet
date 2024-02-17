@@ -7,7 +7,6 @@ namespace Code.Data
     [CreateAssetMenu(fileName = "CorePrefabsData", menuName = "ScriptableObject/CorePrefabsData")]
     public class CorePrefabsData : ScriptableObject
     {
-        [field: SerializeField] public Bootstrapper BootstrapperPrefab { get; private set; }
         [field: SerializeField] public LoadingCurtain LoadingCurtainPrefab { get; private set; }
         [field: SerializeField] public CoroutineRunner CoroutineRunnerPrefab { get; private set; }
     }

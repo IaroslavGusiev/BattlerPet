@@ -16,7 +16,7 @@ namespace CodeBase.Extensions
             return default;
         }
         
-        public static T GetRandomEnumValue<T>(this T enumType, params T[] excludeValues) where T : Enum
+        public static T GetRandomEnumValue<T>(params T[] excludeValues) where T : Enum
         {
             var values = (T[])Enum.GetValues(typeof(T));
             values = values.Except(excludeValues).ToArray();

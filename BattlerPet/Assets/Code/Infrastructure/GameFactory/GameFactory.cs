@@ -1,62 +1,60 @@
 ﻿using System;
 using VContainer;
-using System.Linq;
 using UnityEngine;
 using Code.Services;
 using VContainer.Unity;
-using Code.Gameplay.Hero;
-using Code.Data.Gameplay;
-using CodeBase.Extensions;
-using Code.StaticData.Hero;
+using Code.Gameplay.Core;
+using Code.Gameplay.Entity;
+using Cysharp.Threading.Tasks;
+using Code.StaticData.Gameplay;
 using Code.Gameplay.Battlefield;
 
 namespace Code.Infrastructure
 {
-    public class GameFactory : IGameFactory, IBattlefieldFactory
+    public class GameFactory : IEntityFactory, IBattlefieldFactory
     {
+        private readonly IDeathService _deathService;
+        
+        private readonly ModelFactory _modelFactory;
         private readonly IAssetProvider _assetProvider;
         private readonly IObjectResolver _objectResolver;
         private readonly IStaticDataService _staticDataService;
 
-        public GameFactory(IObjectResolver objectResolver, IAssetProvider assetProvider, IStaticDataService staticDataService)
+        public GameFactory(IObjectResolver objectResolver, IAssetProvider assetProvider, IStaticDataService staticDataService, IDeathService deathService)
         {
             _assetProvider = assetProvider;
+            _deathService = deathService;
             _objectResolver = objectResolver;
             _staticDataService = staticDataService;
+            _modelFactory = new ModelFactory();
         }
 
-        public HeroBehaviour CreateHero(HeroType heroType)
+        public async UniTask<EntityBehaviour> CreateEntity(EntityType entityType, Vector3 at, Quaternion rotation, Transform parent) 
         {
-            HeroData data = _staticDataService.HeroDataFor(heroType);
-            var prefab = GetPrefab<HeroBehaviour>(data.PrefabPath);
-            
-            HeroBehaviour hero = _objectResolver.Instantiate(prefab)
-                .With(hero => hero.HeroType = data.HeroType)
-                .With(hero => hero.Id = new Guid().ToString());
-
-            hero.InitializeHeroModel(new HeroModel() // TODO: model factory, UniRX for stats 
-                .With(x => x.MaxHp = data.MaxHp)
-                .With(x => x.CurrentHp = data.MaxHp)
-                .With(x => x.MaxHaste = data.MaxHaste)
-                .With(x => x.CurrentHaste = 0)
-                .With(x => x.SkillModels = data.SkillData.Select(skillData => new SkillModel(skillData)).ToList()));
-            
-            return hero;
+            string uniqueId = CreateUniqueId();
+            EntityConfig config = _staticDataService.GetEntityData(entityType);
+            EntityModel entityModel = _modelFactory.CreateHeroModel(config, uniqueId);
+            var prefab = await _assetProvider.LoadAndGetComponent<EntityBehaviour>(config.PrefabAddress);
+            EntityBehaviour entity = _objectResolver.Instantiate(prefab, at, rotation, parent);
+            entity.Initialize(new EntityController(entityModel), uniqueId);
+            _deathService.RegisterEntity(entityModel);
+            return entity;
         }
 
-        public BattlefieldBehaviour CreateBattlefieldBehaviour(string path)
+        public async UniTask<BattlefieldBehaviour> CreateBattlefieldBehaviour(string prefabAddress)
         {
-            var prefab = GetPrefab<BattlefieldBehaviour>(path);
-            return _objectResolver.Instantiate(prefab, null);
+            var prefab = await _assetProvider.LoadAndGetComponent<BattlefieldBehaviour>(prefabAddress);
+            BattlefieldBehaviour battlefieldBehaviour = _objectResolver.Instantiate(prefab, null);
+            return battlefieldBehaviour;
         }
 
-        public Cube CreateBattlefieldItem(string path, Vector3 at, Transform under) // TODO: Separate to BattlefieldFactory
+        public async UniTask<Cube> CreateBattlefieldItem(string prefabAddress, Vector3 at, Transform parent)
         {
-            var prefab = GetPrefab<Cube>(path);
-            return _objectResolver.Instantiate(prefab, at, prefab.transform.rotation, under);
+            var prefab = await _assetProvider.LoadAndGetComponent<Cube>(prefabAddress);
+            return _objectResolver.Instantiate(prefab, at, prefab.transform.rotation, parent);
         }
 
-        private T GetPrefab<T>(string path) where T : MonoBehaviour => 
-            _assetProvider.Get<T>(path);
+        private string CreateUniqueId() => 
+            Guid.NewGuid().ToString();
     }
 }

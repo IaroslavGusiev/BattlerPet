@@ -3,7 +3,7 @@
     public enum SideType
     {
         None = 0,
-        HeroSide = 1,
-        EnemySide = 2
+        PlayerSide = 1, 
+        AISide = 2  
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: PumpkinData
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/Pumpkin
+  <PrefabAddress>k__BackingField: Pumpkin
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: 513670325572875606, guid: 39972c1dd23830e4d90ec251feb904d1, type: 3}
   <BattlefieldPart>k__BackingField: 2

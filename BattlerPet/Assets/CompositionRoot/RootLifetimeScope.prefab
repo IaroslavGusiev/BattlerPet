@@ -49,3 +49,5 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _corePrefabsData: {fileID: 11400000, guid: 61dcf62af7d7f7846a899a4bf050d894, type: 2}
+  _testCube: {fileID: 5085156289382413613, guid: 1968768b18c7cf64f9c2ea6fd700e968, type: 3}
+  _testCircle: {fileID: -6814044222959774428, guid: 81fcc4a79e04f94479b3773fd784245e, type: 3}

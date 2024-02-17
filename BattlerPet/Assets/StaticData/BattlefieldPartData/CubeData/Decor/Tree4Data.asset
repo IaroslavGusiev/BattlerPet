@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: Tree4Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/Tree_4
+  <PrefabAddress>k__BackingField: Tree_4
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: 3434271342807743326, guid: 23c46063ed51fed41bea97ccec34b39e, type: 3}
   <BattlefieldPart>k__BackingField: 2

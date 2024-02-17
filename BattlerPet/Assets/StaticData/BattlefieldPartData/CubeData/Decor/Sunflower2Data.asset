@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: Sunflower2Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/Sunflower2
+  <PrefabAddress>k__BackingField: Sunflower2
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: -6335317615496004854, guid: 920773559758ba2499e927a660c72575, type: 3}
   <BattlefieldPart>k__BackingField: 2

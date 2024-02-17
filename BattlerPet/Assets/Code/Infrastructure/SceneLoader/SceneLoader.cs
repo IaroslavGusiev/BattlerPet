@@ -1,5 +1,6 @@
 ﻿using System;
 using Code.Data;
+using VContainer.Unity;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
@@ -7,16 +8,22 @@ namespace Code.Infrastructure
 {
     public class SceneLoader : ISceneLoader
     {
-        public void Load(SceneName scene, Action onLoaded = null) =>
-            LoadSceneAsync(scene.ToString(), LoadSceneMode.Single, onLoaded).Forget();
+        public UniTask Load(SceneName scene, Action onLoaded = null) =>
+            LoadSceneAsync(scene.ToString(), LoadSceneMode.Single, onLoaded);
 
-        public void LoadInAdditiveMode(SceneName scene, Action onLoaded = null) =>
-            LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive, onLoaded).Forget();
+        public UniTask UnloadScene(SceneName scene, Action onUnloaded = null) =>
+            UnloadSceneAsync(scene.ToString(), onUnloaded);
 
-        public void UnloadScene(SceneName scene, Action onUnloaded = null) =>
-            UnloadSceneAsync(scene.ToString(), onUnloaded).Forget();
+        public UniTask LoadInAdditiveMode(SceneName scene, Action onLoaded = null) =>
+            LoadSceneAsync(scene.ToString(), LoadSceneMode.Additive, onLoaded);
 
-        private async UniTaskVoid LoadSceneAsync(string nextScene, LoadSceneMode loadMode, Action onLoaded = null)
+        public UniTask LoadInAdditiveModeWithScopeParenting<T>(SceneName scene, Action onLoaded = null) where T : LifetimeScope
+        {
+            LifetimeScope parentScope = LifetimeScope.Find<T>();
+            return LoadSceneWithScopeParentingAsync(scene.ToString(), parentScope, onLoaded);
+        } 
+
+        private async UniTask LoadSceneAsync(string nextScene, LoadSceneMode loadMode, Action onLoaded = null)
         {
             if (SceneManager.GetActiveScene().name == nextScene)
             {
@@ -24,22 +31,32 @@ namespace Code.Infrastructure
                 return;
             }
             
-            var loadScene = SceneManager
+            await SceneManager
                 .LoadSceneAsync(nextScene, loadMode)
                 .ToUniTask();
             
-            await loadScene;
             onLoaded?.Invoke();
         }
 
-        private async UniTaskVoid UnloadSceneAsync(string sceneName, Action onUnloaded = null)
+        private async UniTask UnloadSceneAsync(string sceneName, Action onUnloaded = null)
         {
-            var unloadScene = SceneManager
+            await SceneManager
                 .UnloadSceneAsync(sceneName)
                 .ToUniTask();
             
-            await unloadScene;
             onUnloaded?.Invoke();
+        }
+
+        private async UniTask LoadSceneWithScopeParentingAsync(string sceneName, LifetimeScope scope, Action onLoaded = null)
+        {
+            using (LifetimeScope.EnqueueParent(scope))
+            {
+                await SceneManager
+                    .LoadSceneAsync(sceneName, LoadSceneMode.Additive)
+                    .ToUniTask();
+                
+                onLoaded?.Invoke();
+            }
         }
     }
 }

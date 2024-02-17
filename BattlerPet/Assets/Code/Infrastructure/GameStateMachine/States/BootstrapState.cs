@@ -1,37 +1,49 @@
-﻿using UnityEngine;
-using Code.Services;
-using System.Collections.Generic;
+﻿using Code.Services;
+using Cysharp.Threading.Tasks;
+using Code.UI.ShowWindowsService;
+using Code.Infrastructure.StateMachineBase;
 
-namespace Code.Infrastructure.GameStateMachine
+namespace Code.Infrastructure.GameStateMachineScope
 {
     public class BootstrapState : IState
     {
-        private readonly IGameStateMachine _gameStateMachine;
-        private readonly StaticDataService _staticDataService;
-        private readonly IEnumerable<IInitializeHandler> _initializeHandlers;
+        private readonly AdsService _adsService;
+        private readonly IAssetProvider _assetProvider;
+        private readonly GameStateMachine _gameStateMachine;
+        private readonly IStaticDataService _staticDataService;
+        private readonly ScreenService _screenService;
 
-        public BootstrapState(IGameStateMachine gameStateMachine, StaticDataService staticDataService, IEnumerable<IInitializeHandler> initializeHandlers)
+        public BootstrapState(
+            GameStateMachine gameStateMachine, 
+            ScreenService screenService, 
+            AdsService adsService, 
+            IStaticDataService staticDataService, 
+            IAssetProvider assetProvider)
         {
-            _gameStateMachine = gameStateMachine;
+            _adsService = adsService;
             _staticDataService = staticDataService;
-            _initializeHandlers = initializeHandlers;
+            _assetProvider = assetProvider;
+            _gameStateMachine = gameStateMachine;
+            _screenService = screenService;
         }
 
-        public void Enter()
+        public async UniTask Enter()
         {
-            Debug.Log("<color=green>Enter BootstrapState</color>");
-            InitializeServices();
-            _gameStateMachine.Enter<LoadPlayerProgressState>();
+           await InitializeServices(); 
+           await _gameStateMachine.Enter<LoadPlayerProgressState>();
         }
 
-        public void Exit() { }
+        public async UniTask Exit()
+        { 
+            await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Configs);
+        }
 
-        private void InitializeServices()
+        private async UniTask InitializeServices()
         {
-            _staticDataService.LoadData();
-
-            foreach (IInitializeHandler initializeHandler in _initializeHandlers)
-                initializeHandler.Initialize();
+            await _assetProvider.InitializeAsync();
+            await _staticDataService.Initialize();
+            _adsService.Initialize();
+            _screenService.Initialize();
         }
     }
 }

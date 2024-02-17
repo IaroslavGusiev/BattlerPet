@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Code.Data.Gameplay.Battlefield
+namespace Code.Gameplay.Battlefield
 {
     [CreateAssetMenu(fileName = "BattlefieldConfig", menuName = "ScriptableObject/Battlefield/BattlefieldConfig")]
     public class BattlefieldConfig : ScriptableObject
     {
         [field: Header("Battlefield Prefab Path")] [field: Space(10)]
-        [field: SerializeField] public string BattlefieldBehaviourPath { get; private set; }
+        [field: SerializeField] public string BattlefieldBehaviourPrefabAddress { get; private set; }
         
         [field: Space(10)] [field: Header("Battlefield Data Container")] 
         [field: SerializeField] public BattlefieldDataContainer BattlefieldDataContainer { get; private set; }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: RockSmallGroupBrown11Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/RockSmallGroupBrown11
+  <PrefabAddress>k__BackingField: RockSmallGroupBrown11
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: -8456266976741750547, guid: c6cb871edaafb044bb0aaf2533a8a265, type: 3}
   <BattlefieldPart>k__BackingField: 2

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: FanceWooden2Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Fence/FanceWooden2
+  <PrefabAddress>k__BackingField: FanceWooden2
   <MaterialPath>k__BackingField: 
   <Prefab>k__BackingField: {fileID: 2750901357292482630, guid: 0247930279caa4341ab23ddd2d4b69f8, type: 3}
   <BattlefieldPart>k__BackingField: 3

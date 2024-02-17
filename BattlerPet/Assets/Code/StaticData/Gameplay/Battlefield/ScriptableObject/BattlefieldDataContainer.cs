@@ -2,7 +2,7 @@
 using Code.Data.Battlefield;
 using System.Collections.Generic;
 
-namespace Code.Data.Gameplay.Battlefield
+namespace Code.Gameplay.Battlefield
 {
     [CreateAssetMenu(fileName = "BattlefieldDataContainer", menuName = "ScriptableObject/Battlefield/BattlefieldDataContainer")]
     public class BattlefieldDataContainer : ScriptableObject

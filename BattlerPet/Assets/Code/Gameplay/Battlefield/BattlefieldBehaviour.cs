@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Linq;
 using Code.Data.Battlefield;
 using System.Collections.Generic;
@@ -17,8 +18,8 @@ namespace Code.Gameplay.Battlefield
 
         public void Initialize()
         {
-            _cubes.ForEach(ProcessCube);
-            _fenceSlots.ForEach(ProcessFenceSlot);
+            AddGroupedElementsToDictionary(_cubes, _cubesMapping, cube => cube.BattlefieldPart);
+            AddGroupedElementsToDictionary(_fenceSlots, _fenceSlotsMapping, slot => slot.SideType);
         }
 
         public void SetTopCubesMaterials(List<Material> materials)
@@ -40,21 +41,13 @@ namespace Code.Gameplay.Battlefield
 
         public List<Vector3> GetFenceSpawnPositions(SideType sideType) => 
             _fenceSlotsMapping[sideType].Select(x => x.GetPosition).ToList();
-
-        private void ProcessCube(Cube cube)
+        
+        private void AddGroupedElementsToDictionary<TElement, TKey>(IEnumerable<TElement> elements, Dictionary<TKey, List<TElement>> dictionary, Func<TElement, TKey> keySelector)
         {
-            if (_cubesMapping.TryGetValue(cube.BattlefieldPart, out List<Cube> cubeList))
-                cubeList.Add(cube);
-            else
-                _cubesMapping[cube.BattlefieldPart] = new List<Cube> { cube };
-        }
-
-        private void ProcessFenceSlot(FenceSlot slot)
-        {
-            if (_fenceSlotsMapping.TryGetValue(slot.SideType, out List<FenceSlot> slots))
-                slots.Add(slot);
-            else
-                _fenceSlotsMapping[slot.SideType] = new List<FenceSlot> { slot };
+            IEnumerable<IGrouping<TKey, TElement>> groupedElements = elements.GroupBy(keySelector);
+            
+            foreach (IGrouping<TKey, TElement> group in groupedElements)
+                EnumerableExtension.AddListToDictionary(group.Key, dictionary, group.ToList());
         }
     }
 }

@@ -2,6 +2,7 @@
 using VContainer;
 using UnityEngine;
 using VContainer.Unity;
+using Code.Infrastructure;
 
 namespace Code.CompositionRoot
 {
@@ -11,8 +12,7 @@ namespace Code.CompositionRoot
 
         protected override void Configure(IContainerBuilder builder)
         {
-            new GameStateMachineInstaller()
-                .Install(builder);
+            builder.RegisterEntryPoint<Bootstrapper>();
             
             new InfrastructureInstaller()
                 .Install(builder);

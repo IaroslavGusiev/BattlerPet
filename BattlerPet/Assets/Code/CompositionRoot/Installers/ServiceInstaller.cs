@@ -18,14 +18,15 @@ namespace Code.CompositionRoot
         private void RegisterStaticDataService()
         {
             _builder.Register<StaticDataService>(Lifetime.Singleton)
-                .As<IStaticDataService>()
-                .AsSelf();
+                .AsSelf()
+                .As<IStaticDataService>();
         }
 
         private void RegisterAdsService()
         {
             _builder.Register<AdsService>(Lifetime.Singleton)
-                .AsImplementedInterfaces();
+                .AsSelf()
+                .As<IAdsService>();
         }
     }
 }

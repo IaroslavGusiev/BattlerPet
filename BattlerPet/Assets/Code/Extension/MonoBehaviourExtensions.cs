@@ -6,8 +6,8 @@ namespace CodeBase.Extensions
 {
     public static class MonoBehaviourExtensions
     {
-        private static readonly WaitForFixedUpdate WaitForEndOfFixedUpdate = new WaitForFixedUpdate();
-        private static readonly WaitForEndOfFrame WaitForEndOfFrame = new WaitForEndOfFrame();
+        private static readonly WaitForFixedUpdate WaitForEndOfFixedUpdate = new();
+        private static readonly WaitForEndOfFrame WaitForEndOfFrame = new();
         
         public static WaitForEndOfFrame GetWaitForEndOfFrame()
             => WaitForEndOfFrame;

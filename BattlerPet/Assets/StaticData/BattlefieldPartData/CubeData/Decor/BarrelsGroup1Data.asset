@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7d96663e604442ade51d15d4d86b0, type: 3}
   m_Name: BarrelsGroup1Data
   m_EditorClassIdentifier: 
-  <PrefabPath>k__BackingField: Battlefield/Decor/BarrelsGroup1
+  <PrefabAddress>k__BackingField: BarrelsGroup1
   <MaterialPath>k__BackingField: Materials/Items
   <Prefab>k__BackingField: {fileID: 116577559974635378, guid: 3257462ecdc92c241abbb56b1762c98a, type: 3}
   <BattlefieldPart>k__BackingField: 2
