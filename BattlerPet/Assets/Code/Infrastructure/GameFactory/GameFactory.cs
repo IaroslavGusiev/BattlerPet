@@ -32,13 +32,18 @@ namespace Code.Infrastructure
         public async UniTask<EntityBehaviour> CreateEntity(EntityType entityType, Vector3 at, Quaternion rotation, Transform parent) 
         {
             string uniqueId = CreateUniqueId();
-            EntityConfig config = _staticDataService.GetEntityData(entityType);
+            EntityConfig config = _staticDataService.EntityConfigFor(entityType);
             EntityModel entityModel = _modelFactory.CreateHeroModel(config, uniqueId);
-            var prefab = await _assetProvider.LoadAndGetComponent<EntityBehaviour>(config.PrefabAddress);
-            EntityBehaviour entity = _objectResolver.Instantiate(prefab, at, rotation, parent);
+            EntityBehaviour entity = await CreateEntityBehaviour(config, at, rotation, parent);
             entity.Initialize(new EntityController(entityModel), uniqueId);
             _deathService.RegisterEntity(entityModel);
             return entity;
+        }
+
+        private async UniTask<EntityBehaviour> CreateEntityBehaviour(EntityConfig config, Vector3 at, Quaternion rotation, Transform parent)
+        {
+            var prefab = await _assetProvider.LoadAndGetComponent<EntityBehaviour>(config.PrefabAddress);
+            return _objectResolver.Instantiate(prefab, at, rotation, parent);
         }
 
         public async UniTask<BattlefieldBehaviour> CreateBattlefieldBehaviour(string prefabAddress)

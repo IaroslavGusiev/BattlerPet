@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Threading.Tasks;
-using Code.Gameplay.Battlefield;
 using Cysharp.Threading.Tasks;
+using Code.Gameplay.Battlefield;
 
 namespace Code.Infrastructure
 {

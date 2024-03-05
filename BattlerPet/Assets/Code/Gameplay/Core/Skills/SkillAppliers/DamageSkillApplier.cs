@@ -1,29 +1,20 @@
 ﻿using Code.Services;
+using Code.Gameplay.Entity;
 using Code.StaticData.Gameplay;
 
 namespace Code.Gameplay.Core
 {
-    public class DamageSkillApplier : ISkillApplier
+    public class DamageSkillApplier : SkillApplier
     {
-        public SkillType SkillType => SkillType.Damage;
+        public override SkillType SkillType => SkillType.Damage;
         
-        private readonly IStaticDataService _staticDataService;
-        private readonly IEntityRegister _entityRegister;
+        public DamageSkillApplier(IStaticDataService staticDataService, IEntityRegister entityRegister) : base(staticDataService, entityRegister) { }
 
-        public DamageSkillApplier(IStaticDataService staticDataService, IEntityRegister entityRegister)
+        protected override void ApplySkillTo(IEntity caster, SkillExecution skillExecution, string targetId)
         {
-            _staticDataService = staticDataService;
-            _entityRegister = entityRegister;
-        }
-
-        public void WarmUp()
-        {
-            
-        }
-
-        public void ApplySkill(SkillExecution skillExecution)
-        {
-            
+            IEntity selectedTarget = EntityRegister.GetEntity(targetId);
+            SkillConfig skillConfig = StaticDataService.SkillConfigFor(caster.EntityType, skillExecution.AttackType);
+            selectedTarget.ReduceHealth(skillConfig.Value);
         }
     }
 }

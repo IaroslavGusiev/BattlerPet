@@ -4,21 +4,18 @@ namespace Code.Gameplay.Core
 {
     public class HasteService
     {
-        private const int HasteTickValue = 3;
-
+        private const int HasteTickValue = 5;
         private readonly IEntityRegister _entityRegister;
 
-        public HasteService(IEntityRegister entityRegister)
-        {
+        public HasteService(IEntityRegister entityRegister) => 
             _entityRegister = entityRegister;
-        }
 
-        public void ReplenishHasteTick()
+        public void IncreaseHasteTick()
         {
             foreach (IEntity entity in _entityRegister.AllActiveEntities())
             {
                 entity.EnableTurnIndicator(false);
-                entity.ReplenishHaste(HasteTickValue);
+                entity.IncreaseHaste(HasteTickValue);
             }
         }
 

@@ -16,9 +16,9 @@ namespace Code.Gameplay.Core
             _entityRegister = entityRegister;
         }
 
-        public void ApplyModifier()
+        public void ApplyModifier(SkillExecution skillExecution)
         {
-            
+            // TODO: foreach
         }
     }
 }

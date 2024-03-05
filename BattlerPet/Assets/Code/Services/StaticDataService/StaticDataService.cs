@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Code.StaticData;
+using Code.StaticData.UI;
 using Cysharp.Threading.Tasks;
 using Code.StaticData.Gameplay;
 using Code.Gameplay.Battlefield;
@@ -13,6 +13,7 @@ namespace Code.Services
 
         private Dictionary<EntityType, EntityConfig> _heroData = new();
         private List<BattlefieldConfig> _battlefieldConfigs = new();
+        private List<ScreenServiceConfig> _screenServiceConfigs = new();
 
         public StaticDataService(IAssetProvider assetProvider) => 
             _assetProvider = assetProvider;
@@ -21,13 +22,23 @@ namespace Code.Services
         {
             await LoadEntityData();
             await LoadBattlefieldConfig();
+            await LoadScreenServiceConfig();
         }
-
-        public EntityConfig GetEntityData(EntityType entityType) => 
-            _heroData[entityType];
 
         public BattlefieldConfig GetBattlefieldConfig() =>
             _battlefieldConfigs.FirstOrDefault();
+
+        public EntityConfig EntityConfigFor(EntityType entityType) => 
+            _heroData[entityType];
+
+        public ScreenServiceConfig GetScreenServiceConfig() => 
+            _screenServiceConfigs.FirstOrDefault();
+
+        public SkillConfig SkillConfigFor(EntityType entityType, AttackType attackType)
+        {
+            List<SkillConfig> configs = EntityConfigFor(entityType).SkillConfigs;
+            return configs.FirstOrDefault(x => x.AttackType == attackType);
+        }
 
         private async UniTask LoadEntityData()
         {
@@ -40,6 +51,12 @@ namespace Code.Services
             BattlefieldConfig[] configs = await GetConfigs<BattlefieldConfig>();
             _battlefieldConfigs = configs.ToList();
         }
+
+        private async UniTask LoadScreenServiceConfig()
+        {
+            ScreenServiceConfig[] configs = await GetConfigs<ScreenServiceConfig>();
+            _screenServiceConfigs = configs.ToList();
+        } 
 
         private async UniTask<T[]> GetConfigs<T>() where T : class
         {

@@ -2,12 +2,11 @@
 
 namespace Code.Gameplay.Entity
 {
-    public interface IEntity : ITurnBasedEntity, IDeath, IAttributeHandler
+    public interface IEntity : ITurnBasedEntity, IAttributeHandler, ISkillHandler, IDeath
     {
         public string Id { get; }
         EntityType EntityType { get; }
         
-        void TickSkillsCooldown(float deltaTime);
-        bool IsReadyForNextTick(float hasteTickValue);
+        void ExecuteSkill(AttackType attackType); 
     }
 }

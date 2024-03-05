@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using UnityEngine.AddressableAssets;
 
 namespace Code.Services
 {
     public interface IAssetProvider 
     {
-        T LoadFromResources<T>(string path) where T : Object;
-        
         UniTask InitializeAsync();
         
         UniTask<T> Load<T>(string key) where T : class;
@@ -17,5 +16,7 @@ namespace Code.Services
         UniTask<List<string>> FetchAssetKeysByLabel<T>(string label);
         UniTask WarmupAssetsByLabel(string label);
         UniTask ReleaseAssetsByLabel(string label);
+        UniTask<TAsset> Load<TAsset>(AssetReference assetReference) where TAsset : MonoBehaviour;
+        T LoadFromResources<T>(string path) where T : Object;
     }
 }

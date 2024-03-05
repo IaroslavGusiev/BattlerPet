@@ -7,4 +7,10 @@
         Paused = 2,
         Finished = 3
     }
+
+    public enum BattleMode : byte
+    {
+        Auto = 0,
+        Manual = 1
+    }
 }

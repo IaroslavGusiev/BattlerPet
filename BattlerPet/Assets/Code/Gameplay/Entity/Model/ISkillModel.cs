@@ -4,8 +4,8 @@ namespace Code.Gameplay.Entity
 {
     public interface ISkillModel
     {
-        bool IsReady { get; }
-        float MaxCooldown { get; }
+        void PutOnCooldown();
+        float GetSkillAnimationPlayTime();
         AttackType AttackType { get; }
     }
 }

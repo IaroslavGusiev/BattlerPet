@@ -1,5 +1,8 @@
-﻿using Code.Services;
+﻿using System.Linq;
+using Code.Services;
+using Code.Gameplay.Entity;
 using System.Collections.Generic;
+using Code.StaticData.Gameplay;
 
 namespace Code.Gameplay.Core
 {
@@ -10,7 +13,7 @@ namespace Code.Gameplay.Core
         private List<ISkillApplier> _appliers;
         
         private readonly SkillModifierSolver _skillModifierSolver;
-        private List<SkillExecution> _skillExecutions = new(20);
+        private readonly List<SkillExecution> _skillExecutions = new(20); 
 
         public SkillSolver(IStaticDataService staticDataService, IEntityRegister entityRegister)
         {
@@ -22,24 +25,53 @@ namespace Code.Gameplay.Core
 
         public void ProcessEntityAction(EntityAction entityAction)
         {
-            var skillExecution = new SkillExecution()
-            {
-                SkillType = entityAction.SkillType,
-                SkillModifier = entityAction.SkillModifier,
-                TargetIds = entityAction.TargetIds,
-                Caster = entityAction.Caster,
-                // RemainingTime = delay for skill
-            };
+            IEntity casterEntity = _entityRegister.GetEntity(entityAction.Caster);
+            CreateSkillExecution(entityAction, casterEntity.EntityType);
+            casterEntity.ExecuteSkill(entityAction.AttackType);
             
-            foreach (ISkillApplier applier in _appliers)
+            // BattleTextPlayer
+        }
+        
+        public void SkillDelaysTick(float deltaTime)
+        {
+            for (int i = _skillExecutions.Count - 1; i >= 0; i--)
             {
-                if (applier.SkillType == entityAction.SkillType)
-                    applier.ApplySkill(skillExecution);
-
-                if (entityAction.SkillModifier == null)
-                    return;
-                _skillModifierSolver.ApplyModifierWithChance(entityAction.SkillModifier, null);
+                SkillExecution activeSkill = _skillExecutions[i];
+                activeSkill.RemainingTime -= deltaTime;
+                
+                if (activeSkill.RemainingTime <= 0)
+                {
+                    _skillExecutions.Remove(activeSkill);
+                    if (_entityRegister.IsAlive(activeSkill.Caster))
+                        ApplySkill(activeSkill);
+                }
             }
+        }
+
+        private void CreateSkillExecution(EntityAction entityAction, EntityType casterEntityType)
+        {
+            SkillConfig skillConfig = _staticDataService.SkillConfigFor(casterEntityType, entityAction.AttackType);
+            var execution = new SkillExecution
+            {
+                RemainingTime = skillConfig.ActualSkillAttackTime,
+                SkillModifier = entityAction.SkillModifier,
+                AttackType = entityAction.AttackType,
+                SkillType = entityAction.SkillType,
+                TargetIds = entityAction.TargetIds,
+                Caster = entityAction.Caster
+            };
+            _skillExecutions.Add(execution);
+        }
+        
+        private void ApplySkill(SkillExecution skillExecution)
+        {
+            foreach (ISkillApplier applier in _appliers
+                         .Where(applier => applier.SkillType == skillExecution.SkillType))
+                applier.ApplySkill(skillExecution);
+            
+            if (skillExecution.SkillModifier == null)
+                return;
+            _skillModifierSolver.ApplyModifierWithChance(skillExecution); // TODO: some chance service 
         }
 
         private void InitSkillAppliers()

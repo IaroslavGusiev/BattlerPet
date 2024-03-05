@@ -1,6 +1,6 @@
 ﻿using Code.Services;
 using Cysharp.Threading.Tasks;
-using Code.UI.ShowWindowsService;
+using Code.UI.ScreenServiceSpace;
 using Code.Infrastructure.StateMachineBase;
 
 namespace Code.Infrastructure.GameStateMachineScope
@@ -33,10 +33,8 @@ namespace Code.Infrastructure.GameStateMachineScope
            await _gameStateMachine.Enter<LoadPlayerProgressState>();
         }
 
-        public async UniTask Exit()
-        { 
+        public async UniTask Exit() => 
             await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Configs);
-        }
 
         private async UniTask InitializeServices()
         {

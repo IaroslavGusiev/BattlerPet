@@ -3,10 +3,10 @@ using UnityEngine;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using Object = UnityEngine.Object;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
-using Object = UnityEngine.Object;
 
 namespace Code.Services
 {
@@ -17,6 +17,9 @@ namespace Code.Services
 
         public async UniTask InitializeAsync() => 
             await Addressables.InitializeAsync().ToUniTask();
+        
+        public async UniTask<TAsset> Load<TAsset>(AssetReference assetReference) where TAsset : MonoBehaviour => 
+            await LoadAndGetComponent<TAsset>(assetReference.AssetGUID);
 
         public async UniTask<T> Load<T>(string key) where T : class
         {
@@ -70,8 +73,8 @@ namespace Code.Services
                 }
             }
         }
-
-        public T LoadFromResources<T>(string path) where T : Object
+        
+        public T LoadFromResources<T>(string path) where T : Object // TODO: maybe own class for it
         {
             if (_cachedObjects.TryGetValue(path, out Object prefab))
                 return prefab as T;

@@ -5,6 +5,7 @@ using VContainer.Unity;
 using Code.Gameplay.Core;
 using Code.Infrastructure;
 using Code.Gameplay.Battlefield;
+using Code.Gameplay.Core.AI;
 using Code.Infrastructure.StateMachineBase;
 
 namespace Code.LifetimeScopes
@@ -51,7 +52,7 @@ namespace Code.LifetimeScopes
                 .AsSelf();
 
             builder.Register<BattleTurnService>(Lifetime.Scoped)
-                .As<IBattleTurnService, IDisposable>();
+                .As<IBattleTurnService, IAsyncStartable, IDisposable>();
 
             builder
                 .Register<HasteService>(Lifetime.Scoped)
@@ -60,6 +61,14 @@ namespace Code.LifetimeScopes
             builder
                 .Register<SkillSolver>(Lifetime.Scoped)
                 .As<ISkillSolver>();
+
+            builder
+                .Register<StupidAI>(Lifetime.Scoped)
+                .As<IArtificialIntelligence>();
+
+            builder
+                .Register<TargetChooser>(Lifetime.Scoped)
+                .As<ITargetChooser>();
         }
     }
 }

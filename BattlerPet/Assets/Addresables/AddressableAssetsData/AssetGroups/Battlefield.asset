@@ -1,0 +1,331 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Battlefield
+  m_EditorClassIdentifier: 
+  m_GroupName: Battlefield
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 8e3a16f4a9d83ae4497b7acc82ab2b2a
+  m_SerializeEntries:
+  - m_GUID: 414641dc75075ab42af90232f3815f18
+    m_Address: Battlefield
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc771f6b4cbbdbb45a6a0b8ed73d01e7
+    m_Address: Flower1_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f389bf1bb2931e4ab025583eebf85fa
+    m_Address: RockSmallGroupBrown9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d71d0023f7f57de43a3c7ab991a84911
+    m_Address: Stump3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a03fce7f0f4e06f4c990444dc4c55094
+    m_Address: CrystalGroupPink22
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c10327cf80b35e4a80f214c6b4c33da
+    m_Address: RockSmallGroupBrown10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 074a0b54ecf9c234d8bc32ec37817f05
+    m_Address: RockSmallGroupBlue10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0151929d70b12284c93ee635dd1e1371
+    m_Address: Grass7
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c086eeeb02be18446be5f372298c1974
+    m_Address: RockSmallGroupGreen9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1fa0ceb6a38acb4ea7bf621e58b32ff
+    m_Address: CrystalGroupYellow22
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43c367636b578bd4289d1985b7af2a97
+    m_Address: Sunflower1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 920773559758ba2499e927a660c72575
+    m_Address: Sunflower2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d2ac2cdfeb17c44385ef050828d25d2
+    m_Address: CrystalGroupPink13
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2dad820969e62e247a65c9c0deec59a6
+    m_Address: CrystalGroupBlue19
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 671ab12e2dbb32a4a8e877ee689c6392
+    m_Address: Canon
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ebc3d6f14afae38459105b7058c16a8b
+    m_Address: Flower2_5
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4f0e3c19d721d75499e59648bf575ebe
+    m_Address: CrystalGroupPink19
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1010f72a751af6b4ca25896bc811a500
+    m_Address: RockSmallGroupBlue9
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0c7f90990ea5776479ff8d862a3feeac
+    m_Address: CrystalGroupGreen19
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b12c5896849bbd4eab22b0b073aab1f
+    m_Address: RockSmallGroupGreen10
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7b9d259a1a00ba46b3e44326d28a659
+    m_Address: RockSmallGroupGreen11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72456bba7d08f304ba7b5bfa671206ad
+    m_Address: Tree_3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f02cb3f98fa44514bbca6280921211db
+    m_Address: CrystalGroupBlue12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3d9e1739189e68c418a6e927feb0e53c
+    m_Address: CrystalGroupGreen12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3257462ecdc92c241abbb56b1762c98a
+    m_Address: BarrelsGroup1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16b3d8734ea7efc4fafb2b3061c6b243
+    m_Address: Tree_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6cb871edaafb044bb0aaf2533a8a265
+    m_Address: RockSmallGroupBrown11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b68852af533c86498e23e47c5aa886f
+    m_Address: CrystalGroupBlue13
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f488ee03453f85e4b97b2e7de91a8118
+    m_Address: Chest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 676e2b1b8a7d94942904984c6d1982c2
+    m_Address: MushroomYellowGroup1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fcbe4a9769e0d064682ac3c731c46d13
+    m_Address: Grass4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d88be3b8caa97454a91a35727b959fae
+    m_Address: CrystalGroupGreen13
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97e7f4215f45c024fb33d6fd1f7e5450
+    m_Address: CrystalGroupYellow12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54a0f816d9abcc545ab0653f6a1db389
+    m_Address: CrystalGroupPink12
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e2298f0ac6e9384086adf619897be49
+    m_Address: CrystalGroupYellow13
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06716651652c8a649b1e8b810eecfdad
+    m_Address: Palm_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 07bc3466a1a4fec40bb725085db1e3c0
+    m_Address: CrystalGroupYellow19
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 275ea76a27b03694fbfd53f7df232108
+    m_Address: Wood2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 887f3320e7f484e4aa4e8f866f25cd5b
+    m_Address: MushroomYellowGroup2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 45fa6973d14d3554192082b350ad1571
+    m_Address: Flower3_6
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd8a3c95ac8878840b192b7d691a5160
+    m_Address: MushroomRedGroup2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 23c46063ed51fed41bea97ccec34b39e
+    m_Address: Tree_4
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85caf01f60c1309429d4a59f72973ce7
+    m_Address: Box
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: af044630fe71217478611845e1158b0b
+    m_Address: MushroomRedGroup1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39972c1dd23830e4d90ec251feb904d1
+    m_Address: Pumpkin
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e58cb5eb3281344aa0299a046f1192e
+    m_Address: Tree_2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88b5b7c769f58134f8216dc1f456a231
+    m_Address: CrystalGroupBlue22
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42508d691c536d541a0528aa141b1b20
+    m_Address: RockSmallGroupBlue11
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6a6b757d99f5324bafad22a993b6e6d
+    m_Address: CrystalGroupGreen22
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0247930279caa4341ab23ddd2d4b69f8
+    m_Address: FanceWooden2
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0258105eee832ac4cb33ab330cdb9a39
+    m_Address: FanceWooden
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Battlefield
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: c85dfa36122ce534388ee31708a06be0, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 229e7b0967cb5d94dab7aa76cd6936da, type: 2}
+    - {fileID: 11400000, guid: d79728459fee8ff449cc4d346bda9300, type: 2}

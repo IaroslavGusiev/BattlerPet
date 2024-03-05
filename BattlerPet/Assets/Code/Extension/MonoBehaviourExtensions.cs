@@ -32,5 +32,11 @@ namespace CodeBase.Extensions
 
         public static bool IsNotNull(this Object obj) => 
             !IsNull(obj);
+        
+        public static void Enable(this Behaviour component) => 
+            component.enabled = true;
+
+        public static void Disable(this Behaviour component) => 
+            component.enabled = false;
     }
 }

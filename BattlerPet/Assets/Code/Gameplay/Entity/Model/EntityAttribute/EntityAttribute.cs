@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using System;
+using UniRx;
 using UnityEngine;
 using Code.StaticData.Gameplay;
 
@@ -20,11 +21,36 @@ namespace Code.Gameplay.Entity
             _maxValue.Value = maxValue;
             _currentValue.Value = currentValue;
         }
+        
+        public void ModifyCurrentValue(float value, AttributeOperation operation)
+        {
+            switch (operation)
+            {
+                case AttributeOperation.Increase:
+                    IncreaseCurrentValue(value);
+                    break;
+                case AttributeOperation.Decrease:
+                    DecreaseCurrentValue(value);
+                    break;
+                case AttributeOperation.Set:
+                    SetToZero();
+                    break;
+                default:
+                    ThrowArgumentOutOfRangeException(operation);
+                    break;
+            }
+        }
 
-        public void DecreaseCurrentValue(float value) => 
+        private void DecreaseCurrentValue(float value) => 
             _currentValue.Value = Mathf.Max(_currentValue.Value - value, 0);
 
-        public void IncreaseCurrentValue(float value) => 
+        private void IncreaseCurrentValue(float value) => 
             _currentValue.Value = Mathf.Min(_currentValue.Value + value, MaxValue.Value);
+
+        private void SetToZero() => 
+            _currentValue.Value = 0f;
+
+        private void ThrowArgumentOutOfRangeException(AttributeOperation operation) => 
+            throw new ArgumentOutOfRangeException(nameof(operation), operation, $"Unsupported operation: {operation}. Supported operations are Increase, Decrease, and Set.");
     }
 }

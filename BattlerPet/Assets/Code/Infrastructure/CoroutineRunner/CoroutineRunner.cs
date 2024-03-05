@@ -27,7 +27,8 @@ namespace Code.Infrastructure
 
         public void Dispose()
         {
-            foreach (IEnumerator coroutine in _currentlyRunningCoroutines.Where(coroutine => coroutine != null))
+            foreach (IEnumerator coroutine in _currentlyRunningCoroutines
+                         .Where(coroutine => coroutine != null))
                 StopCoroutine(coroutine);
 
             _currentlyRunningCoroutines.Clear();

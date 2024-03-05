@@ -157,6 +157,10 @@ PrefabInstance:
       propertyPath: <EntityType>k__BackingField
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 8984731905896837363, guid: 00e6080526315ae4290d54d90030f1ee, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00e6080526315ae4290d54d90030f1ee, type: 3}
 --- !u!4 &5388532633485612212 stripped

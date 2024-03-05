@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Code.Gameplay.Entity;
 using Code.Data.Battlefield;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ namespace Code.Gameplay.Core
     public class EntityRegister : IEntityRegister
     {
         private readonly Dictionary<string, IEntity> _allEntities = new();
-    
         private readonly Dictionary<SideType, List<string>> _sidesMapping = new()
         {
             [SideType.PlayerSide] = new List<string>(),
@@ -18,14 +16,18 @@ namespace Code.Gameplay.Core
         
         public IEntity GetEntity(string entityId) => 
             _allEntities.GetValueOrDefault(entityId);
-        
-        // public T GetEntity<T>(string entityId) where T : class
-        // {
-        //     IEntity entity = _allEntities.GetValueOrDefault(entityId);
-        //     if (entity is T castedEntity)
-        //         return castedEntity;
-        //     throw new InvalidOperationException($"Entity with ID { entityId } does not implement the interface { typeof(T) }.");
-        // }
+
+        public bool IsAlive(string entityId) => 
+            _allEntities.ContainsKey(entityId);
+
+        public IEnumerable<string> AlliesOf(string heroId) => 
+            _sidesMapping.Values.FirstOrDefault(list => list.Contains(heroId));
+
+        public IEnumerable<string> EnemiesOf(string heroId) => 
+            _sidesMapping.Values.FirstOrDefault(list => !list.Contains(heroId));
+
+        public IEnumerable<IEntity> AllActiveEntities() =>
+            _allEntities.Values;
 
         public void AddEntityToTeam(IEntity entity, SideType sideType)
         {
@@ -40,14 +42,5 @@ namespace Code.Gameplay.Core
             
             _allEntities.Remove(entityId);
         }
-
-        public IEnumerable<string> AlliesOf(string heroId) => 
-            _sidesMapping.Values.FirstOrDefault(list => list.Contains(heroId));
-
-        public IEnumerable<string> EnemiesOf(string heroId) => 
-            _sidesMapping.Values.FirstOrDefault(list => !list.Contains(heroId));
-
-        public IEnumerable<IEntity> AllActiveEntities() =>
-            _allEntities.Values;
     }
 }

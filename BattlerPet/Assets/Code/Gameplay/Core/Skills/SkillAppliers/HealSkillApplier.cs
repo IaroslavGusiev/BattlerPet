@@ -1,29 +1,20 @@
 ﻿using Code.Services;
+using Code.Gameplay.Entity;
 using Code.StaticData.Gameplay;
 
 namespace Code.Gameplay.Core
 {
-    public class HealSkillApplier : ISkillApplier
+    public class HealSkillApplier : SkillApplier
     {
-        public SkillType SkillType => SkillType.Heal;
-        
-        private readonly IStaticDataService _staticDataService;
-        private readonly IEntityRegister _entityRegister;
+        public override SkillType SkillType => SkillType.Heal;
 
-        public HealSkillApplier(IStaticDataService staticDataService, IEntityRegister entityRegister)
-        {
-            _staticDataService = staticDataService;
-            _entityRegister = entityRegister;
-        }
+        public HealSkillApplier(IStaticDataService staticDataService, IEntityRegister entityRegister) : base(staticDataService, entityRegister) { }
 
-        public void WarmUp()
+        protected override void ApplySkillTo(IEntity caster, SkillExecution skillExecution, string targetId)
         {
-            
-        }
-
-        public void ApplySkill(SkillExecution skillExecution)
-        {
-            
+            IEntity selectedTarget = EntityRegister.GetEntity(targetId);
+            SkillConfig skillConfig = StaticDataService.SkillConfigFor(caster.EntityType, skillExecution.AttackType);
+            selectedTarget.IncreaseHealth(skillConfig.Value);
         }
     }
 }

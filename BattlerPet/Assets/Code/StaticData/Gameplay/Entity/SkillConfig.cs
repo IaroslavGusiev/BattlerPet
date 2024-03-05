@@ -8,7 +8,8 @@ namespace Code.StaticData.Gameplay
         [field: Header("Base")]
         [field: SerializeField] public string Name { get; private set; }
         [field: SerializeField] public EntityType EntityType { get; private set; }
-        [field: SerializeField] public AttackType AttackType { get; private set; }
+        [field: SerializeField] public AttackType AttackType { get; private set; } // SkillCategory
+        [field: SerializeField] public float ActualSkillAttackTime { get; set; }
         [field: Space(15)]
         
         [field: Header("Skill Parameters")]
@@ -20,7 +21,7 @@ namespace Code.StaticData.Gameplay
         
         [field: Header("Skill Modifier Parameters")]
         [field: SerializeField] public SkillModifier SkillModifier { get; private set; }
-        
+
         public void Rename(string newName) => 
             name = newName;
     }

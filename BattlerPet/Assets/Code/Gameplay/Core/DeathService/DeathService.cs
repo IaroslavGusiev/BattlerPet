@@ -1,6 +1,5 @@
 ﻿using UniRx;
 using System;
-using UnityEngine;
 using Code.Gameplay.Entity;
 
 namespace Code.Gameplay.Core
@@ -28,9 +27,9 @@ namespace Code.Gameplay.Core
 
         private void HandleDeathOfEntity(string entityId)
         {
-            Debug.Log("<color=yellow>1111</color>");
             IEntity entity = _entityRegister.GetEntity(entityId);
             entity.AnimateDeath(); //  TODO: wait for anim time and disable in scene
+            _entityRegister.Unregister(entityId);
         }
     }
 }

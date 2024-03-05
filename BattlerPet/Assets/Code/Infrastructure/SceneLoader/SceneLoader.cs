@@ -21,7 +21,7 @@ namespace Code.Infrastructure
         {
             LifetimeScope parentScope = LifetimeScope.Find<T>();
             return LoadSceneWithScopeParentingAsync(scene.ToString(), parentScope, onLoaded);
-        } 
+        }
 
         private async UniTask LoadSceneAsync(string nextScene, LoadSceneMode loadMode, Action onLoaded = null)
         {

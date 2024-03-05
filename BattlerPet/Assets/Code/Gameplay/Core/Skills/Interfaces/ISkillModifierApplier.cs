@@ -5,7 +5,6 @@ namespace Code.Gameplay.Core
     public interface ISkillModifierApplier
     {
         public SkillModifierType SkillModifierType { get; }
-        
-        void ApplyModifier();
+        void ApplyModifier(SkillExecution skillExecution);
     }
 }

@@ -5,28 +5,34 @@ namespace Code.Gameplay.Entity
 {
     public class SkillModel : ISkillModel
     {
-        private float _cooldown;
         public float MaxCooldown { get; private set; }
-        public AttackType AttackType { get; private set; }
+        public AttackType AttackType { private set; get; }
 
         public SkillType SkillType;
         public SkillModifier SkillModifier;
-        
-        public bool IsReady => _cooldown <= 0;
+        private float _cooldown;
+        private float _actualSkillAttackTime;
 
         public SkillModel(SkillConfig config)
         {
             config
+                .With(x => SkillType = x.SkillType)
                 .With(x => MaxCooldown = x.Cooldown)
                 .With(x => AttackType = x.AttackType)
-                .With(x => SkillType = x.SkillType)
-                .With(x => SkillModifier = x.SkillModifier);
+                .With(x => SkillModifier = x.SkillModifier)
+                .With(x => _actualSkillAttackTime = x.ActualSkillAttackTime);
         }
 
-        public void PutOnCooldown()
+        public float GetSkillAnimationPlayTime()
         {
-            _cooldown = MaxCooldown;
+            return _actualSkillAttackTime;
         }
+
+        public bool IsReady => 
+            _cooldown <= 0;
+
+        public void PutOnCooldown() => 
+            _cooldown = MaxCooldown;
 
         public void TickCooldown(float delta)
         {

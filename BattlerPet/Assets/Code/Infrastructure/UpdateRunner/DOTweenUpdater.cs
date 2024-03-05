@@ -9,7 +9,7 @@ namespace Code.Infrastructure.UpdateRunner
     {
         private ITickSource _tickSource;
 
-        public DoTweenUpdater(ITickSource tickSource)
+        public DoTweenUpdater(ITickSource tickSource) // TODO: rename something like DoTween Core
         {
             _tickSource = tickSource;
             _tickSource.AddListener(this);

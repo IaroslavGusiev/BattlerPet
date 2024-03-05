@@ -2,7 +2,10 @@
 {
     public interface IAttributeHandler
     {
-        void ReplenishHaste(float amountToAdd);
-        void TakeDamage(float incomeDamage);
+        void IncreaseHaste(float value);
+        void ReduceHaste(float value);
+        
+        void IncreaseHealth(float value);
+        void ReduceHealth(float value);
     }
 }

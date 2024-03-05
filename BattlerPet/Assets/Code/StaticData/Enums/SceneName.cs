@@ -6,8 +6,7 @@
         
         BootstrapScene = 0,
         BattleArea = 1,
-        ShowWindowsScene = 2,
         
-        // last index = 2
+        // last index = 1
     }
 }

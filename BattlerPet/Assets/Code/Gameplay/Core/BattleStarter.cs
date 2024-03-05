@@ -12,15 +12,13 @@ namespace Code.Gameplay.Core
 {
     public class BattleStarter 
     {
-        private readonly IDeathService _deathService;
         private readonly IEntityFactory _entityFactory;
         private readonly IEntityRegister _entityRegister;
         private readonly EntityRandomizer _entityRandomizer;
         private readonly IBattleTurnService _battleTurnService;
 
-        public BattleStarter(IEntityFactory entityFactory, IEntityRegister entityRegister, EntityRandomizer entityRandomizer, IDeathService deathService, IBattleTurnService battleTurnService)
+        public BattleStarter(IEntityFactory entityFactory, IEntityRegister entityRegister, EntityRandomizer entityRandomizer, IBattleTurnService battleTurnService)
         {
-            _deathService = deathService;
             _entityFactory = entityFactory;
             _entityRegister = entityRegister;
             _entityRandomizer = entityRandomizer;

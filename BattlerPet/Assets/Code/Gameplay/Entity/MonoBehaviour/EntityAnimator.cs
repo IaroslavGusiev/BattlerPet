@@ -37,7 +37,7 @@ namespace Code.Gameplay.Entity
         public void PlayAttack(AttackType attackType)
         {
             ResetAllTrigger();
-            _animator.SetTrigger(_attackHashes[attackType.ToInt()]);
+            _animator.SetTrigger(_attackHashes[attackType.ToInt()]); 
         }
 
         public void PlayDeath()

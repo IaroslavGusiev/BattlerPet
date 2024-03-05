@@ -1,10 +1,12 @@
-﻿using Code.Gameplay.Entity;
+﻿using System.Linq;
 using Code.Services;
+using Code.Gameplay.Entity;
 using Code.StaticData.Gameplay;
+using System.Collections.Generic;
 
 namespace Code.Gameplay.Core.AI
 {
-    public class StupidAI
+    public class StupidAI : IArtificialIntelligence
     {
         private readonly ITargetChooser _targetChooser;
         private readonly IEntityRegister _entityRegister;
@@ -19,46 +21,36 @@ namespace Code.Gameplay.Core.AI
 
         public EntityAction MakeBestDecision(IEntity entity)
         {
-            // SkillType skillType = entity // TODO: here i need ready skills
+            AttackType attackType = entity.GetReadySkills().PickRandom().AttackType;
+            SkillConfig config = _staticDataService.SkillConfigFor(entity.EntityType, attackType);
+
+            return new EntityAction
+            {
+                Caster = entity.Id,
+                SkillType = config.SkillType,
+                AttackType = config.AttackType,
+                SkillModifier = config.SkillModifier,
+                TargetIds = SelectTargets(entity.Id, config.TargetType, _targetChooser.AvailableTargetsFor(entity.Id, config.TargetType))
+            };
+            
+        }
+
+        private List<string> SelectTargets(string casterId, TargetType targetType, IEnumerable<string> availableTargets)
+        {
+            switch (targetType)
+            {
+                case TargetType.Self:
+                    return new List<string> { casterId };
+                
+                case TargetType.Enemy:
+                case TargetType.Ally:
+                    return new List<string> { availableTargets.PickRandom() };
+                
+                case TargetType.AllEnemies:
+                case TargetType.AllAllies:
+                    return availableTargets.ToList();
+            }
             return default;
         }
-        
-        // public HeroAction MakeBestDecision(IHero readyHero)
-        // {
-        //     SkillTypeId chosen =
-        //         readyHero.State.SkillStates
-        //             .Where(x => x.IsReady)
-        //             .Select(x => x.TypeId)
-        //             .PickRandom();
-        //
-        //     HeroSkill skill = _staticDataService.HeroSkillFor(chosen, readyHero.TypeId);
-        //
-        //     return new HeroAction
-        //     {
-        //         Caster = readyHero,
-        //         Skill = chosen,
-        //         SkillKind = skill.Kind,
-        //         TargetIds = ChoseTargets(readyHero.Id, skill.TargetType, _targetPicker.AvailableTargetsFor(readyHero.Id, skill.TargetType))
-        //     };
-        // }
-        //
-        // private List<string> ChoseTargets(string casterId, TargetType targetType, IEnumerable<string> availableTargets)
-        // {
-        //     switch (targetType)
-        //     {
-        //         case TargetType.Ally:
-        //             return new List<string> {_heroRegistry.AlliesOf(casterId).PickRandom()};
-        //         case TargetType.Enemy:
-        //             return new List<string> {_heroRegistry.EnemiesOf(casterId).PickRandom()};
-        //         case TargetType.AllAllies:
-        //             return _heroRegistry.AlliesOf(casterId).ToList();
-        //         case TargetType.AllEnemies:
-        //             return _heroRegistry.EnemiesOf(casterId).ToList();
-        //         case TargetType.Self:
-        //             return new List<string> {casterId};
-        //     }
-        //
-        //     return new List<string>();
-        // }
     }
 }

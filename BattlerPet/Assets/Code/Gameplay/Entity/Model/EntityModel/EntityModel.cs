@@ -1,4 +1,5 @@
 ﻿using UniRx;
+using Code.Data;
 using System.Linq;
 using CodeBase.Extensions;
 using Code.StaticData.Gameplay;
@@ -6,27 +7,33 @@ using System.Collections.Generic;
 
 namespace Code.Gameplay.Entity
 {
-    public class EntityModel : IReactiveModel
+    public class EntityModel : IReactiveModel, ISavedData<EntityModelDTO>
     {
         public IReadOnlyReactiveProperty<string> UponDeath { get; private set; }
 
+        private readonly EntityModelDTO _modelDto;
         private readonly List<SkillModel> _skillModels;
         private readonly JournalEntryReporter _entryReporter;
         private readonly List<EntityAttribute> _entityAttributes = new();
 
-        public EntityModel(string entityId, float maxHp, float maxHaste, List<SkillModel> skillModels)
+        public EntityModel(EntityModelDTO modelDto, List<SkillModel> skillModels) // TODO: EntityModelDTO 
         {
+            _modelDto = modelDto;
             _skillModels = skillModels;
             _entryReporter = new JournalEntryReporter();
-            CreateAttribute(AttributeType.Health, maxHp, maxHp);
-            CreateAttribute(AttributeType.Haste, maxHaste, 0f);
-            CreateUponDeathReactiveProperty(entityId);
+            CreateAttribute(AttributeType.Health, _modelDto.MaxHealth, _modelDto.MaxHealth);
+            CreateAttribute(AttributeType.Haste, _modelDto.MaxHaste, 0f);
+            CreateUponDeathReactiveProperty(_modelDto.EntityId);
         }
+        
+        public EntityModelDTO GetDataToSave() => 
+            ParseCurrentModelToDto();
 
-        public IEnumerable<ISkillModel> GetReadySkills()
-        {
-            return _skillModels.Where(x => x.IsReady);
-        }
+        public IEnumerable<ISkillModel> GetReadySkills() => 
+            _skillModels.Where(x => x.IsReady);
+
+        public ISkillModel GetSkillModel(AttackType attackType) =>
+            _skillModels.FirstOrDefault(x => x.AttackType == attackType);
 
         public IAttribute GetAttribute(AttributeType attributeType) => 
             _entityAttributes.FirstOrDefault(x => x.AttributeType == attributeType);
@@ -34,19 +41,33 @@ namespace Code.Gameplay.Entity
         public void TickSkillsCooldown(float deltaTime) => 
             _skillModels.ForEach(x => x.TickCooldown(deltaTime));
 
-        public void TakeDamage(float incomeDamage)
+        public void IncreaseHealth(float value) => 
+            ModifyAttribute(AttributeType.Health, AttributeOperation.Increase, value);
+
+        public void IncreaseHaste(float value) => 
+            ModifyAttribute(AttributeType.Haste, AttributeOperation.Increase, value);
+
+        public void ReduceHealth(float value) => 
+            ModifyAttribute(AttributeType.Health, AttributeOperation.Decrease, value);
+
+        public void ReduceHaste(float value) => 
+            ModifyAttribute(AttributeType.Haste, AttributeOperation.Decrease, value);
+
+        public void SetHasteToZero() => 
+            ModifyAttribute(AttributeType.Haste, AttributeOperation.Set, 0f);
+
+        private void ModifyAttribute(AttributeType attributeType, AttributeOperation operation, float value)
         {
-            EntityAttribute healthAttribute = GetConcreteAttribute(AttributeType.Health);
-            _entryReporter.AddEntry<TakeDamageJournalEntry>(incomeDamage, healthAttribute.CurrentValue.Value);
-            healthAttribute.DecreaseCurrentValue(incomeDamage);
+            EntityAttribute attribute = GetConcreteAttribute(attributeType);
+            attribute.ModifyCurrentValue(value, operation);
+            _entryReporter.AddEntry(attributeType, operation, value, attribute.CurrentValue.Value); 
         }
 
-        public void UpdateHaste(float amountToAdd)
-        {
-            EntityAttribute hasteAttribute = GetConcreteAttribute(AttributeType.Haste);
-            _entryReporter.AddEntry<HasteJournalEntry>(amountToAdd, hasteAttribute.CurrentValue.Value);
-            hasteAttribute.IncreaseCurrentValue(amountToAdd);
-        }
+        private void CreateAttribute(AttributeType attributeType, float maxValue, float currentValue) => 
+            _entityAttributes.Add(new EntityAttribute(attributeType, maxValue, currentValue));
+
+        private EntityAttribute GetConcreteAttribute(AttributeType attributeType) => 
+            _entityAttributes.FirstOrDefault(x => x.AttributeType == attributeType);
 
         private void CreateUponDeathReactiveProperty(string entityId)
         {
@@ -55,13 +76,18 @@ namespace Code.Gameplay.Entity
                 .ToReactiveProperty(entityId);
         }
 
-        private void CreateAttribute(AttributeType attributeType, float maxValue, float currentValue)
+        private EntityModelDTO ParseCurrentModelToDto()
         {
-            new EntityAttribute(attributeType, maxValue, currentValue)
-                .With(x => _entityAttributes.Add(x));
+            return _modelDto
+                .With(x => x.EntityId = _modelDto.EntityId)
+                .With(x => x.EntityType = _modelDto.EntityType)
+                .With(x => x.CurrentHaste = GetConcreteAttribute(AttributeType.Haste).CurrentValue.Value)
+                .With(x => x.CurrentHealth= GetConcreteAttribute(AttributeType.Health).CurrentValue.Value);
         }
+    }
 
-        private EntityAttribute GetConcreteAttribute(AttributeType attributeType) => 
-            _entityAttributes.FirstOrDefault(x => x.AttributeType == attributeType);
+    public interface ISavedData<out TArg>
+    {
+        public TArg GetDataToSave();
     }
 }

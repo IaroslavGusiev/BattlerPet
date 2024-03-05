@@ -1,9 +1,10 @@
-﻿using Code.Data;
+﻿using Code.UI;
+using Code.Data;
 using VContainer;
 using Code.Services;
 using VContainer.Unity;
 using Code.UI.LoadingCurtain;
-using Code.UI.ShowWindowsService;
+using Code.UI.ScreenServiceSpace;
 
 namespace Code.CompositionRoot
 {
@@ -18,22 +19,30 @@ namespace Code.CompositionRoot
         public void Install(IContainerBuilder builder)
         {
             _builder = builder;
+            RegisterUIFactory();
             RegisterLoadingCurtain();
             RegisterShowWindowService();
         }
-        
-        private void RegisterShowWindowService()
+
+        private void RegisterUIFactory()
         {
-            _builder.Register<ScreenService>(Lifetime.Singleton)
-                .As<IScreenService>()
-                .AsSelf();
+            _builder
+                .Register<UIFactory>(Lifetime.Singleton)
+                .As<IUIFactory>();
         }
-        
+
         private void RegisterLoadingCurtain()
         {
             _builder.RegisterComponentInNewPrefab(_corePrefabsData.LoadingCurtainPrefab, Lifetime.Singleton)
                 .DontDestroyOnLoad()
                 .As<ILoadingCurtain>();
+        }
+
+        private void RegisterShowWindowService()
+        {
+            _builder.Register<ScreenService>(Lifetime.Singleton)
+                .As<IScreenService>()
+                .AsSelf();
         }
     }
 }

@@ -1,29 +1,20 @@
 ﻿using Code.Services;
+using Code.Gameplay.Entity;
 using Code.StaticData.Gameplay;
 
 namespace Code.Gameplay.Core
 {
-    public class HasteBuffSkillApplier : ISkillApplier
+    public class HasteBuffSkillApplier : SkillApplier
     {
-        public SkillType SkillType => SkillType.HasteBuff;
-        
-        private readonly IStaticDataService _staticDataService;
-        private readonly IEntityRegister _entityRegister;
+        public override SkillType SkillType => SkillType.HasteBuff;
 
-        public HasteBuffSkillApplier(IStaticDataService staticDataService, IEntityRegister entityRegister)
-        {
-            _staticDataService = staticDataService;
-            _entityRegister = entityRegister;
-        }
+        public HasteBuffSkillApplier(IStaticDataService staticDataService, IEntityRegister entityRegister) : base(staticDataService, entityRegister) { }
 
-        public void WarmUp()
+        protected override void ApplySkillTo(IEntity caster, SkillExecution skillExecution, string targetId)
         {
-            
-        }
-
-        public void ApplySkill(SkillExecution skillExecution)
-        {
-            
+            IEntity selectedTarget = EntityRegister.GetEntity(targetId);
+            SkillConfig skillConfig = StaticDataService.SkillConfigFor(caster.EntityType, skillExecution.AttackType);
+            selectedTarget.IncreaseHaste(skillConfig.Value);
         }
     }
 }
