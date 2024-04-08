@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Code.Services
 {
-    public class SaveLoadService : ISaveLoadService
+    public class SaveLoadService : ISaveLoadService // TODO: rename with mention that it's player data
     {
         private readonly ISaver _saver;
         private readonly IEnumerable<IProgressSaver> _saverServices;

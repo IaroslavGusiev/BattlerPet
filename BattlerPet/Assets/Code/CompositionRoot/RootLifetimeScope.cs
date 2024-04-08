@@ -1,19 +1,17 @@
 ﻿using Code.Data;
 using VContainer;
 using UnityEngine;
-using VContainer.Unity;
 using Code.Infrastructure;
+using Code.Infrastructure.GameStateMachineScope;
 
 namespace Code.CompositionRoot
 {
-    public class RootLifetimeScope : LifetimeScope
+    public class RootLifetimeScope : SceneScope<AppStateMachine, AppBootstrapper>
     {
         [SerializeField] private CorePrefabsData _corePrefabsData;
 
-        protected override void Configure(IContainerBuilder builder)
+        protected override void OnConfigure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<Bootstrapper>();
-            
             new InfrastructureInstaller()
                 .Install(builder);
             

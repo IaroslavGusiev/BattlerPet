@@ -9,12 +9,12 @@ namespace Code.Infrastructure.GameStateMachineScope
     {
         private readonly AdsService _adsService;
         private readonly IAssetProvider _assetProvider;
-        private readonly GameStateMachine _gameStateMachine;
+        private readonly AppStateMachine _appStateMachine;
         private readonly IStaticDataService _staticDataService;
         private readonly ScreenService _screenService;
 
         public BootstrapState(
-            GameStateMachine gameStateMachine, 
+            AppStateMachine appStateMachine, 
             ScreenService screenService, 
             AdsService adsService, 
             IStaticDataService staticDataService, 
@@ -23,14 +23,14 @@ namespace Code.Infrastructure.GameStateMachineScope
             _adsService = adsService;
             _staticDataService = staticDataService;
             _assetProvider = assetProvider;
-            _gameStateMachine = gameStateMachine;
+            _appStateMachine = appStateMachine;
             _screenService = screenService;
         }
 
         public async UniTask Enter()
         {
            await InitializeServices(); 
-           await _gameStateMachine.Enter<LoadPlayerProgressState>();
+           await _appStateMachine.Enter<LoadPlayerProgressState>();
         }
 
         public async UniTask Exit() => 
@@ -39,6 +39,7 @@ namespace Code.Infrastructure.GameStateMachineScope
         private async UniTask InitializeServices()
         {
             await _assetProvider.InitializeAsync();
+            await _assetProvider.WarmupAssetsByLabel(AssetLabels.Configs);
             await _staticDataService.Initialize();
             _adsService.Initialize();
             _screenService.Initialize();

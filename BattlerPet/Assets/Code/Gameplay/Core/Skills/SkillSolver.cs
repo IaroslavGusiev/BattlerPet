@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Code.Services;
 using Code.Gameplay.Entity;
-using System.Collections.Generic;
 using Code.StaticData.Gameplay;
+using System.Collections.Generic;
 
 namespace Code.Gameplay.Core
 {
@@ -37,7 +37,7 @@ namespace Code.Gameplay.Core
             for (int i = _skillExecutions.Count - 1; i >= 0; i--)
             {
                 SkillExecution activeSkill = _skillExecutions[i];
-                activeSkill.RemainingTime -= deltaTime;
+                activeSkill.RemainingTime -= deltaTime; // TODO: prepare time then wait until attack is done
                 
                 if (activeSkill.RemainingTime <= 0)
                 {

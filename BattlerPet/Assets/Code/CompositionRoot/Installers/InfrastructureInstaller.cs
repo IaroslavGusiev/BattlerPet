@@ -2,8 +2,6 @@
 using Code.Services;
 using VContainer.Unity;
 using Code.Infrastructure;
-using Code.Infrastructure.StateMachineBase;
-using Code.Infrastructure.GameStateMachineScope;
 
 namespace Code.CompositionRoot
 {
@@ -14,24 +12,8 @@ namespace Code.CompositionRoot
         public void Install(IContainerBuilder builder)
         {
             _builder = builder;
-            RegisterGameStateMachine();
-            RegisterStateFactory();
             RegisterSceneLoader();
             RegisterAssetProvider();
-        }
-        
-        private void RegisterGameStateMachine()
-        {
-            _builder
-                .Register<GameStateMachine>(Lifetime.Singleton)
-                .AsSelf();
-        }
-
-        private void RegisterStateFactory()
-        {
-            _builder
-                .Register<StateFactory>(Lifetime.Singleton)
-                .AsSelf();
         }
         
         private void RegisterSceneLoader()

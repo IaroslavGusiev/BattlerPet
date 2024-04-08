@@ -1,27 +1,20 @@
 ﻿using VContainer;
 using System.Threading;
-using VContainer.Unity;
 using Code.Gameplay.States;
+using Code.Infrastructure;
 using Cysharp.Threading.Tasks;
 using Code.Infrastructure.StateMachineBase;
 
 namespace Code.Gameplay
 {
-    public class BattleAreaBootstrapper : IAsyncStartable
+    public class BattleAreaBootstrapper : ScopeBootstrapper<BattleAreaStateMachine>
     {
-        private readonly BattleAreaStateMachine _stateMachine;
-        private readonly StateFactory _stateFactory;
+        public BattleAreaBootstrapper(BattleAreaStateMachine stateMachine, StateFactory stateFactory) : base(stateMachine, stateFactory) { }
 
-        public BattleAreaBootstrapper(BattleAreaStateMachine stateMachine, StateFactory stateFactory)
-        {
-            _stateMachine = stateMachine;
-            _stateFactory = stateFactory;
-        }
-
-        public async UniTask StartAsync(CancellationToken token)
-        {
-            _stateMachine.RegisterState(_stateFactory.Create<CreateBattlefieldState>(Lifetime.Scoped));
-            await _stateMachine.Enter<CreateBattlefieldState>();
+        protected override async UniTask StartLogic(CancellationToken token)
+        { 
+            StateMachine.RegisterState(StateFactory.Create<CreateBattlefieldState>(Lifetime.Scoped));
+            await StateMachine.Enter<CreateBattlefieldState>();
         }
     }
 }

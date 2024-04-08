@@ -4,25 +4,15 @@ using Code.Gameplay;
 using VContainer.Unity;
 using Code.Gameplay.Core;
 using Code.Infrastructure;
-using Code.Gameplay.Battlefield;
 using Code.Gameplay.Core.AI;
-using Code.Infrastructure.StateMachineBase;
+using Code.Gameplay.Battlefield;
 
 namespace Code.LifetimeScopes
 {
-    public class BattleAreaScope : LifetimeScope 
+    public class BattleAreaScope : SceneScope<BattleAreaStateMachine, BattleAreaBootstrapper>
     {
-        protected override void Configure(IContainerBuilder builder)
+        protected override void OnConfigure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<BattleAreaBootstrapper>();
-
-            builder
-                .Register<BattleAreaStateMachine>(Lifetime.Scoped)
-                .AsSelf();
-            
-            builder.Register<StateFactory>(Lifetime.Scoped)
-                .AsSelf();
-            
             builder
                 .Register<GameFactory>(Lifetime.Scoped)
                 .AsImplementedInterfaces();

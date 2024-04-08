@@ -9,15 +9,15 @@ namespace Code.Infrastructure.GameStateMachineScope
     public class LoadPlayerProgressState : IState
     {
         private readonly ISaveLoadService _saveLoadService;
-        private readonly GameStateMachine _gameStateMachine;
+        private readonly AppStateMachine _appStateMachine;
         private readonly IPlayerProgressProvider _playerProgress;
         private readonly IEnumerable<IProgressReader> _progressReaderServices;
 
-        public LoadPlayerProgressState(GameStateMachine gameStateMachine, ISaveLoadService saveLoadService, IPlayerProgressProvider playerProgress, IEnumerable<IProgressReader> progressReaderServices)
+        public LoadPlayerProgressState(AppStateMachine appStateMachine, ISaveLoadService saveLoadService, IPlayerProgressProvider playerProgress, IEnumerable<IProgressReader> progressReaderServices)
         {
             _playerProgress = playerProgress;
             _saveLoadService = saveLoadService;
-            _gameStateMachine = gameStateMachine;
+            _appStateMachine = appStateMachine;
             _progressReaderServices = progressReaderServices;
         }
 
@@ -35,7 +35,7 @@ namespace Code.Infrastructure.GameStateMachineScope
         {
             PlayerProgress progress = await LoadProgressOrInitNew();
             NotifyProgressReaders(progress);
-            await _gameStateMachine.Enter<BattleAreaState>();
+            await _appStateMachine.Enter<BattleAreaState>();
         }
 
         private void NotifyProgressReaders(PlayerProgress progress)
