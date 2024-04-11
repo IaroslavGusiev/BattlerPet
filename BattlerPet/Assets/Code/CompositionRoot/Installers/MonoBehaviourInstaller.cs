@@ -19,7 +19,6 @@ namespace Code.CompositionRoot
         {
             _builder = builder;
             RegisterUpdateRunner();
-            RegisterDoTweenUpdater();
             RegisterCoroutineRunner();
         }
 
@@ -27,13 +26,6 @@ namespace Code.CompositionRoot
         {
             _builder.Register<UpdateRunner>(Lifetime.Singleton)
                 .As<ITickable, ITickSource>();
-        }
-
-        private void RegisterDoTweenUpdater()
-        {
-            _builder
-                .Register<DoTweenUpdater>(Lifetime.Singleton)
-                .As<IInitializable, IDisposable>();
         }
 
         private void RegisterCoroutineRunner()

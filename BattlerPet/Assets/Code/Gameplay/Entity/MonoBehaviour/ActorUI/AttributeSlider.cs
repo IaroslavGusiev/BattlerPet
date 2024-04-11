@@ -1,8 +1,9 @@
 ﻿using UniRx;
-using DG.Tweening;
+using LitMotion;
 using UnityEngine;
 using UnityEngine.UI;
 using Code.StaticData.Gameplay;
+using CodeBase.Extensions;
 
 namespace Code.Gameplay.Entity
 {
@@ -12,45 +13,43 @@ namespace Code.Gameplay.Entity
 
         [field: SerializeField] public AttributeType AttributeType { get; private set; }
         [SerializeField] private Slider _slider;
-        
+
         private readonly CompositeDisposable _disposables = new();
         private IAttribute _attribute;
-        private Tween _tween;
+        private MotionHandle _sliderTweenHandle;
 
         private void OnDestroy()
         {
-            _disposables.ForEach(x => x.Dispose()); 
+            _disposables.ForEach(x => x.Dispose());
             _disposables.Clear();
         }
 
         public void Initialize(IAttribute attribute)
         {
             _attribute = attribute;
-            
+
             _attribute.MaxValue
                 .Subscribe(SetMaxValue)
                 .AddTo(_disposables);
-            
+
             _attribute.CurrentValue
                 .Subscribe(UpdateCurrentValue)
                 .AddTo(_disposables);
         }
 
-        private void SetMaxValue(float maxValue) => 
+        private void SetMaxValue(float maxValue) =>
             _slider.maxValue = maxValue;
 
-        private void UpdateCurrentValue(float value) => 
-            DoValue(_slider, value, FillTweenDuration);
+        private void UpdateCurrentValue(float value) =>
+            TweenSliderValue(_slider, value, FillTweenDuration);
 
-        private void DoValue(Slider target, float endValue, float duration) 
+        private void TweenSliderValue(Slider slider, float endValue, float duration)
         {
-            if (_tween != null && _tween.IsPlaying()) // TODO: extensions
-                _tween.Kill();
-            
-            _tween = DOTween.To(() => target.value, x => target.value = x, endValue, duration)
-                .SetOptions(false)
-                .SetTarget(target)
-                .SetLink(gameObject, LinkBehaviour.KillOnDestroy);
+            _sliderTweenHandle.CancelIfValid();
+
+            _sliderTweenHandle = LMotion
+                .Create(slider.value, endValue, duration)
+                .BindToSlider(slider);
         }
     }
 }

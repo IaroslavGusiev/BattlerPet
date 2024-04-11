@@ -17,25 +17,19 @@ namespace Code.Gameplay.Core
             StaticDataService = staticDataService;
         }
 
-        public void WarmUp()
-        {
-            
-        }
+        public void WarmUp() { }
 
-        public void ApplySkill(SkillExecution skillExecution)
-        {
-            IEntity caster = GetCaster(skillExecution.Caster);
+        public void ApplySkill(SkillExecution skillExecution) => 
+            ProcessSkillExecution(skillExecution);
 
-            foreach (string targetId in skillExecution.TargetIds)
-                ApplySkillTo(caster, skillExecution, targetId);
-        }
+        protected abstract void ProcessSkillExecution(SkillExecution skillExecution);
 
-        protected abstract void ApplySkillTo(IEntity caster, SkillExecution skillExecution, string targetId);
-
-        private IEntity GetCaster(string casterID) => 
+        protected IEntity GetCaster(string casterID) => 
             EntityRegister.GetEntity(casterID);
         
-        // _battleTextPlayer.PlayText($"{skill.Value}", Color.red, target.transform.position);
-        // PlayFx(skill.CustomTargetFx, target.transform.position);
+        protected SkillConfig GetSkillConfig(EntityType entityType, AttackType attackType) =>  
+            StaticDataService.SkillConfigFor(entityType, attackType);
+
+        // TODO: calculate skill value
     }
 }
