@@ -5,6 +5,7 @@ using Code.Services;
 using VContainer.Unity;
 using Code.Gameplay.Core;
 using Code.Gameplay.Entity;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Code.StaticData.Gameplay;
 using Code.Gameplay.Battlefield;
@@ -29,21 +30,14 @@ namespace Code.Infrastructure
             _modelFactory = new ModelFactory();
         }
 
-        public async UniTask<EntityBehaviour> CreateEntity(EntityType entityType, Vector3 at, Quaternion rotation, Transform parent) 
+        public async UniTask<IEntity> CreateEntity(EntityType entityType, Vector3 at, Quaternion rotation, Transform parent) 
         {
             string uniqueId = CreateUniqueId();
             EntityConfig config = _staticDataService.EntityConfigFor(entityType);
             EntityModel entityModel = _modelFactory.CreateHeroModel(config, uniqueId);
-            EntityBehaviour entity = await CreateEntityBehaviour(config, at, rotation, parent);
-            entity.Initialize(new EntityController(entityModel), uniqueId);
+            EntityBehaviour entityBehaviour = await CreateEntityBehaviour(config, entityModel, at, rotation, parent);
             _deathService.RegisterEntity(entityModel);
-            return entity;
-        }
-
-        private async UniTask<EntityBehaviour> CreateEntityBehaviour(EntityConfig config, Vector3 at, Quaternion rotation, Transform parent)
-        {
-            var prefab = await _assetProvider.LoadAndGetComponent<EntityBehaviour>(config.PrefabAddress);
-            return _objectResolver.Instantiate(prefab, at, rotation, parent);
+            return new EntityPresenter(entityModel, entityBehaviour, entityType, uniqueId); // TODO: service to save model data; 
         }
 
         public async UniTask<BattlefieldBehaviour> CreateBattlefieldBehaviour(string prefabAddress)
@@ -57,6 +51,13 @@ namespace Code.Infrastructure
         {
             var prefab = await _assetProvider.LoadAndGetComponent<Cube>(prefabAddress);
             return _objectResolver.Instantiate(prefab, at, prefab.transform.rotation, parent);
+        }
+
+        private async Task<EntityBehaviour> CreateEntityBehaviour(EntityConfig config, EntityModel entityModel, Vector3 at, Quaternion rotation, Transform parent)
+        {
+            var prefab = await _assetProvider.LoadAndGetComponent<EntityBehaviour>(config.PrefabAddress);
+            EntityBehaviour behaviour = _objectResolver.Instantiate(prefab, at, rotation, parent);
+            return behaviour.Initialize(entityModel);
         }
 
         private string CreateUniqueId() => 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2374769662591409158}
-  - component: {fileID: 6067326968729893430}
+  - component: {fileID: 7422648524848378527}
   m_Layer: 0
   m_Name: RootLifetimeScope
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6067326968729893430
+--- !u!114 &7422648524848378527
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,5 +49,3 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _corePrefabsData: {fileID: 11400000, guid: 61dcf62af7d7f7846a899a4bf050d894, type: 2}
-  _testCube: {fileID: 5085156289382413613, guid: 1968768b18c7cf64f9c2ea6fd700e968, type: 3}
-  _testCircle: {fileID: -6814044222959774428, guid: 81fcc4a79e04f94479b3773fd784245e, type: 3}

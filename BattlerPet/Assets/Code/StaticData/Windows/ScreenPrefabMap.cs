@@ -17,8 +17,6 @@ namespace Code.StaticData.UI
         
         public AssetReference GetPrefabReference<TScreen>() where TScreen : CommonScreen
         {
-            Debug.Log($"<color=yellow> {_screenReferenceMap.Count} </color>");
-            
             if (_screenReferenceMap.TryGetValue(typeof(TScreen), out AssetReference screenReference))
                 return screenReference;
             

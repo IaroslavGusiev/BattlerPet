@@ -1,4 +1,5 @@
 ﻿using Code.Services;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using Code.UI.ScreenServiceSpace;
 using Code.Infrastructure.StateMachineBase;
@@ -7,41 +8,33 @@ namespace Code.Infrastructure.GameStateMachineScope
 {
     public class BootstrapState : IState
     {
-        private readonly AdsService _adsService;
+        private readonly ScreenService _screenService;
         private readonly IAssetProvider _assetProvider;
         private readonly AppStateMachine _appStateMachine;
         private readonly IStaticDataService _staticDataService;
-        private readonly ScreenService _screenService;
 
-        public BootstrapState(
-            AppStateMachine appStateMachine, 
-            ScreenService screenService, 
-            AdsService adsService, 
-            IStaticDataService staticDataService, 
-            IAssetProvider assetProvider)
+        public BootstrapState(AppStateMachine appStateMachine, ScreenService screenService, IStaticDataService staticDataService, IAssetProvider assetProvider)
         {
-            _adsService = adsService;
-            _staticDataService = staticDataService;
+            _screenService = screenService;
             _assetProvider = assetProvider;
             _appStateMachine = appStateMachine;
-            _screenService = screenService;
+            _staticDataService = staticDataService;
         }
 
-        public async UniTask Enter()
+        public async UniTask Enter(CancellationToken token)
         {
-           await InitializeServices(); 
-           await _appStateMachine.Enter<LoadPlayerProgressState>();
+            await InitializeServices(token);
+            await _appStateMachine.Enter<LoadPlayerProgressState>(token);
         }
 
-        public async UniTask Exit() => 
-            await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Configs);
+        public async UniTask Exit(CancellationToken token) =>
+            await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Configs, token);
 
-        private async UniTask InitializeServices()
+        private async UniTask InitializeServices(CancellationToken token)
         {
-            await _assetProvider.InitializeAsync();
-            await _assetProvider.WarmupAssetsByLabel(AssetLabels.Configs);
-            await _staticDataService.Initialize();
-            _adsService.Initialize();
+            await _assetProvider.InitializeAsync(token);
+            await _assetProvider.WarmupAssetsByLabel(AssetLabels.Configs, token);
+            await _staticDataService.Initialize(token);
             _screenService.Initialize();
         }
     }

@@ -10,11 +10,14 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Code.UI.ScreenServiceSpace;
 using Code.Infrastructure.UpdateRunner;
+using UnityEngine;
 
 namespace Code.Gameplay.Core
 {
     public class BattleTurnService : IBattleTurnService, ITickListener, IAsyncStartable, IDisposable
     {
+        public event Action<EntityAction> OnEntitySkillExecution;
+        
         private const float TurnTickDuration = 0.3f;
 
         private readonly IArtificialIntelligence _artificialIntelligence;
@@ -48,6 +51,9 @@ namespace Code.Gameplay.Core
             _skillCooldownService = skillCooldownService;
             _entityRegister = entityRegister;
             _tickSource.AddListener(this);
+
+            // IObservable<bool> observable = Observable.EveryApplicationPause();
+            // observable.Subscribe(x => Debug.Log("Pause"));
         }
         
         public async UniTask StartAsync(CancellationToken cancellation) => 
@@ -123,6 +129,7 @@ namespace Code.Gameplay.Core
         {
             EntityAction bestEntityAction = _artificialIntelligence.MakeBestDecision(entity);
             _skillSolver.ProcessEntityAction(bestEntityAction);
+            OnEntitySkillExecution?.Invoke(bestEntityAction);
         }
 
         private void SetPauseIfManualMode()

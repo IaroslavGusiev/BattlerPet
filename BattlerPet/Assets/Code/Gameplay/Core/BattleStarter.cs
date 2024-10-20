@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using Code.StaticData.Gameplay;
 using Code.Gameplay.Battlefield;
 using System.Collections.Generic;
+using UniRx;
 
 namespace Code.Gameplay.Core
 {
@@ -40,8 +41,8 @@ namespace Code.Gameplay.Core
                 foreach (EntityType entityType in randomTypes)
                 {
                     SlotBehaviour slot = slots.Dequeue();
-                    EntityBehaviour entity = await _entityFactory.CreateEntity(entityType, slot.GetPosition(), slot.GetRotation(), entityParent);
-                    _entityRegister.AddEntityToTeam(entity, sideType);
+                    IEntity entity = await _entityFactory.CreateEntity(entityType, slot.GetPosition(), slot.GetRotation(), entityParent);
+                    _entityRegister.AddEntityToTeam(entity, sideType); // TODO: add here entity presenter
                 }
             }
             

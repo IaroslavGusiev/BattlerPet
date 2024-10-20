@@ -1,7 +1,7 @@
 ﻿using VContainer;
 using System.Threading;
-using Code.Gameplay.States;
 using Code.Infrastructure;
+using Code.Gameplay.States;
 using Cysharp.Threading.Tasks;
 using Code.Infrastructure.StateMachineBase;
 
@@ -14,7 +14,7 @@ namespace Code.Gameplay
         protected override async UniTask StartLogic(CancellationToken token)
         { 
             StateMachine.RegisterState(StateFactory.Create<CreateBattlefieldState>(Lifetime.Scoped));
-            await StateMachine.Enter<CreateBattlefieldState>();
+            await StateMachine.Enter<CreateBattlefieldState>(token);
         }
     }
 }

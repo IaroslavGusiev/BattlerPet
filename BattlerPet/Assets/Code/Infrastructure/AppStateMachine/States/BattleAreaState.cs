@@ -1,6 +1,7 @@
 ﻿using Code.UI;
 using Code.Data;
 using Code.Services;
+using System.Threading;
 using Code.UI.LoadingCurtain;
 using Cysharp.Threading.Tasks;
 using Code.Infrastructure.StateMachineBase;
@@ -22,18 +23,18 @@ namespace Code.Infrastructure.GameStateMachineScope
             _loadingCurtain = loadingCurtain;
         }
 
-        public async UniTask Enter()
+        public async UniTask Enter(CancellationToken token)
         {
             _loadingCurtain.Show();
-            await _assetProvider.WarmupAssetsByLabel(AssetLabels.Entities);
-            await _assetProvider.WarmupAssetsByLabel(AssetLabels.Battlefield);
+            await _assetProvider.WarmupAssetsByLabel(AssetLabels.Entities, token);
+            await _assetProvider.WarmupAssetsByLabel(AssetLabels.Battlefield, token);
             await _sceneLoader.Load(SceneName.BattleArea, OnLoadedScene); 
         }
 
-        public async UniTask Exit()
+        public async UniTask Exit(CancellationToken token)
         {
-            await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Entities);
-            await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Battlefield);
+            await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Entities, token);
+            await _assetProvider.ReleaseAssetsByLabel(AssetLabels.Battlefield, token);
         }
 
         private async void OnLoadedScene()

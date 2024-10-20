@@ -28,8 +28,6 @@ namespace Code.Gameplay.Core
             IEntity casterEntity = _entityRegister.GetEntity(entityAction.Caster);
             CreateSkillExecution(entityAction, casterEntity.EntityType);
             casterEntity.ExecuteSkill(entityAction.AttackType);
-            
-            // BattleTextPlayer
         }
         
         public void SkillDelaysTick(float deltaTime)

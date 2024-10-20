@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Code.Gameplay.Entity
 {
-    public class EntityModel : IReactiveModel, ISavedData<EntityModelDTO>
+    public class EntityModel : IReactiveModel // TODO: separate logic for SkillComponent
     {
         public IReadOnlyReactiveProperty<string> UponDeath { get; private set; }
 
@@ -26,7 +26,7 @@ namespace Code.Gameplay.Entity
             CreateUponDeathReactiveProperty(_modelDto.EntityId);
         }
         
-        public EntityModelDTO GetDataToSave() => 
+        public EntityModelDTO GetDataToSave() => // TODO: when add need to make interface
             ParseCurrentModelToDto();
 
         public IEnumerable<ISkillModel> GetReadySkills() => 
@@ -36,7 +36,7 @@ namespace Code.Gameplay.Entity
             _skillModels.FirstOrDefault(x => x.AttackType == attackType);
 
         public IAttribute GetAttribute(AttributeType attributeType) => 
-            _entityAttributes.FirstOrDefault(x => x.AttributeType == attributeType);
+            GetConcreteAttribute(attributeType);
 
         public void TickSkillsCooldown(float deltaTime) => 
             _skillModels.ForEach(x => x.TickCooldown(deltaTime));
@@ -81,13 +81,8 @@ namespace Code.Gameplay.Entity
             return _modelDto
                 .With(x => x.EntityId = _modelDto.EntityId)
                 .With(x => x.EntityType = _modelDto.EntityType)
-                .With(x => x.CurrentHaste = GetConcreteAttribute(AttributeType.Haste).CurrentValue.Value)
+                .With(x => x.CurrentHaste = GetConcreteAttribute(AttributeType.Haste).CurrentValue.Value) // TODO: some extension
                 .With(x => x.CurrentHealth= GetConcreteAttribute(AttributeType.Health).CurrentValue.Value);
         }
-    }
-
-    public interface ISavedData<out TArg>
-    {
-        public TArg GetDataToSave();
     }
 }

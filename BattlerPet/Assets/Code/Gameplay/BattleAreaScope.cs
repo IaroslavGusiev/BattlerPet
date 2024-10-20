@@ -1,5 +1,4 @@
-﻿using System;
-using VContainer;
+﻿using VContainer;
 using Code.Gameplay;
 using VContainer.Unity;
 using Code.Gameplay.Core;
@@ -41,8 +40,8 @@ namespace Code.LifetimeScopes
                 .Register<SkillCooldownService>(Lifetime.Scoped)
                 .AsSelf();
 
-            builder.Register<BattleTurnService>(Lifetime.Scoped)
-                .As<IBattleTurnService, IAsyncStartable, IDisposable>();
+            builder.RegisterEntryPoint<BattleTurnService>(Lifetime.Scoped)
+                .As<IBattleTurnService>();
 
             builder
                 .Register<HasteService>(Lifetime.Scoped)

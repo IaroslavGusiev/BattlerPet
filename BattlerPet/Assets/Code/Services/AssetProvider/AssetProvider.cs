@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Linq;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using Object = UnityEngine.Object;
@@ -15,9 +16,13 @@ namespace Code.Services
         private readonly Dictionary<string, Object> _cachedObjects = new();
         private readonly Dictionary<string, AsyncOperationHandle> _assetsRequests = new();
 
-        public async UniTask InitializeAsync() => 
-            await Addressables.InitializeAsync().ToUniTask();
-        
+        public async UniTask InitializeAsync(CancellationToken token)
+        {
+            await Addressables
+                .InitializeAsync()
+                .ToUniTask(cancellationToken: token);
+        }
+
         public async UniTask<TAsset> Load<TAsset>(AssetReference assetReference) where TAsset : MonoBehaviour => 
             await LoadAndGetComponent<TAsset>(assetReference.AssetGUID);
 
@@ -52,23 +57,23 @@ namespace Code.Services
             return await UniTask.WhenAll(tasks);
         }
 
-        public async UniTask<List<string>> FetchAssetKeysByLabel<T>(string label) =>
-            await FetchAssetKeysByLabel(label, typeof(T));
+        public async UniTask<List<string>> FetchAssetKeysByLabel<T>(string label, CancellationToken token) =>
+            await FetchAssetKeysByLabel(label, token, typeof(T));
 
-        public async UniTask WarmupAssetsByLabel(string label) 
+        public async UniTask WarmupAssetsByLabel(string label, CancellationToken token) 
         {
-            List<string> assetKeys = await FetchAssetKeysByLabel(label);
+            List<string> assetKeys = await FetchAssetKeysByLabel(label, token);
             await LoadAll<object>(assetKeys);
         }
 
-        public async UniTask ReleaseAssetsByLabel(string label)
+        public async UniTask ReleaseAssetsByLabel(string label, CancellationToken token)
         {
-            List<string> assetKeys = await FetchAssetKeysByLabel(label);
+            List<string> assetKeys = await FetchAssetKeysByLabel(label, token);
             foreach (string key in assetKeys)
             {
                 if (_assetsRequests.TryGetValue(key, out AsyncOperationHandle handler))
                 {
-                    Addressables.Release(handler);
+                     Addressables.Release(handler);
                     _assetsRequests.Remove(key);
                 }
             }
@@ -84,10 +89,10 @@ namespace Code.Services
             return (T) loadedPrefab;
         }
 
-        private async UniTask<List<string>> FetchAssetKeysByLabel(string label, Type type = null)
+        private async UniTask<List<string>> FetchAssetKeysByLabel(string label, CancellationToken token, Type type = null)
         { 
             AsyncOperationHandle<IList<IResourceLocation>> operationHandle = Addressables.LoadResourceLocationsAsync(label, type);
-            IList<IResourceLocation> locations = await operationHandle.ToUniTask();
+            IList<IResourceLocation> locations = await operationHandle.ToUniTask(cancellationToken: token);
             
             var assetKeys = new List<string>(locations.Count);
             assetKeys.AddRange(locations.Select(location => location.PrimaryKey));

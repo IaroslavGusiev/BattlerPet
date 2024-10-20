@@ -1,4 +1,5 @@
-﻿using Code.Gameplay.Core;
+﻿using System.Threading;
+using Code.Gameplay.Core;
 using Cysharp.Threading.Tasks;
 using Code.Gameplay.Battlefield;
 using Code.Infrastructure.StateMachineBase;
@@ -16,15 +17,13 @@ namespace Code.Gameplay.States
             _battleStarter = battleStarter;
         }
 
-        public async UniTask Enter()
+        public async UniTask Enter(CancellationToken token)
         {
             await _battlefield.Initialize();
             await _battleStarter.Initialize(_battlefield);
         }
 
-        public async UniTask Exit()
-        {
-            
-        }
+        public UniTask Exit(CancellationToken token) => 
+            UniTask.CompletedTask;
     }
 }

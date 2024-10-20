@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using Code.StaticData.UI;
 using Cysharp.Threading.Tasks;
 using Code.StaticData.Gameplay;
@@ -18,11 +19,11 @@ namespace Code.Services
         public StaticDataService(IAssetProvider assetProvider) => 
             _assetProvider = assetProvider;
 
-        public async UniTask Initialize()
+        public async UniTask Initialize(CancellationToken token)
         {
-            await LoadEntityData();
-            await LoadBattlefieldConfig();
-            await LoadScreenServiceConfig();
+            await LoadEntityData(token);
+            await LoadBattlefieldConfig(token);
+            await LoadScreenServiceConfig(token);
         }
 
         public BattlefieldConfig GetBattlefieldConfig() =>
@@ -40,32 +41,32 @@ namespace Code.Services
             return configs.FirstOrDefault(x => x.AttackType == attackType);
         }
 
-        private async UniTask LoadEntityData()
+        private async UniTask LoadEntityData(CancellationToken token)
         {
-            EntityConfig[] configs = await GetConfigs<EntityConfig>();
+            EntityConfig[] configs = await GetConfigs<EntityConfig>(token);
             _heroData = configs.ToDictionary(x => x.EntityType, x => x);
         }
 
-        private async UniTask LoadBattlefieldConfig()
+        private async UniTask LoadBattlefieldConfig(CancellationToken token)
         {
-            BattlefieldConfig[] configs = await GetConfigs<BattlefieldConfig>();
+            BattlefieldConfig[] configs = await GetConfigs<BattlefieldConfig>(token);
             _battlefieldConfigs = configs.ToList();
         }
 
-        private async UniTask LoadScreenServiceConfig()
+        private async UniTask LoadScreenServiceConfig(CancellationToken token)
         {
-            ScreenServiceConfig[] configs = await GetConfigs<ScreenServiceConfig>();
+            ScreenServiceConfig[] configs = await GetConfigs<ScreenServiceConfig>(token);
             _screenServiceConfigs = configs.ToList();
         } 
 
-        private async UniTask<T[]> GetConfigs<T>() where T : class
+        private async UniTask<T[]> GetConfigs<T>(CancellationToken token) where T : class
         {
-            List<string> keys = await GetConfigsKeys<T>();
+            List<string> keys = await GetConfigsKeys<T>(token);
             T[] loadedConfigs = await _assetProvider.LoadAll<T>(keys);
             return loadedConfigs;
         }
 
-        private async UniTask<List<string>> GetConfigsKeys<T>() =>
-            await _assetProvider.FetchAssetKeysByLabel<T>(AssetLabels.Configs);
+        private async UniTask<List<string>> GetConfigsKeys<T>(CancellationToken token) =>
+            await _assetProvider.FetchAssetKeysByLabel<T>(AssetLabels.Configs, token);
     }
 }

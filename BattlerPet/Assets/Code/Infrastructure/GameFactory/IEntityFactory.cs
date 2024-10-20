@@ -7,6 +7,6 @@ namespace Code.Infrastructure
 {
     public interface IEntityFactory
     {
-        UniTask<EntityBehaviour> CreateEntity(EntityType entityType, Vector3 at, Quaternion rotation, Transform parent);
+        UniTask<IEntity> CreateEntity(EntityType entityType, Vector3 at, Quaternion rotation, Transform parent);
     }
 }

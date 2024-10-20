@@ -1,3 +1,4 @@
+using System.Threading;
 using Code.StaticData.UI;
 using Cysharp.Threading.Tasks;
 using Code.StaticData.Gameplay;
@@ -7,7 +8,8 @@ namespace Code.Services
 {
     public interface IStaticDataService
     {
-        UniTask Initialize();
+        UniTask Initialize(CancellationToken token);
+        
         BattlefieldConfig GetBattlefieldConfig();
         ScreenServiceConfig GetScreenServiceConfig();
         EntityConfig EntityConfigFor(EntityType entityType);

@@ -9,10 +9,12 @@ namespace Code.StaticData.UI
 
         private void OnValidate() => 
             CreateScreenPrefabMap();
-
+        
+        private void CreateScreenPrefabMap()
+        {
 #if UNITY_EDITOR
-        private void CreateScreenPrefabMap() => 
             ScreenPrefabMap.CreateMap();
 #endif
+        }
     }
 }

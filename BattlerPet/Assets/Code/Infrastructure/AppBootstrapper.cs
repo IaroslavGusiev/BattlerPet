@@ -15,7 +15,7 @@ namespace Code.Infrastructure
             StateMachine.RegisterState(StateFactory.Create<BootstrapState>(Lifetime.Scoped));
             StateMachine.RegisterState(StateFactory.Create<LoadPlayerProgressState>(Lifetime.Scoped));
             StateMachine.RegisterState(StateFactory.Create<BattleAreaState>(Lifetime.Scoped));
-            await StateMachine.Enter<BootstrapState>();
+            await StateMachine.Enter<BootstrapState>(token);
         }
     }
 }

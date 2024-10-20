@@ -8,9 +8,6 @@ namespace Code.Gameplay.Entity
     {
         private readonly List<IJournalEntry> _journal = new();
 
-        public IReadOnlyList<IJournalEntry> Journal =>
-            _journal.AsReadOnly();
-
         public void AddEntry(AttributeType attributeType, AttributeOperation operation, float value, float currentValue)
         {
             IJournalEntry entry = attributeType switch

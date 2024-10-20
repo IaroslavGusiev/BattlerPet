@@ -12,7 +12,7 @@ namespace Code.Infrastructure.StateMachineBase
         public TState Create<TState>(Lifetime lifetime) where TState : IExitableState
         {
             var registrationBuilder = new RegistrationBuilder(typeof(TState), lifetime);
-            return (TState)_objectResolver.Resolve(registrationBuilder.Build());
+            return (TState) _objectResolver.Resolve(registrationBuilder.Build());
         }
     }
 }

@@ -13,11 +13,11 @@ namespace Code.Infrastructure
             builder.RegisterEntryPoint<TBootstrapper>();
             
             builder
-                .Register<TStateMachine>(Lifetime.Scoped)
+                .Register<TStateMachine>(Lifetime.Singleton)
                 .AsSelf();
 
             builder
-                .Register<StateFactory>(Lifetime.Scoped)
+                .Register<StateFactory>(Lifetime.Singleton)
                 .AsSelf();
             
             OnConfigure(builder);

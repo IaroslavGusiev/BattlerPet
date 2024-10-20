@@ -1,5 +1,6 @@
 ﻿using Code.Data;
 using Code.Services;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using Code.Infrastructure.StateMachineBase;
@@ -21,21 +22,17 @@ namespace Code.Infrastructure.GameStateMachineScope
             _progressReaderServices = progressReaderServices;
         }
 
-        public async UniTask Enter()
-        {
-            await LoadPlayerProgress();
-        }
+        public async UniTask Enter(CancellationToken token) => 
+            await LoadPlayerProgress(token);
 
-        public async UniTask Exit()
-        {
-            
-        }
+        public UniTask Exit(CancellationToken token) => 
+            UniTask.CompletedTask;
 
-        private async UniTask LoadPlayerProgress()
+        private async UniTask LoadPlayerProgress(CancellationToken token)
         {
             PlayerProgress progress = await LoadProgressOrInitNew();
             NotifyProgressReaders(progress);
-            await _appStateMachine.Enter<BattleAreaState>();
+            await _appStateMachine.Enter<BattleAreaState>(token);
         }
 
         private void NotifyProgressReaders(PlayerProgress progress)
